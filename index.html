@@ -29,8 +29,11 @@
 <body>
   <canvas id="grid"></canvas>
   <div class="buttons">
-    <button onclick="drawGrid('red')">Make stroke color red</button>
-    <button onclick="drawGrid('green')">Make stroke color green</button>
+    <script>
+      let strokeStyle = '#ccc';
+    </script>
+    <button onclick="strokeStyle='red'; drawGrid()">Make stroke color red</button>
+    <button onclick="strokeStyle='green'; drawGrid()">Make stroke color green</button>
   </div>
   <script>
     const canvas = document.getElementById('grid');
@@ -39,7 +42,7 @@
 
     const ctx = canvas.getContext('2d');
 
-    function drawGrid(strokeStyle) {
+    function drawGrid() {
       ctx.clearRect(0, 0, width, height);
       ctx.strokeStyle = strokeStyle;
       const VERTICAL_GAP = 20;
@@ -60,7 +63,7 @@
       }
     }
 
-    drawGrid('#ccc');
+    drawGrid();
 
   </script>
 </body>
