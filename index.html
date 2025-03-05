@@ -96,24 +96,26 @@
     function drawGrid() {
       ctx.clearRect(0, 0, width, height);
       ctx.save();
+      // 
       ctx.translate(offsetX, offsetY);
       ctx.scale(scale, scale);
+      //
       ctx.strokeStyle = strokeStyle;
-      const VERTICAL_GAP = 20;
       // Calculate x_start, y_start
       const x_start = -offsetX / scale;
       const y_start = -offsetY / scale;
       const x_end = x_start + width / scale;
       const y_end = y_start + height / scale;
       // Draw vertical lines
+      const VERTICAL_GAP = 20;
       for (let x = x_start; x < x_end; x += VERTICAL_GAP) {
         ctx.beginPath();
         ctx.moveTo(x, y_start);
         ctx.lineTo(x, y_end);
         ctx.stroke();
       }
-      const HORIZONTAL_GAP = 20;
       // Draw horizontal lines
+      const HORIZONTAL_GAP = 20;
       for (let y = y_start; y < y_end; y += HORIZONTAL_GAP) {
         ctx.beginPath();
         ctx.moveTo(x_start, y);
@@ -126,7 +128,7 @@
       // Draw canvas border
       ctx.strokeStyle = 'red'
       ctx.lineWidth = 3;
-      ctx.strokeRect(-offsetX / scale, -offsetY / scale, width / scale, height / scale);
+      ctx.strokeRect(x_start, y_start, width / scale, height / scale);
       //
       ctx.restore();
     }
