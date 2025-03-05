@@ -67,15 +67,10 @@
 
     drawGrid();
 
-    function setPosition(top, left) {
-      const canvas = document.getElementById('canvas');
-      if (canvas) {
-        canvas.style.top = `${top}px`;
-        canvas.style.left = `${left}px`;
-      }
+    function setPosition(left, top) {
+      canvas.style.left = `${left}px`;
+      canvas.style.top = `${top}px`;
     }
-
-    setPosition(100, 200); // Moves the canvas to (100px, 200px)
 
     let isDragging = false;
     let offsetX = 0, offsetY = 0;
@@ -88,8 +83,7 @@
 
     window.addEventListener('mousemove', (e) => {
       if (isDragging) {
-        canvas.style.left = `${e.clientX - offsetX}px`;
-        canvas.style.top = `${e.clientY - offsetY}px`;
+        setPosition(e.clientX - offsetX, e.clientY - offsetY);
       }
     });
 
