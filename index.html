@@ -77,9 +77,8 @@
     </script>
     <button onclick="strokeStyle='red'; drawGrid()">Make stroke color red</button>
     <button onclick="strokeStyle='green'; drawGrid()">Make stroke color green</button>
-    <button onclick="scale=0.5; drawGrid()">Make scale 0.5</button>
-    <button onclick="scale=1; drawGrid()">Make scale 1</button>
-    <button onclick="scale=2; drawGrid()">Make scale 2</button>
+    <button onclick="scale*=0.9; drawGrid()">Make scale down</button>
+    <button onclick="scale*=1.1; drawGrid()">Make scale up</button>
   </div>
   <div class="directionBtns">
     <button class="up" onclick="offsetY-=20; drawGrid()">Up</button>
