@@ -84,11 +84,15 @@
     window.addEventListener('mousemove', (e) => {
       if (isDragging) {
         setPosition(e.clientX - offsetX, e.clientY - offsetY);
+      } else {
+        drawGrid();
+        const rect = canvas.getBoundingClientRect();
+        const gridX = Math.floor((e.clientX - rect.left) / GAP);
+        const gridY = Math.floor((e.clientY - rect.top) / GAP);
+        drawTable({ x: gridX, y: gridY, w: 1, h: 1, bg: 'red' });
       }
-      drawGrid();
-      // draw square the mouse is on
-      drawTable({ x: Math.floor((e.clientX - offsetX) / GAP), y: Math.floor((e.clientY - offsetY) / GAP), w: 1, h: 1, bg: 'red' });
     });
+
 
     window.addEventListener('mouseup', () => {
       isDragging = false;
