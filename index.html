@@ -52,19 +52,22 @@
       ctx.scale(scale, scale);
       ctx.strokeStyle = strokeStyle;
       const VERTICAL_GAP = 20;
+      // Calculate new width and height based on scale
+      const _width = width / scale;
+      const _height = height / scale;
       // Draw vertical lines
-      for (let x = 0; x < width; x += VERTICAL_GAP) {
+      for (let x = 0; x < _width; x += VERTICAL_GAP) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
-        ctx.lineTo(x, height - 1);
+        ctx.lineTo(x, _height - 1);
         ctx.stroke();
       }
       const HORIZONTAL_GAP = 20;
       // Draw horizontal lines
-      for (let y = 0; y < height; y += HORIZONTAL_GAP) {
+      for (let y = 0; y < _height; y += HORIZONTAL_GAP) {
         ctx.beginPath();
         ctx.moveTo(0, y);
-        ctx.lineTo(width - 1, y);
+        ctx.lineTo(_width - 1, y);
         ctx.stroke();
       }
       // Draw blue square
