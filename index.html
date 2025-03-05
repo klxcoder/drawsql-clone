@@ -81,10 +81,10 @@
     <button onclick="scale*=1.1; drawGrid()">Make scale up</button>
   </div>
   <div class="directionBtns">
-    <button class="up" onclick="offsetY-=20; drawGrid()">Up</button>
-    <button class="down" onclick="offsetY+=20; drawGrid()">Down</button>
-    <button class="left" onclick="offsetX-=20; drawGrid()">Left</button>
-    <button class="right" onclick="offsetX+=20; drawGrid()">Right</button>
+    <button class="up" onclick="offsetY+=20; drawGrid()">Up</button>
+    <button class="down" onclick="offsetY-=20; drawGrid()">Down</button>
+    <button class="left" onclick="offsetX+=20; drawGrid()">Left</button>
+    <button class="right" onclick="offsetX-=20; drawGrid()">Right</button>
   </div>
   <script>
     const canvas = document.getElementById('grid');
