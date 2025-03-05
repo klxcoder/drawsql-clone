@@ -79,6 +79,12 @@
 
     drawGrid();
 
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      drawGrid();
+    });
+
   </script>
 </body>
 
