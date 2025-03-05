@@ -21,9 +21,27 @@
 <body>
   <canvas id="grid"></canvas>
   <script>
+    // Constants
+    const X = 40;
+    const Y = 20;
+    const GAP = 20;
+    //
     const canvas = document.getElementById('grid');
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
+    canvas.width = X * GAP;
+    canvas.height = Y * GAP;
+    const ctx = canvas.getContext('2d');
+
+    function drawGrid() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(100, 100, 50, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    drawGrid();
+
   </script>
 </body>
 
