@@ -48,6 +48,7 @@
 
     function drawGrid() {
       ctx.clearRect(0, 0, width, height);
+      ctx.save();
       ctx.scale(scale, scale);
       ctx.strokeStyle = strokeStyle;
       const VERTICAL_GAP = 20;
@@ -69,6 +70,8 @@
       // Draw blue square
       ctx.fillStyle = "blue";
       ctx.fillRect(100, 100, 200, 200);
+      //
+      ctx.restore();
     }
 
     drawGrid();
