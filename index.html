@@ -73,6 +73,26 @@
 
     setPosition(100, 200); // Moves the canvas to (100px, 200px)
 
+    let isDragging = false;
+    let offsetX = 0, offsetY = 0;
+
+    canvas.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      offsetX = e.clientX - canvas.offsetLeft;
+      offsetY = e.clientY - canvas.offsetTop;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        canvas.style.left = `${e.clientX - offsetX}px`;
+        canvas.style.top = `${e.clientY - offsetY}px`;
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
   </script>
 </body>
 
