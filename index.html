@@ -4,88 +4,10 @@
 <head>
   <meta charset="utf-8">
   <title>Simple DrawSQL Grid</title>
-  <style>
-    body,
-    html {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-
-    canvas {
-      background: #fff;
-      display: block;
-    }
-  </style>
 </head>
 
 <body>
-  <canvas id="grid"></canvas>
-  <script>
-    const canvas = document.getElementById('grid');
-    const ctx = canvas.getContext('2d');
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-    let scale = 1, offsetX = 0, offsetY = 0, isPanning = false, startX, startY;
-
-    function drawGrid() {
-      ctx.clearRect(0, 0, width, height);
-      ctx.save();
-      ctx.translate(offsetX, offsetY);
-      ctx.scale(scale, scale);
-      ctx.strokeStyle = '#ccc';
-      for (let x = -offsetX / scale - 100; x < (width - offsetX) / scale + 100; x += 20) {
-        ctx.beginPath();
-        ctx.moveTo(x, -offsetY / scale - 100);
-        ctx.lineTo(x, (height - offsetY) / scale + 100);
-        ctx.stroke();
-      }
-      for (let y = -offsetY / scale - 100; y < (height - offsetY) / scale + 100; y += 20) {
-        ctx.beginPath();
-        ctx.moveTo(-offsetX / scale - 100, y);
-        ctx.lineTo((width - offsetX) / scale + 100, y);
-        ctx.stroke();
-      }
-      ctx.restore();
-    }
-
-    drawGrid();
-
-    // Zoom with mouse wheel
-    canvas.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      const mouseX = e.clientX, mouseY = e.clientY;
-      const wheel = e.deltaY < 0 ? 1.1 : 0.9;
-      const newScale = scale * wheel;
-      offsetX = mouseX - (mouseX - offsetX) * (newScale / scale);
-      offsetY = mouseY - (mouseY - offsetY) * (newScale / scale);
-      scale = newScale;
-      drawGrid();
-    });
-
-    // Pan with mouse drag
-    canvas.addEventListener('mousedown', (e) => {
-      isPanning = true;
-      startX = e.clientX - offsetX;
-      startY = e.clientY - offsetY;
-    });
-
-    canvas.addEventListener('mousemove', (e) => {
-      if (!isPanning) return;
-      offsetX = e.clientX - startX;
-      offsetY = e.clientY - startY;
-      drawGrid();
-    });
-
-    canvas.addEventListener('mouseup', () => isPanning = false);
-    canvas.addEventListener('mouseleave', () => isPanning = false);
-
-    window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      drawGrid();
-    });
-  </script>
+  Minimal index.html
 </body>
 
 </html>
