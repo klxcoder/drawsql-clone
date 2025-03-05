@@ -24,7 +24,30 @@
     const canvas = document.getElementById('grid');
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
-    console.log({ width, height });
+
+    const ctx = canvas.getContext('2d');
+
+    function drawGrid() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = 'red';
+      // Log
+      console.log(`ctx.lineWidth = ${ctx.lineWidth}`); // 1
+      // Drawing first line
+      ctx.beginPath();
+      ctx.moveTo(100, 0);
+      ctx.lineTo(200, height);
+      ctx.stroke();
+      // Change color of the pen
+      ctx.strokeStyle = 'green';
+      // Start drawing second line
+      ctx.beginPath();
+      ctx.moveTo(200, 0);
+      ctx.lineTo(200, height);
+      ctx.stroke();
+    }
+
+    drawGrid();
+
   </script>
 </body>
 
