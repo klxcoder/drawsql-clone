@@ -31,10 +31,14 @@
   <div class="buttons">
     <script>
       let strokeStyle = '#ccc';
+      let offsetX = 0;
+      let offsetY = 0;
       let scale = 1;
     </script>
     <button onclick="strokeStyle='red'; drawGrid()">Make stroke color red</button>
     <button onclick="strokeStyle='green'; drawGrid()">Make stroke color green</button>
+    <button onclick="offsetX=0; offsetY=0; drawGrid()">ctx.translate(0, 0);</button>
+    <button onclick="offsetX=100; offsetY=100; drawGrid()">ctx.translate(100, 100);</button>
     <button onclick="scale=0.5; drawGrid()">Make scale 0.5</button>
     <button onclick="scale=1; drawGrid()">Make scale 1</button>
     <button onclick="scale=2; drawGrid()">Make scale 2</button>
@@ -49,6 +53,7 @@
     function drawGrid() {
       ctx.clearRect(0, 0, width, height);
       ctx.save();
+      ctx.translate(offsetX, offsetY);
       ctx.scale(scale, scale);
       ctx.strokeStyle = strokeStyle;
       const VERTICAL_GAP = 20;
