@@ -15,11 +15,20 @@
       background: #fff;
       display: block;
     }
+
+    .buttons {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
   </style>
 </head>
 
 <body>
   <canvas id="grid"></canvas>
+  <div class="buttons">
+    <button onclick="drawGrid('red')">Make stroke color red</button>
+  </div>
   <script>
     const canvas = document.getElementById('grid');
     let width = canvas.width = window.innerWidth;
@@ -27,9 +36,9 @@
 
     const ctx = canvas.getContext('2d');
 
-    function drawGrid() {
+    function drawGrid(strokeStyle) {
       ctx.clearRect(0, 0, width, height);
-      ctx.strokeStyle = '#ccc';
+      ctx.strokeStyle = strokeStyle;
       const VERTICAL_GAP = 20;
       // Draw vertical lines
       for (let x = 0; x < width; x += VERTICAL_GAP) {
@@ -48,7 +57,7 @@
       }
     }
 
-    drawGrid();
+    drawGrid('#ccc');
 
   </script>
 </body>
