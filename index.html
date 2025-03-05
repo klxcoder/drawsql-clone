@@ -20,7 +20,7 @@
     }
 
     canvas {
-      background: gray;
+      background: rgb(240, 238, 238);
       display: block;
     }
   </style>
@@ -48,7 +48,7 @@
       for (let x = 1; x < X; x++) {
         for (let y = 1; y < Y; y++) {
           ctx.beginPath();
-          ctx.arc(x * GAP, y * GAP, 2, 0, 2 * Math.PI);
+          ctx.arc(x * GAP, y * GAP, 1, 0, 2 * Math.PI);
           ctx.fill();
         }
       }
