@@ -61,7 +61,7 @@
         { x: 2, y: 3, w: 4, h: 4, bg: 'blue' },
         { x: 5, y: 6, w: 3, h: 3, bg: 'green' },
       ]
-      tables.forEach(drawTable)
+      tables.forEach(drawTable);
       ctx.restore();
     }
 
@@ -85,6 +85,9 @@
       if (isDragging) {
         setPosition(e.clientX - offsetX, e.clientY - offsetY);
       }
+      drawGrid();
+      // draw square the mouse is on
+      drawTable({ x: Math.floor((e.clientX - offsetX) / GAP), y: Math.floor((e.clientY - offsetY) / GAP), w: 1, h: 1, bg: 'red' });
     });
 
     window.addEventListener('mouseup', () => {
