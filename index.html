@@ -35,7 +35,15 @@
       for (let x = 0; x < width; x += VERTICAL_GAP) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
-        ctx.lineTo(x, height);
+        ctx.lineTo(x, height - 1);
+        ctx.stroke();
+      }
+      const HORIZONTAL_GAP = 20;
+      // Draw horizontal lines
+      for (let y = 0; y < height; y += HORIZONTAL_GAP) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width - 1, y);
         ctx.stroke();
       }
     }
