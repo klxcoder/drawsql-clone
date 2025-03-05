@@ -100,27 +100,33 @@
       ctx.scale(scale, scale);
       ctx.strokeStyle = strokeStyle;
       const VERTICAL_GAP = 20;
-      // Calculate new width and height based on scale
-      const _width = width / scale;
-      const _height = height / scale;
+      // Calculate x_start, y_start
+      const x_start = -offsetX / scale;
+      const y_start = -offsetY / scale;
+      const x_end = x_start + width / scale;
+      const y_end = y_start + height / scale;
       // Draw vertical lines
-      for (let x = 0; x < _width; x += VERTICAL_GAP) {
+      for (let x = x_start; x < x_end; x += VERTICAL_GAP) {
         ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, _height - 1);
+        ctx.moveTo(x, y_start);
+        ctx.lineTo(x, y_end);
         ctx.stroke();
       }
       const HORIZONTAL_GAP = 20;
       // Draw horizontal lines
-      for (let y = 0; y < _height; y += HORIZONTAL_GAP) {
+      for (let y = y_start; y < y_end; y += HORIZONTAL_GAP) {
         ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(_width - 1, y);
+        ctx.moveTo(x_start, y);
+        ctx.lineTo(x_end, y);
         ctx.stroke();
       }
       // Draw blue square
       ctx.fillStyle = "blue";
       ctx.fillRect(100, 100, 200, 200);
+      // Draw canvas border
+      ctx.strokeStyle = 'red'
+      ctx.lineWidth = 3;
+      ctx.strokeRect(-offsetX / scale, -offsetY / scale, width / scale, height / scale);
       //
       ctx.restore();
     }
