@@ -23,6 +23,46 @@
       display: flex;
       flex-direction: column;
     }
+
+    .directionBtns {
+      position: fixed;
+      left: 50%;
+      transform: translate(-50%, 0);
+      bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      width: 150px;
+      height: 150px;
+      border: 1px solid red;
+    }
+
+    .directionBtns button {
+      position: absolute;
+    }
+
+    .directionBtns .up {
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    .directionBtns .down {
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    .directionBtns .left {
+      left: 0;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+
+    .directionBtns .right {
+      right: 0;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
   </style>
 </head>
 
@@ -37,11 +77,15 @@
     </script>
     <button onclick="strokeStyle='red'; drawGrid()">Make stroke color red</button>
     <button onclick="strokeStyle='green'; drawGrid()">Make stroke color green</button>
-    <button onclick="offsetX=0; offsetY=0; drawGrid()">ctx.translate(0, 0);</button>
-    <button onclick="offsetX=100; offsetY=100; drawGrid()">ctx.translate(100, 100);</button>
     <button onclick="scale=0.5; drawGrid()">Make scale 0.5</button>
     <button onclick="scale=1; drawGrid()">Make scale 1</button>
     <button onclick="scale=2; drawGrid()">Make scale 2</button>
+  </div>
+  <div class="directionBtns">
+    <button class="up" onclick="offsetX=0; offsetY=-20; drawGrid()">Up</button>
+    <button class="down" onclick="offsetX=0; offsetY=20; drawGrid()">Down</button>
+    <button class="left" onclick="offsetX=-20; offsetY=0; drawGrid()">Left</button>
+    <button class="right" onclick="offsetX=20; offsetY=0; drawGrid()">Right</button>
   </div>
   <script>
     const canvas = document.getElementById('grid');
