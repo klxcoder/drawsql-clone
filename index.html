@@ -29,21 +29,15 @@
 
     function drawGrid() {
       ctx.clearRect(0, 0, width, height);
-      ctx.strokeStyle = 'red';
-      // Log
-      console.log(`ctx.lineWidth = ${ctx.lineWidth}`); // 1
-      // Drawing first line
-      ctx.beginPath();
-      ctx.moveTo(100, 0);
-      ctx.lineTo(200, height);
-      ctx.stroke();
-      // Change color of the pen
-      ctx.strokeStyle = 'green';
-      // Start drawing second line
-      ctx.beginPath();
-      ctx.moveTo(200, 0);
-      ctx.lineTo(200, height);
-      ctx.stroke();
+      ctx.strokeStyle = '#ccc';
+      const VERTICAL_GAP = 20;
+      // Draw vertical lines
+      for (let x = 0; x < width; x += VERTICAL_GAP) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
     }
 
     drawGrid();
