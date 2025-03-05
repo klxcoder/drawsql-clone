@@ -20,6 +20,8 @@
       position: fixed;
       top: 0;
       left: 0;
+      display: flex;
+      flex-direction: column;
     }
   </style>
 </head>
@@ -28,6 +30,7 @@
   <canvas id="grid"></canvas>
   <div class="buttons">
     <button onclick="drawGrid('red')">Make stroke color red</button>
+    <button onclick="drawGrid('green')">Make stroke color green</button>
   </div>
   <script>
     const canvas = document.getElementById('grid');
