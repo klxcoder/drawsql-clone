@@ -26,8 +26,9 @@ function GridView({
   }
 
   const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
-    console.log(ctx);
-    console.log(tables);
+    tables.forEach(table => {
+      ctx.fillRect(table.rect.col * CELL_SIZE, table.rect.row * CELL_SIZE, 3 * CELL_SIZE, 3 * CELL_SIZE);
+    });
   }, [tables]);
 
   const draw = useCallback(() => {
