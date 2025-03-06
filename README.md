@@ -1,2 +1,2 @@
 # TODO
-  - init a fake tables then draw it
+  - Each table has its own color

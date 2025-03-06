@@ -5,7 +5,7 @@ import { Table } from './models/Table';
 
 function App() {
   const [tables] = useState<Table[]>([
-    {
+    new Table({
       title: 'table1',
       rect: {
         col: 1,
@@ -13,8 +13,8 @@ function App() {
         width: 2,
         height: 2,
       }
-    },
-    {
+    }),
+    new Table({
       title: 'table2',
       rect: {
         col: 5,
@@ -22,7 +22,7 @@ function App() {
         width: 3,
         height: 3,
       }
-    },
+    }),
   ]);
   return (
     <div className={styles.app}>
