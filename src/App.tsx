@@ -10,17 +10,17 @@ function App() {
       rect: {
         col: 1,
         row: 1,
-        width: 6,
-        height: 3,
+        width: 15,
+        height: 10,
       }
     }),
     new Table({
       name: 'table2',
       rect: {
-        col: 5,
-        row: 6,
-        width: 6,
-        height: 3,
+        col: 15,
+        row: 15,
+        width: 15,
+        height: 10,
       }
     }),
   ]);
