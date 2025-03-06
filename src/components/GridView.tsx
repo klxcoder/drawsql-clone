@@ -1,12 +1,12 @@
 import styles from './Grid.module.scss';
 
-function Grid() {
+function GridView() {
 
   return (
     <div className={styles.grid}>
-      Grid
+      GridView
     </div>
   )
 }
 
-export default Grid
+export default GridView

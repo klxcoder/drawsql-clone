@@ -1,11 +1,11 @@
 import styles from './App.module.scss';
-import Grid from './components/Grid';
+import GridView from './components/GridView';
 
 function App() {
 
   return (
     <div className={styles.app}>
-      <Grid />
+      <GridView />
     </div>
   )
 }

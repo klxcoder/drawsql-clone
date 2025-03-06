@@ -1,4 +1,2 @@
 # TODO
-  - ERD are just tables and lines
-  - Class Table
-  - Class Line
+  - GridView will accept tables and draw it in a canvas
