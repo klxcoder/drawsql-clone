@@ -1,10 +1,11 @@
 import styles from './App.module.scss';
+import Grid from './components/Grid';
 
 function App() {
 
   return (
     <div className={styles.app}>
-      Minimal vite
+      <Grid />
     </div>
   )
 }
