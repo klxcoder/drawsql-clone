@@ -1,2 +1,2 @@
 # TODO
-  - GridView will accept tables and draw it in a canvas
+  - GridView will draw a canvas with gap and X and Y
