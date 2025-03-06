@@ -42,11 +42,19 @@ function GridView({
   const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
     tables.forEach(table => {
       ctx.fillStyle = table.color;
-
       drawRoundedRect(
         ctx,
         table.rect.col * CELL_SIZE,
         table.rect.row * CELL_SIZE,
+        table.rect.width * CELL_SIZE,
+        table.rect.height * CELL_SIZE,
+        CELL_SIZE / 2,
+      )
+      ctx.fillStyle = 'ivory';
+      drawRoundedRect(
+        ctx,
+        table.rect.col * CELL_SIZE,
+        (table.rect.row + 1) * CELL_SIZE,
         table.rect.width * CELL_SIZE,
         table.rect.height * CELL_SIZE,
         CELL_SIZE / 2,
