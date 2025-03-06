@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Table } from '../models/Table';
 import styles from './Grid.module.scss';
 import {
@@ -13,13 +13,8 @@ function GridView({
   tables: Table[],
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  console.log(tables);
 
-  const drawDots = () => {
-    const canvas: HTMLCanvasElement | null = canvasRef.current;
-    if (!canvas) return;
-    const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
-    if (!ctx) return;
+  const drawDots = (ctx: CanvasRenderingContext2D) => {
     ctx.fillStyle = "red";
     for (let col = 1; col < MAX_TABLE_COLS; col++) {
       for (let row = 1; row < MAX_TABLE_ROWS; row++) {
@@ -28,9 +23,24 @@ function GridView({
     }
   }
 
+  const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
+    console.log(ctx);
+    console.log(tables);
+  }, [tables]);
+
+  const draw = useCallback(() => {
+    const canvas: HTMLCanvasElement | null = canvasRef.current;
+    if (!canvas) return;
+    const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
+    if (!ctx) return;
+    drawDots(ctx);
+    drawTables(ctx);
+  }, [drawTables]);
+
   useEffect(() => {
-    drawDots();
-  }, []);
+    draw();
+  }, [draw]);
+
   return (
     <div className={styles.grid}>
       <canvas
