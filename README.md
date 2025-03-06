@@ -1,2 +1,2 @@
 # TODO
-  - GridView will draw a canvas with gap and X and Y
+  - init a fake tables then draw it

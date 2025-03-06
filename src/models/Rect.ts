@@ -1,6 +1,6 @@
 export type Rect = {
-  x: number,
-  y: number,
-  w: number,
-  h: number,
+  col: number,
+  row: number,
+  width: number,
+  height: number,
 }
