@@ -10,8 +10,8 @@ function App() {
       rect: {
         col: 1,
         row: 1,
-        width: 2,
-        height: 2,
+        width: 6,
+        height: 3,
       }
     }),
     new Table({
@@ -19,7 +19,7 @@ function App() {
       rect: {
         col: 5,
         row: 6,
-        width: 3,
+        width: 6,
         height: 3,
       }
     }),
