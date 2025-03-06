@@ -25,6 +25,19 @@ function GridView({
     }
   }
 
+  const drawTableName = useCallback((ctx: CanvasRenderingContext2D, table: Table) => {
+    // Draw the text centered inside the rectangle
+    ctx.fillStyle = "black";
+    ctx.font = "20px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(
+      "hello",
+      (table.rect.col + table.rect.width / 2) * CELL_SIZE,
+      (table.rect.row + table.rect.height / 2) * CELL_SIZE
+    );
+  }, []);
+
   const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
     tables.forEach(table => {
       ctx.fillStyle = table.color;
@@ -34,8 +47,9 @@ function GridView({
         table.rect.width * CELL_SIZE,
         table.rect.height * CELL_SIZE,
       );
+      drawTableName(ctx, table);
     });
-  }, [tables]);
+  }, [tables, drawTableName]);
 
   const draw = useCallback(() => {
     const canvas: HTMLCanvasElement | null = canvasRef.current;
