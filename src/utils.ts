@@ -2,6 +2,13 @@ export const randomColor = () => `#${Math.floor(Math.random() * 16777215).toStri
 
 // Function to draw a rounded rectangle
 export const drawRoundedRect = (ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, radius: number) => {
+  ctx.save();
+  // Set shadow properties
+  ctx.shadowColor = "rgba(0, 0, 0, 0.5)"; // Shadow color (black with 50% opacity)
+  ctx.shadowBlur = 10; // Blur intensity
+  ctx.shadowOffsetX = 5; // Shadow offset to the right
+  ctx.shadowOffsetY = 5; // Shadow offset downward
+  // Draw the rounded rectangle
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
   ctx.lineTo(x + width - radius, y);
@@ -14,4 +21,5 @@ export const drawRoundedRect = (ctx: CanvasRenderingContext2D, x: number, y: num
   ctx.arc(x + radius, y + radius, radius, Math.PI, (Math.PI * 3) / 2);
   ctx.closePath();
   ctx.fill();
+  ctx.restore();
 };
