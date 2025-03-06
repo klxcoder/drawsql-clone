@@ -4,10 +4,10 @@ export const randomColor = () => `#${Math.floor(Math.random() * 16777215).toStri
 export const drawRoundedRect = (ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, radius: number) => {
   ctx.save();
   // Set shadow properties
-  ctx.shadowColor = "rgba(0, 0, 0, 0.5)"; // Shadow color (black with 50% opacity)
-  ctx.shadowBlur = 10; // Blur intensity
-  ctx.shadowOffsetX = 5; // Shadow offset to the right
-  ctx.shadowOffsetY = 5; // Shadow offset downward
+  ctx.shadowColor = "rgba(0, 0, 0, 0.4)"; // Shadow color (black with 50% opacity)
+  ctx.shadowBlur = 4; // Blur intensity
+  ctx.shadowOffsetX = 2; // Shadow offset to the right
+  ctx.shadowOffsetY = 2; // Shadow offset downward
   // Draw the rounded rectangle
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
