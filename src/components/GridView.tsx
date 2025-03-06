@@ -33,7 +33,7 @@ function GridView({
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(
-      "hello",
+      table.name,
       (table.rect.col + table.rect.width / 2) * CELL_SIZE,
       (table.rect.row + table.rect.height / 2) * CELL_SIZE
     );

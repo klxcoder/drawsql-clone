@@ -6,7 +6,7 @@ import { Table } from './models/Table';
 function App() {
   const [tables] = useState<Table[]>([
     new Table({
-      name: 'table1',
+      name: 'student',
       rect: {
         col: 1,
         row: 1,
@@ -15,7 +15,7 @@ function App() {
       }
     }),
     new Table({
-      name: 'table2',
+      name: 'notification',
       rect: {
         col: 15,
         row: 15,
