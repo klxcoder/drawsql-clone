@@ -37,6 +37,16 @@ function GridView({
       (table.rect.col + table.rect.width / 2) * CELL_SIZE,
       (table.rect.row + 2.5) * CELL_SIZE
     );
+    ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
+    ctx.shadowColor = "rgba(0, 0, 0, 0.2)"; // Shadow color (black with 50% opacity)
+    ctx.shadowBlur = 1; // Blur intensity
+    ctx.shadowOffsetX = 1; // Shadow offset to the right
+    ctx.shadowOffsetY = 1; // Shadow offset downward
+    ctx.beginPath();
+    ctx.moveTo(table.rect.col * CELL_SIZE, (table.rect.row + 3.8) * CELL_SIZE);
+    ctx.lineTo((table.rect.col + table.rect.width) * CELL_SIZE, (table.rect.row + 3.8) * CELL_SIZE);
+    ctx.closePath();
+    ctx.stroke();
   }, []);
 
   const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
