@@ -35,7 +35,7 @@ function GridView({
     ctx.fillText(
       table.name,
       (table.rect.col + table.rect.width / 2) * CELL_SIZE,
-      (table.rect.row + table.rect.height / 2) * CELL_SIZE
+      (table.rect.row + 2.5) * CELL_SIZE
     );
   }, []);
 
