@@ -16,7 +16,7 @@ function GridView({
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const drawDots = (ctx: CanvasRenderingContext2D) => {
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
     for (let col = 1; col < MAX_TABLE_COLS; col++) {
       for (let row = 1; row < MAX_TABLE_ROWS; row++) {
         ctx.beginPath();
