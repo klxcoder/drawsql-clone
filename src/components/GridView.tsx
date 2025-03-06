@@ -14,14 +14,22 @@ function GridView({
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   console.log(tables);
-  useEffect(() => {
+
+  const drawDots = () => {
     const canvas: HTMLCanvasElement | null = canvasRef.current;
     if (!canvas) return;
     const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
     if (!ctx) return;
-    // Draw something (example: a red rectangle)
     ctx.fillStyle = "red";
-    ctx.fillRect(10, 10, 100, 100);
+    for (let col = 1; col < MAX_TABLE_COLS; col++) {
+      for (let row = 1; row < MAX_TABLE_ROWS; row++) {
+        ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, 3, 3);
+      }
+    }
+  }
+
+  useEffect(() => {
+    drawDots();
   }, []);
   return (
     <div className={styles.grid}>
