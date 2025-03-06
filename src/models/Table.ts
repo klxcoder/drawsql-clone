@@ -2,17 +2,17 @@ import { randomColor } from "../utils";
 import { Rect } from "./Rect";
 
 export class Table {
-  title: string;
+  name: string;
   rect: Rect;
   color: string;
   constructor({
-    title,
+    name,
     rect,
   }: {
-    title: string,
+    name: string,
     rect: Rect,
   }) {
-    this.title = title;
+    this.name = name;
     this.rect = rect;
     this.color = randomColor();
   }
