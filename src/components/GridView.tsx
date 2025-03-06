@@ -18,7 +18,9 @@ function GridView({
     ctx.fillStyle = "red";
     for (let col = 1; col < MAX_TABLE_COLS; col++) {
       for (let row = 1; row < MAX_TABLE_ROWS; row++) {
-        ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, 3, 3);
+        ctx.beginPath();
+        ctx.arc(col * CELL_SIZE, row * CELL_SIZE, 1, 0, Math.PI * 2);
+        ctx.fill();
       }
     }
   }
