@@ -12,12 +12,14 @@ function TableForm({
     <div className={styles.tableForm}>
       <div className={styles.tableName}>
         <input
-          className={styles.tableName}
           placeholder='table1'
           value={table.name}
           onChange={(e) => onChangeTableName(e.target.value)}
         />
       </div>
+      {table.columns.map((column, index) => (
+        <div key={index}>{column.name}</div>
+      ))}
     </div>
   )
 }
