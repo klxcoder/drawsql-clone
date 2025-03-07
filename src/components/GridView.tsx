@@ -67,16 +67,21 @@ function GridView({
     ctx.font = "20px Arial";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    drawRoundedRect({
-      ctx,
-      x: table.rect.col * Grid.CELL_SIZE,
-      y: (table.rect.row + 4.5) * Grid.CELL_SIZE,
-      width: table.rect.width * Grid.CELL_SIZE,
-      height: 3 * Grid.CELL_SIZE,
-      radius: Grid.CELL_SIZE / 2,
-      shadowOffset: 1,
-      stroke: false,
-    });
+    if (table === grid.hoveredTable) {
+      const hoveredColumnIndex = Math.round((grid.mouseCell.row - table.rect.row - 4.5) / 3);
+      if (hoveredColumnIndex >= 0 && hoveredColumnIndex < table.columns.length) {
+        drawRoundedRect({
+          ctx,
+          x: table.rect.col * Grid.CELL_SIZE,
+          y: (table.rect.row + 4.5 + hoveredColumnIndex * 3) * Grid.CELL_SIZE,
+          width: table.rect.width * Grid.CELL_SIZE,
+          height: 3 * Grid.CELL_SIZE,
+          radius: Grid.CELL_SIZE / 2,
+          shadowOffset: 1,
+          stroke: false,
+        });
+      }
+    }
     ctx.fillStyle = "black";
     table.columns.forEach((column, index) => {
       ctx.fillText(
@@ -85,7 +90,7 @@ function GridView({
         (table.rect.row + 6 + 3 * index) * Grid.CELL_SIZE,
       );
     });
-  }, []);
+  }, [grid.hoveredTable, grid.mouseCell.row]);
 
   const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
     tables.forEach(table => {
