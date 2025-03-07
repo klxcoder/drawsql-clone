@@ -46,6 +46,7 @@ function GridView({
     ctx.fillText(
       table.name,
       (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
+      // Table name start at 2.5
       (table.rect.row + 2.5) * Grid.CELL_SIZE,
     );
     ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
@@ -54,6 +55,7 @@ function GridView({
     ctx.shadowOffsetX = 1; // Shadow offset to the right
     ctx.shadowOffsetY = 1; // Shadow offset downward
     ctx.beginPath();
+    // Shadow below table name start at 3.8
     ctx.moveTo(table.rect.col * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
     ctx.lineTo((table.rect.col + table.rect.width) * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
     ctx.closePath();
@@ -65,11 +67,11 @@ function GridView({
     ctx.font = "20px Arial";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    table.columns.forEach(column => {
+    table.columns.forEach((column, index) => {
       ctx.fillText(
         `${column.keyType} ${column.name} ${column.columnType}`,
         (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
-        (table.rect.row + 5.5) * Grid.CELL_SIZE,
+        (table.rect.row + 6 + 3 * index) * Grid.CELL_SIZE,
       );
     });
   }, []);

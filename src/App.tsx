@@ -22,7 +22,12 @@ function App() {
           keyType: 'PK',
           name: 'person_id',
           columnType: 'bigint',
-        })
+        }),
+        new Column({
+          keyType: '',
+          name: 'description',
+          columnType: 'text',
+        }),
       ],
     }));
     grid.addTable(new Table({

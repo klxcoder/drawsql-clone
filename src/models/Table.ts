@@ -20,6 +20,8 @@ export class Table {
     this.name = name;
     this.rect = rect;
     this.columns = columns;
+    this.rect.width = 30;
+    this.rect.height = 6 + 3 * columns.length + 1;
     this.color = randomColor();
   }
 }
