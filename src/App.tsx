@@ -5,6 +5,7 @@ import { Table } from './models/Table';
 import { Grid } from './models/Grid';
 import { Column } from './models/Column';
 import { RowCol } from './models/RowCol';
+import TableForm from './components/TableForm';
 
 function App() {
   const [grid] = useState<Grid>(new Grid());
@@ -64,6 +65,7 @@ function App() {
   }, [grid]);
   return (
     <div className={styles.app}>
+      <TableForm />
       <GridView grid={grid} />
     </div>
   )
