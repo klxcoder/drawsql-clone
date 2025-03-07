@@ -18,6 +18,14 @@ function GridView({
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const bufferRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    bufferRef.current = document.createElement("canvas");
+    bufferRef.current.width = Grid.MAX_COLS * Grid.CELL_SIZE;
+    bufferRef.current.height = Grid.MAX_ROWS * Grid.CELL_SIZE;
+  }, []);
+
   const drawDots = (ctx: CanvasRenderingContext2D) => {
     ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
     for (let col = 1; col < Grid.MAX_COLS; col++) {
@@ -28,14 +36,6 @@ function GridView({
       }
     }
   }
-
-  const bufferRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    bufferRef.current = document.createElement("canvas");
-    bufferRef.current.width = Grid.MAX_COLS * Grid.CELL_SIZE;
-    bufferRef.current.height = Grid.MAX_ROWS * Grid.CELL_SIZE;
-  }, []);
 
   const drawTableName = useCallback((ctx: CanvasRenderingContext2D, table: Table) => {
     // Draw the text centered inside the rectangle
