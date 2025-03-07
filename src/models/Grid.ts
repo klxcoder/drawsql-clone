@@ -16,6 +16,10 @@ export class Grid {
 
   public selectedTable: Table | undefined;
 
+  public hoveredColumnIndex: number = -1;
+
+  public selectedColumnIndex: number = -1;
+
   public readonly mouseCell: RowCol = {
     row: -1,
     col: -1,
@@ -43,18 +47,37 @@ export class Grid {
     this.mouseCell.col = Math.round(xy.x / Grid.CELL_SIZE);
     this.mouseCell.row = Math.round(xy.y / Grid.CELL_SIZE);
     this.hoveredTable = this.getMostTopTable();
+    if (!this.hoveredTable) {
+      this.hoveredColumnIndex = -1;
+      return;
+    }
+    {
+      // Calculate this.hoveredColumn
+      const index = Math.floor((this.mouseCell.row - this.hoveredTable.rect.row - 4) / 3);
+      if (index >= 0 && index < this.hoveredTable.columns.length) {
+        this.hoveredColumnIndex = index;
+      } else {
+        this.hoveredColumnIndex = -1;
+      }
+    }
   }
 
   // Call this function when mouse click on canvas
   public click() {
     this.selectedTable = this.getMostTopTable();
-    if (!this.selectedTable) return;
+    if (!this.selectedTable) {
+      this.selectedColumnIndex = -1;
+      return;
+    }
+    // Bubble selected table on top
     for (let index = 0; index < this.tables.length; index++) {
       if (this.tables[index].name === this.selectedTable.name) {
         this.tables.splice(index, 1);
         this.tables.push(this.selectedTable);
       }
     }
+    // assign seleted column index
+    this.selectedColumnIndex = this.hoveredColumnIndex;
   }
 
   constructor() {
