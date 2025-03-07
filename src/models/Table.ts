@@ -22,11 +22,10 @@ export class Table {
     this.rect = new Rect({
       row: rowCol.row,
       col: rowCol.col,
-      width: 30,
+      width: 35,
       height: 5 + 3 * columns.length,
     });
     this.columns = columns;
-    this.rect.width = 30;
     this.color = randomColor();
   }
 }

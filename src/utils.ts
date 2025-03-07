@@ -165,9 +165,10 @@ export const drawTables = (
 
     const drawText = () => {
       ctx.fillStyle = "black";
+
       table.columns.forEach((column, index) => {
         ctx.fillText(
-          `${column.keyType} ${column.name} ${column.columnType}`,
+          `${column.keyType.padEnd(2, ' ')} | ${column.name.padEnd(25 - column.columnType.length, ' ')} ${column.columnType}`,
           (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
           (table.rect.row + 5.5 + 3 * index) * Grid.CELL_SIZE,
         );
