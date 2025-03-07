@@ -4,6 +4,7 @@ import GridView from './components/GridView';
 import { Table } from './models/Table';
 import { Grid } from './models/Gird';
 import { Rect } from './models/Rect';
+import { Column } from './models/Column';
 
 function App() {
   const [grid] = useState<Grid>(new Grid());
@@ -16,6 +17,13 @@ function App() {
         width: 25,
         height: 10,
       }),
+      columns: [
+        new Column({
+          keyType: 'PK',
+          name: 'person_id',
+          columnType: 'bigint',
+        })
+      ],
     }));
     grid.addTable(new Table({
       name: 'notification',
@@ -25,6 +33,7 @@ function App() {
         width: 20,
         height: 10,
       }),
+      columns: [],
     }));
     grid.addTable(new Table({
       name: 'x',
@@ -34,6 +43,7 @@ function App() {
         width: 5,
         height: 2, // Rect will enforce this height to 4, because 4 is minimal height
       }),
+      columns: [],
     }));
     grid.addTable(new Table({
       name: 'overlap',
@@ -43,6 +53,7 @@ function App() {
         width: 22,
         height: 12,
       }),
+      columns: [],
     }));
   }, [grid]);
   return (
