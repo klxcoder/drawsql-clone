@@ -13,3 +13,5 @@
   - table name
   - each row have 3 fields
   - a button Add/Update
+  - Where does state store at?
+  - state is store at App contains all tables?

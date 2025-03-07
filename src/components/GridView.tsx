@@ -11,11 +11,14 @@ import {
   drawTables,
 } from '../utils';
 import { Grid } from '../models/Grid';
+import { Table } from '../models/Table';
 
 function GridView({
   grid,
+  setTable,
 }: {
   grid: Grid,
+  setTable: React.Dispatch<React.SetStateAction<Table | undefined>>,
 }) {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -74,7 +77,10 @@ function GridView({
       grid.updateMouseCell({ x, y });
     };
 
-    const onClick = () => grid.click();
+    const onClick = () => {
+      grid.click();
+      setTable(grid.selectedTable);
+    }
 
     canvas.addEventListener('mousemove', onMouseMove);
     canvas.addEventListener('click', onClick);
@@ -83,7 +89,7 @@ function GridView({
       canvas.removeEventListener('mousemove', onMouseMove);
       canvas.removeEventListener('click', onClick);
     };
-  }, [grid]);
+  }, [grid, setTable]);
 
   useLayoutEffect(() => {
     let frameId: number;

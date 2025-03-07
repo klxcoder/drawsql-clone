@@ -9,6 +9,7 @@ import TableForm from './components/TableForm';
 
 function App() {
   const [grid] = useState<Grid>(new Grid());
+  const [table, setTable] = useState<Table | undefined>();
   useEffect(() => {
     grid.addTable(new Table({
       name: 'student',
@@ -65,8 +66,14 @@ function App() {
   }, [grid]);
   return (
     <div className={styles.app}>
-      <TableForm />
-      <GridView grid={grid} />
+      {table && <TableForm
+        table={table}
+        onChangeTableName={(name) => console.log('Will change table name to ', name)}
+      />}
+      <GridView
+        grid={grid}
+        setTable={setTable}
+      />
     </div>
   )
 }
