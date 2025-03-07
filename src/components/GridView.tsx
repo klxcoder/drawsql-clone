@@ -63,10 +63,21 @@ function GridView({
   }, []);
 
   const drawTableColumns = useCallback((ctx: CanvasRenderingContext2D, table: Table) => {
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "antiquewhite";
     ctx.font = "20px Arial";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
+    drawRoundedRect({
+      ctx,
+      x: table.rect.col * Grid.CELL_SIZE,
+      y: (table.rect.row + 4.5) * Grid.CELL_SIZE,
+      width: table.rect.width * Grid.CELL_SIZE,
+      height: 3 * Grid.CELL_SIZE,
+      radius: Grid.CELL_SIZE / 2,
+      shadowOffset: 1,
+      stroke: false,
+    });
+    ctx.fillStyle = "black";
     table.columns.forEach((column, index) => {
       ctx.fillText(
         `${column.keyType} ${column.name} ${column.columnType}`,
