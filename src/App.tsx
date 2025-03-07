@@ -35,6 +35,15 @@ function App() {
         height: 2, // Rect will enforce this height to 4, because 4 is minimal height
       }),
     }));
+    grid.addTable(new Table({
+      name: 'overlap',
+      rect: new Rect({
+        col: 10,
+        row: 10,
+        width: 25,
+        height: 10, // Rect will enforce this height to 4, because 4 is minimal height
+      }),
+    }));
   }, [grid]);
   return (
     <div className={styles.app}>
