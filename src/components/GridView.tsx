@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useLayoutEffect, useRef } from 'react';
 import { Table } from '../models/Table';
 import styles from './Grid.module.scss';
 import { drawRoundedRect } from '../utils';
 import { Grid } from '../models/Gird';
-
 
 function GridView({
   grid,
@@ -81,8 +80,12 @@ function GridView({
     drawTables(ctx);
   }, [drawTables]);
 
-  useEffect(() => {
-    draw();
+  useLayoutEffect(() => {
+    const animate = () => {
+      draw();
+    };
+    const frameId: number = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frameId);
   }, [draw]);
 
   return (
