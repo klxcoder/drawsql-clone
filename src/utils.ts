@@ -23,7 +23,7 @@ export const drawRoundedRect = ({
   ctx.save();
   //
   ctx.strokeStyle = 'rgba(0,0,255, 0.5)';
-  ctx.lineWidth = 10;
+  ctx.lineWidth = 5;
   // Set shadow properties
   ctx.shadowColor = "rgba(0, 0, 0, 0.4)"; // Shadow color (black with 40% opacity)
   ctx.shadowBlur = 4 * shadowOffset; // Blur intensity
