@@ -113,17 +113,25 @@ function GridView({
   }, [drawTables, drawMouseCell]);
 
   useEffect(() => {
-    const canvas: HTMLCanvasElement | null = canvasRef.current;
+    const canvas = canvasRef.current;
     if (!canvas) return;
-    canvas.addEventListener('mousemove', (e) => {
+
+    const onMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       grid.updateMouseCell({ x, y });
-    });
-    canvas.addEventListener('click', () => {
-      grid.click();
-    });
+    };
+
+    const onClick = () => grid.click();
+
+    canvas.addEventListener('mousemove', onMouseMove);
+    canvas.addEventListener('click', onClick);
+
+    return () => {
+      canvas.removeEventListener('mousemove', onMouseMove);
+      canvas.removeEventListener('click', onClick);
+    };
   }, [grid]);
 
   useLayoutEffect(() => {
