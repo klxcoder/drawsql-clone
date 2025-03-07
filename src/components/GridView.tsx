@@ -38,9 +38,19 @@ function GridView({
     const bufferCtx = buffer.getContext("2d");
     if (!ctx || !bufferCtx) return;
     // Draw everything on the buffer
+    bufferCtx.textAlign = "center";
+    bufferCtx.textBaseline = "middle";
+    //
     bufferCtx.clearRect(0, 0, buffer.width, buffer.height);
     drawDots(bufferCtx);
-    drawTables(bufferCtx, grid.tables, grid.hoveredTable, grid.selectedTable, grid.hoveredColumnIndex, grid.selectedColumnIndex);
+    drawTables(
+      bufferCtx,
+      grid.tables,
+      grid.hoveredTable,
+      grid.selectedTable,
+      grid.hoveredColumnIndex,
+      grid.selectedColumnIndex,
+    );
     drawMouseCell(bufferCtx, grid.mouseCell);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);

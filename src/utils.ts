@@ -5,7 +5,7 @@ import { Table } from "./models/Table";
 export const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
 
 // Function to draw a rounded rectangle
-export const drawRoundedRect = ({
+const drawRoundedRect = ({
   ctx,
   x,
   y,
@@ -53,6 +53,7 @@ export const drawRoundedRect = ({
 };
 
 export const drawDots = (ctx: CanvasRenderingContext2D) => {
+  ctx.save();
   ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
   for (let col = 1; col < Grid.MAX_COLS; col++) {
     for (let row = 1; row < Grid.MAX_ROWS; row++) {
@@ -61,65 +62,7 @@ export const drawDots = (ctx: CanvasRenderingContext2D) => {
       ctx.fill();
     }
   }
-}
-
-export const drawTableName = (ctx: CanvasRenderingContext2D, table: Table) => {
-  // Draw the text centered inside the rectangle
-  ctx.fillStyle = "black";
-  ctx.font = "20px Arial";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(
-    table.name,
-    (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
-    // Table name start at 2.5
-    (table.rect.row + 2.5) * Grid.CELL_SIZE,
-  );
-  ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
-  ctx.shadowColor = "rgba(0, 0, 0, 0.2)"; // Shadow color (black with 50% opacity)
-  ctx.shadowBlur = 1; // Blur intensity
-  ctx.shadowOffsetX = 1; // Shadow offset to the right
-  ctx.shadowOffsetY = 1; // Shadow offset downward
-  ctx.beginPath();
-  // Shadow below table name start at 3.8
-  ctx.moveTo(table.rect.col * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
-  ctx.lineTo((table.rect.col + table.rect.width) * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
-  ctx.closePath();
-  ctx.stroke();
-}
-
-export const drawTableColumns = (
-  ctx: CanvasRenderingContext2D,
-  table: Table,
-  hoveredTable: Table | undefined,
-  hoveredColumnIndex: number,
-) => {
-  ctx.fillStyle = "antiquewhite";
-  ctx.font = "20px Arial";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  if (table === hoveredTable) {
-    if (hoveredColumnIndex !== -1) {
-      drawRoundedRect({
-        ctx,
-        x: table.rect.col * Grid.CELL_SIZE,
-        y: (table.rect.row + 4 + hoveredColumnIndex * 3) * Grid.CELL_SIZE,
-        width: table.rect.width * Grid.CELL_SIZE,
-        height: 3 * Grid.CELL_SIZE,
-        radius: Grid.CELL_SIZE / 2,
-        shadowOffset: 1,
-        stroke: false,
-      });
-    }
-  }
-  ctx.fillStyle = "black";
-  table.columns.forEach((column, index) => {
-    ctx.fillText(
-      `${column.keyType} ${column.name} ${column.columnType}`,
-      (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
-      (table.rect.row + 5.5 + 3 * index) * Grid.CELL_SIZE,
-    );
-  });
+  ctx.restore();
 }
 
 export const drawTables = (
@@ -130,9 +73,9 @@ export const drawTables = (
   hoveredColumnIndex: number,
   selectedColumnIndex: number,
 ) => {
-  tables.forEach(table => {
+
+  const drawTableBackground1 = (table: Table) => {
     ctx.fillStyle = table.color;
-    // Draw table border
     drawRoundedRect({
       ctx,
       x: table.rect.col * Grid.CELL_SIZE,
@@ -143,7 +86,9 @@ export const drawTables = (
       shadowOffset: table === hoveredTable ? 5 : 1,
       stroke: table === selectedTable,
     });
-    // draw line below table header
+  }
+
+  const drawTableBackground2 = (table: Table) => {
     ctx.fillStyle = 'ivory';
     drawRoundedRect({
       ctx,
@@ -155,27 +100,101 @@ export const drawTables = (
       shadowOffset: 1,
       stroke: false,
     });
-    drawTableName(ctx, table);
+  }
+
+  const drawTableName = (table: Table) => {
+    ctx.save();
+    // Draw the text centered inside the rectangle
+    ctx.fillStyle = "black"; // Text color
+    ctx.font = "bold 20px 'Lucida Console', monospace";
+    ctx.fillText(
+      table.name,
+      (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
+      // Table name start at 2.5
+      (table.rect.row + 2.5) * Grid.CELL_SIZE,
+    );
+    // Draw border below table name
+    ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
+    ctx.shadowColor = "rgba(0, 0, 0, 0.2)"; // Shadow color (black with 50% opacity)
+    ctx.shadowBlur = 1; // Blur intensity
+    ctx.shadowOffsetX = 1; // Shadow offset to the right
+    ctx.shadowOffsetY = 1; // Shadow offset downward
+    ctx.beginPath();
+    // Shadow below table name start at 3.8
+    ctx.moveTo(table.rect.col * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
+    ctx.lineTo((table.rect.col + table.rect.width) * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.save();
+  }
+
+  const drawSelectedColumn = (table: Table) => {
+    ctx.save();
+    ctx.fillStyle = "antiquewhite";
+    drawRoundedRect({
+      ctx,
+      x: table.rect.col * Grid.CELL_SIZE,
+      y: (table.rect.row + 4 + selectedColumnIndex * 3) * Grid.CELL_SIZE,
+      width: table.rect.width * Grid.CELL_SIZE,
+      height: 3 * Grid.CELL_SIZE,
+      radius: Grid.CELL_SIZE / 2,
+      shadowOffset: 1,
+      stroke: false,
+    });
+    ctx.restore();
+  }
+
+  const drawTableColumns = (
+    ctx: CanvasRenderingContext2D,
+    table: Table,
+    hoveredTable: Table | undefined,
+    hoveredColumnIndex: number,
+  ) => {
+    ctx.save();
+    ctx.fillStyle = "antiquewhite";
+    ctx.font = "18px 'Lucida Console', monospace";
+    // Draw hovered column
+    if (table === hoveredTable) {
+      if (hoveredColumnIndex !== -1) {
+        drawRoundedRect({
+          ctx,
+          x: table.rect.col * Grid.CELL_SIZE,
+          y: (table.rect.row + 4 + hoveredColumnIndex * 3) * Grid.CELL_SIZE,
+          width: table.rect.width * Grid.CELL_SIZE,
+          height: 3 * Grid.CELL_SIZE,
+          radius: Grid.CELL_SIZE / 2,
+          shadowOffset: 1,
+          stroke: false,
+        });
+      }
+    }
+    // Draw text
+    ctx.fillStyle = "black";
+    table.columns.forEach((column, index) => {
+      ctx.fillText(
+        `${column.keyType} ${column.name} ${column.columnType}`,
+        (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
+        (table.rect.row + 5.5 + 3 * index) * Grid.CELL_SIZE,
+      );
+    });
+    ctx.restore();
+  }
+
+  ctx.save();
+  tables.forEach(table => {
+    drawTableBackground1(table);
+    drawTableBackground2(table);
+    drawTableName(table);
     if (table === selectedTable && selectedColumnIndex !== -1) {
-      ctx.save();
-      ctx.fillStyle = "antiquewhite";
-      drawRoundedRect({
-        ctx,
-        x: table.rect.col * Grid.CELL_SIZE,
-        y: (table.rect.row + 4 + selectedColumnIndex * 3) * Grid.CELL_SIZE,
-        width: table.rect.width * Grid.CELL_SIZE,
-        height: 3 * Grid.CELL_SIZE,
-        radius: Grid.CELL_SIZE / 2,
-        shadowOffset: 1,
-        stroke: false,
-      });
-      ctx.restore();
+      drawSelectedColumn(table);
     }
     drawTableColumns(ctx, table, hoveredTable, hoveredColumnIndex);
+    ctx.restore();
   });
 };
 
 export const drawMouseCell = (ctx: CanvasRenderingContext2D, mouseCell: RowCol) => {
+  ctx.save();
   const { col, row } = mouseCell;
   ctx.fillStyle = "rgba(0, 0, 255, 0.15)";
   drawRoundedRect({
@@ -188,4 +207,5 @@ export const drawMouseCell = (ctx: CanvasRenderingContext2D, mouseCell: RowCol) 
     shadowOffset: 1,
     stroke: false,
   });
+  ctx.restore();
 }
