@@ -1,7 +1,15 @@
 export const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
 
 // Function to draw a rounded rectangle
-export const drawRoundedRect = (
+export const drawRoundedRect = ({
+  ctx,
+  x,
+  y,
+  width,
+  height,
+  radius,
+  shadowOffset,
+}: {
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
@@ -9,7 +17,7 @@ export const drawRoundedRect = (
   height: number,
   radius: number,
   shadowOffset: number,
-) => {
+}) => {
   ctx.save();
   // Set shadow properties
   ctx.shadowColor = "rgba(0, 0, 0, 0.4)"; // Shadow color (black with 40% opacity)

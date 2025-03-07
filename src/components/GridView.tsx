@@ -55,25 +55,25 @@ function GridView({
   const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
     tables.forEach(table => {
       ctx.fillStyle = table.color;
-      drawRoundedRect(
+      drawRoundedRect({
         ctx,
-        table.rect.col * Grid.CELL_SIZE,
-        table.rect.row * Grid.CELL_SIZE,
-        table.rect.width * Grid.CELL_SIZE,
-        table.rect.height * Grid.CELL_SIZE,
-        Grid.CELL_SIZE / 2,
-        1,
-      )
+        x: table.rect.col * Grid.CELL_SIZE,
+        y: table.rect.row * Grid.CELL_SIZE,
+        width: table.rect.width * Grid.CELL_SIZE,
+        height: table.rect.height * Grid.CELL_SIZE,
+        radius: Grid.CELL_SIZE / 2,
+        shadowOffset: 1,
+      })
       ctx.fillStyle = 'ivory';
-      drawRoundedRect(
+      drawRoundedRect({
         ctx,
-        table.rect.col * Grid.CELL_SIZE,
-        (table.rect.row + 1) * Grid.CELL_SIZE,
-        table.rect.width * Grid.CELL_SIZE,
-        table.rect.height * Grid.CELL_SIZE,
-        Grid.CELL_SIZE / 2,
-        1,
-      )
+        x: table.rect.col * Grid.CELL_SIZE,
+        y: (table.rect.row + 1) * Grid.CELL_SIZE,
+        width: table.rect.width * Grid.CELL_SIZE,
+        height: table.rect.height * Grid.CELL_SIZE,
+        radius: Grid.CELL_SIZE / 2,
+        shadowOffset: 1,
+      })
       drawTableName(ctx, table);
     });
   }, [tables, drawTableName]);
@@ -81,15 +81,15 @@ function GridView({
   const drawMouseCell = useCallback((ctx: CanvasRenderingContext2D) => {
     const { col, row } = grid.mouseCell;
     ctx.fillStyle = "rgba(0, 0, 255, 0.15)";
-    drawRoundedRect(
+    drawRoundedRect({
       ctx,
-      col * Grid.CELL_SIZE,
-      row * Grid.CELL_SIZE,
-      Grid.CELL_SIZE,
-      Grid.CELL_SIZE,
-      Grid.CELL_SIZE / 2,
-      1,
-    );
+      x: col * Grid.CELL_SIZE,
+      y: row * Grid.CELL_SIZE,
+      width: Grid.CELL_SIZE,
+      height: Grid.CELL_SIZE,
+      radius: Grid.CELL_SIZE / 2,
+      shadowOffset: 1,
+    });
   }, [grid.mouseCell]);
 
   const draw = useCallback(() => {
