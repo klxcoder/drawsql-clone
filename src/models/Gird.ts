@@ -51,9 +51,8 @@ export class Grid {
     if (!this.selectedTable) return;
     for (let index = 0; index < this.tables.length; index++) {
       if (this.tables[index].name === this.selectedTable.name) {
-        const lastIndex: number = this.tables.length - 1;
-        this.tables[index] = this.tables[lastIndex];
-        this.tables[lastIndex] = this.selectedTable;
+        this.tables.splice(index, 1);
+        this.tables.push(this.selectedTable);
       }
     }
   }
