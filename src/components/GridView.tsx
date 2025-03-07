@@ -68,12 +68,23 @@ function GridView({
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     if (table === grid.hoveredTable) {
-      const hoveredColumnIndex = Math.round((grid.mouseCell.row - table.rect.row - 4.5) / 3);
-      if (hoveredColumnIndex >= 0 && hoveredColumnIndex < table.columns.length) {
+      if (grid.hoveredColumnIndex !== -1) {
         drawRoundedRect({
           ctx,
           x: table.rect.col * Grid.CELL_SIZE,
-          y: (table.rect.row + 4.5 + hoveredColumnIndex * 3) * Grid.CELL_SIZE,
+          y: (table.rect.row + 4 + grid.hoveredColumnIndex * 3) * Grid.CELL_SIZE,
+          width: table.rect.width * Grid.CELL_SIZE,
+          height: 3 * Grid.CELL_SIZE,
+          radius: Grid.CELL_SIZE / 2,
+          shadowOffset: 1,
+          stroke: false,
+        });
+      }
+      if (grid.selectedColumnIndex !== -1) {
+        drawRoundedRect({
+          ctx,
+          x: table.rect.col * Grid.CELL_SIZE,
+          y: (table.rect.row + 4 + grid.selectedColumnIndex * 3) * Grid.CELL_SIZE,
           width: table.rect.width * Grid.CELL_SIZE,
           height: 3 * Grid.CELL_SIZE,
           radius: Grid.CELL_SIZE / 2,
@@ -90,7 +101,7 @@ function GridView({
         (table.rect.row + 6 + 3 * index) * Grid.CELL_SIZE,
       );
     });
-  }, [grid.hoveredTable, grid.mouseCell.row]);
+  }, [grid.hoveredTable, grid.hoveredColumnIndex, grid.selectedColumnIndex]);
 
   const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
     tables.forEach(table => {
