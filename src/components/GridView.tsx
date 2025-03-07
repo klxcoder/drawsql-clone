@@ -44,7 +44,7 @@ function GridView({
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(
-      table.name + grid.hoveredColumnIndex + grid.selectedColumnIndex,
+      table.name,
       (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
       // Table name start at 2.5
       (table.rect.row + 2.5) * Grid.CELL_SIZE,
@@ -60,7 +60,7 @@ function GridView({
     ctx.lineTo((table.rect.col + table.rect.width) * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
     ctx.closePath();
     ctx.stroke();
-  }, [grid.hoveredColumnIndex, grid.selectedColumnIndex]);
+  }, []);
 
   const drawTableColumns = useCallback((ctx: CanvasRenderingContext2D, table: Table) => {
     ctx.fillStyle = "antiquewhite";
