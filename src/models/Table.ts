@@ -23,7 +23,7 @@ export class Table {
       row: rowCol.row,
       col: rowCol.col,
       width: 35,
-      height: 5 + 3 * columns.length,
+      height: 4 + 3 * columns.length,
     });
     this.columns = columns;
     this.color = randomColor();
