@@ -12,6 +12,10 @@ export class Grid {
 
   public readonly tables: Table[] = [];
 
+  public hoveredTable: Table | null = null;
+
+  public selectedTable: Table | null = null;
+
   public readonly mouseCell: RowCol = {
     row: -1,
     col: -1,
@@ -21,10 +25,24 @@ export class Grid {
     this.tables.push(table);
   }
 
+  private updateHoveredTable() {
+    for (const table of this.tables.reverse()) {
+      if (
+        this.mouseCell.col >= table.rect.col &&
+        this.mouseCell.col < table.rect.col + table.rect.width &&
+        this.mouseCell.row >= table.rect.row &&
+        this.mouseCell.row < table.rect.row + table.rect.height
+      ) {
+        this.hoveredTable = table;
+        return;
+      }
+    }
+  }
+
   public updateMouseCell(xy: XY) {
     this.mouseCell.col = Math.round(xy.x / Grid.CELL_SIZE);
     this.mouseCell.row = Math.round(xy.y / Grid.CELL_SIZE);
-    console.log('Updated mouseCell to ', this.mouseCell);
+    this.updateHoveredTable();
   }
 
   constructor() {

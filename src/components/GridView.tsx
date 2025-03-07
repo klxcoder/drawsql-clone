@@ -62,7 +62,7 @@ function GridView({
         width: table.rect.width * Grid.CELL_SIZE,
         height: table.rect.height * Grid.CELL_SIZE,
         radius: Grid.CELL_SIZE / 2,
-        shadowOffset: 1,
+        shadowOffset: table === grid.hoveredTable ? 5 : 1,
       })
       ctx.fillStyle = 'ivory';
       drawRoundedRect({
@@ -76,7 +76,7 @@ function GridView({
       })
       drawTableName(ctx, table);
     });
-  }, [tables, drawTableName]);
+  }, [tables, drawTableName, grid.hoveredTable]);
 
   const drawMouseCell = useCallback((ctx: CanvasRenderingContext2D) => {
     const { col, row } = grid.mouseCell;
