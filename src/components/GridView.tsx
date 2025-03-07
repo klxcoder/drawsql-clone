@@ -8,6 +8,7 @@ import { Table } from '../models/Table';
 import styles from './Grid.module.scss';
 import { drawRoundedRect } from '../utils';
 import { Grid } from '../models/Gird';
+import { Column } from '../models/Column';
 
 function GridView({
   grid,
@@ -60,10 +61,14 @@ function GridView({
     ctx.stroke();
   }, []);
 
+  const drawTableColumns = useCallback((ctx: CanvasRenderingContext2D, columns: Column[]) => {
+    console.log(ctx, columns);
+  }, []);
+
   const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
     tables.forEach(table => {
       ctx.fillStyle = table.color;
-      // Draw table
+      // Draw table border
       drawRoundedRect({
         ctx,
         x: table.rect.col * Grid.CELL_SIZE,
@@ -73,7 +78,8 @@ function GridView({
         radius: Grid.CELL_SIZE / 2,
         shadowOffset: table === grid.hoveredTable ? 5 : 1,
         stroke: table === grid.selectedTable,
-      })
+      });
+      // draw line below table header
       ctx.fillStyle = 'ivory';
       drawRoundedRect({
         ctx,
@@ -84,14 +90,16 @@ function GridView({
         radius: Grid.CELL_SIZE / 2,
         shadowOffset: 1,
         stroke: false,
-      })
+      });
       drawTableName(ctx, table);
+      drawTableColumns(ctx, table.columns);
     });
   }, [
     tables,
     drawTableName,
     grid.hoveredTable,
     grid.selectedTable,
+    drawTableColumns,
   ]);
 
   const drawMouseCell = useCallback((ctx: CanvasRenderingContext2D) => {
