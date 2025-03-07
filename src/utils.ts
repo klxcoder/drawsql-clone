@@ -86,3 +86,37 @@ export const drawTableName = (ctx: CanvasRenderingContext2D, table: Table) => {
   ctx.closePath();
   ctx.stroke();
 }
+
+export const drawTableColumns = (
+  ctx: CanvasRenderingContext2D,
+  table: Table,
+  hoveredTable: Table | undefined,
+  hoveredColumnIndex: number,
+) => {
+  ctx.fillStyle = "antiquewhite";
+  ctx.font = "20px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  if (table === hoveredTable) {
+    if (hoveredColumnIndex !== -1) {
+      drawRoundedRect({
+        ctx,
+        x: table.rect.col * Grid.CELL_SIZE,
+        y: (table.rect.row + 4 + hoveredColumnIndex * 3) * Grid.CELL_SIZE,
+        width: table.rect.width * Grid.CELL_SIZE,
+        height: 3 * Grid.CELL_SIZE,
+        radius: Grid.CELL_SIZE / 2,
+        shadowOffset: 1,
+        stroke: false,
+      });
+    }
+  }
+  ctx.fillStyle = "black";
+  table.columns.forEach((column, index) => {
+    ctx.fillText(
+      `${column.keyType} ${column.name} ${column.columnType}`,
+      (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
+      (table.rect.row + 5.5 + 3 * index) * Grid.CELL_SIZE,
+    );
+  });
+}

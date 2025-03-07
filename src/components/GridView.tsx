@@ -6,7 +6,7 @@ import {
 } from 'react';
 import { Table } from '../models/Table';
 import styles from './Grid.module.scss';
-import { drawDots, drawRoundedRect, drawTableName } from '../utils';
+import { drawDots, drawRoundedRect, drawTableColumns, drawTableName } from '../utils';
 import { Grid } from '../models/Grid';
 
 function GridView({
@@ -25,35 +25,6 @@ function GridView({
     bufferRef.current.width = Grid.MAX_COLS * Grid.CELL_SIZE;
     bufferRef.current.height = Grid.MAX_ROWS * Grid.CELL_SIZE;
   }, []);
-
-  const drawTableColumns = useCallback((ctx: CanvasRenderingContext2D, table: Table) => {
-    ctx.fillStyle = "antiquewhite";
-    ctx.font = "20px Arial";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    if (table === grid.hoveredTable) {
-      if (grid.hoveredColumnIndex !== -1) {
-        drawRoundedRect({
-          ctx,
-          x: table.rect.col * Grid.CELL_SIZE,
-          y: (table.rect.row + 4 + grid.hoveredColumnIndex * 3) * Grid.CELL_SIZE,
-          width: table.rect.width * Grid.CELL_SIZE,
-          height: 3 * Grid.CELL_SIZE,
-          radius: Grid.CELL_SIZE / 2,
-          shadowOffset: 1,
-          stroke: false,
-        });
-      }
-    }
-    ctx.fillStyle = "black";
-    table.columns.forEach((column, index) => {
-      ctx.fillText(
-        `${column.keyType} ${column.name} ${column.columnType}`,
-        (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
-        (table.rect.row + 5.5 + 3 * index) * Grid.CELL_SIZE,
-      );
-    });
-  }, [grid.hoveredTable, grid.hoveredColumnIndex]);
 
   const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
     tables.forEach(table => {
@@ -97,14 +68,14 @@ function GridView({
         });
         ctx.restore();
       }
-      drawTableColumns(ctx, table);
+      drawTableColumns(ctx, table, grid.hoveredTable, grid.hoveredColumnIndex);
     });
   }, [
     tables,
     grid.hoveredTable,
+    grid.hoveredColumnIndex,
     grid.selectedTable,
     grid.selectedColumnIndex,
-    drawTableColumns,
   ]);
 
   const drawMouseCell = useCallback((ctx: CanvasRenderingContext2D) => {
