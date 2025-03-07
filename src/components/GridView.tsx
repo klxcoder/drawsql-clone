@@ -6,7 +6,7 @@ import {
 } from 'react';
 import { Table } from '../models/Table';
 import styles from './Grid.module.scss';
-import { drawDots, drawRoundedRect, drawTables } from '../utils';
+import { drawDots, drawMouseCell, drawTables } from '../utils';
 import { Grid } from '../models/Grid';
 
 function GridView({
@@ -26,21 +26,6 @@ function GridView({
     bufferRef.current.height = Grid.MAX_ROWS * Grid.CELL_SIZE;
   }, []);
 
-  const drawMouseCell = useCallback((ctx: CanvasRenderingContext2D) => {
-    const { col, row } = grid.mouseCell;
-    ctx.fillStyle = "rgba(0, 0, 255, 0.15)";
-    drawRoundedRect({
-      ctx,
-      x: col * Grid.CELL_SIZE,
-      y: row * Grid.CELL_SIZE,
-      width: Grid.CELL_SIZE,
-      height: Grid.CELL_SIZE,
-      radius: Grid.CELL_SIZE / 2,
-      shadowOffset: 1,
-      stroke: false,
-    });
-  }, [grid.mouseCell]);
-
   const draw = useCallback(() => {
     //
     const canvas: HTMLCanvasElement | null = canvasRef.current;
@@ -55,15 +40,15 @@ function GridView({
 
     drawDots(bufferCtx);
     drawTables(bufferCtx, tables, grid.hoveredTable, grid.selectedTable, grid.hoveredColumnIndex, grid.selectedColumnIndex);
-    drawMouseCell(bufferCtx);
+    drawMouseCell(bufferCtx, grid.mouseCell);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
   }, [
-    drawMouseCell,
     grid.hoveredColumnIndex,
     grid.hoveredTable,
     grid.selectedColumnIndex,
     grid.selectedTable,
+    grid.mouseCell,
     tables,
   ]);
 
@@ -101,7 +86,6 @@ function GridView({
 
     return () => cancelAnimationFrame(frameId);
   }, [draw]);
-
 
   return (
     <div className={styles.grid}>

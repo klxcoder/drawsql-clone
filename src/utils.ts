@@ -1,4 +1,5 @@
 import { Grid } from "./models/Grid";
+import { RowCol } from "./models/RowCol";
 import { Table } from "./models/Table";
 
 export const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
@@ -173,3 +174,18 @@ export const drawTables = (
     drawTableColumns(ctx, table, hoveredTable, hoveredColumnIndex);
   });
 };
+
+export const drawMouseCell = (ctx: CanvasRenderingContext2D, mouseCell: RowCol) => {
+  const { col, row } = mouseCell;
+  ctx.fillStyle = "rgba(0, 0, 255, 0.15)";
+  drawRoundedRect({
+    ctx,
+    x: col * Grid.CELL_SIZE,
+    y: row * Grid.CELL_SIZE,
+    width: Grid.CELL_SIZE,
+    height: Grid.CELL_SIZE,
+    radius: Grid.CELL_SIZE / 2,
+    shadowOffset: 1,
+    stroke: false,
+  });
+}
