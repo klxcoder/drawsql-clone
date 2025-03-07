@@ -1,6 +1,7 @@
 import { randomColor } from "../utils";
 import { Column } from "./Column";
 import { Rect } from "./Rect";
+import { RowCol } from "./RowCol";
 
 export class Table {
   public name: string;
@@ -10,18 +11,22 @@ export class Table {
 
   constructor({
     name,
-    rect,
+    rowCol,
     columns,
   }: {
     name: string,
-    rect: Rect,
+    rowCol: RowCol,
     columns: Column[],
   }) {
     this.name = name;
-    this.rect = rect;
+    this.rect = new Rect({
+      row: rowCol.row,
+      col: rowCol.col,
+      width: 30,
+      height: 6 + 3 * columns.length + 1,
+    });
     this.columns = columns;
     this.rect.width = 30;
-    this.rect.height = 6 + 3 * columns.length + 1;
     this.color = randomColor();
   }
 }
