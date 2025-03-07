@@ -1,3 +1,5 @@
+import { Grid } from "./models/Grid";
+
 export const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
 
 // Function to draw a rounded rectangle
@@ -47,3 +49,14 @@ export const drawRoundedRect = ({
   }
   ctx.restore();
 };
+
+export const drawDots = (ctx: CanvasRenderingContext2D) => {
+  ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
+  for (let col = 1; col < Grid.MAX_COLS; col++) {
+    for (let row = 1; row < Grid.MAX_ROWS; row++) {
+      ctx.beginPath();
+      ctx.arc(col * Grid.CELL_SIZE, row * Grid.CELL_SIZE, 1, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+}

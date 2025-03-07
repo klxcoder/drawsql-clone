@@ -6,7 +6,7 @@ import {
 } from 'react';
 import { Table } from '../models/Table';
 import styles from './Grid.module.scss';
-import { drawRoundedRect } from '../utils';
+import { drawDots, drawRoundedRect } from '../utils';
 import { Grid } from '../models/Grid';
 
 function GridView({
@@ -25,17 +25,6 @@ function GridView({
     bufferRef.current.width = Grid.MAX_COLS * Grid.CELL_SIZE;
     bufferRef.current.height = Grid.MAX_ROWS * Grid.CELL_SIZE;
   }, []);
-
-  const drawDots = (ctx: CanvasRenderingContext2D) => {
-    ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
-    for (let col = 1; col < Grid.MAX_COLS; col++) {
-      for (let row = 1; row < Grid.MAX_ROWS; row++) {
-        ctx.beginPath();
-        ctx.arc(col * Grid.CELL_SIZE, row * Grid.CELL_SIZE, 1, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-  }
 
   const drawTableName = useCallback((ctx: CanvasRenderingContext2D, table: Table) => {
     // Draw the text centered inside the rectangle
