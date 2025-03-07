@@ -98,7 +98,7 @@ function GridView({
       ctx.fillText(
         `${column.keyType} ${column.name} ${column.columnType}`,
         (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
-        (table.rect.row + 6 + 3 * index) * Grid.CELL_SIZE,
+        (table.rect.row + 5.5 + 3 * index) * Grid.CELL_SIZE,
       );
     });
   }, [grid.hoveredTable, grid.hoveredColumnIndex, grid.selectedColumnIndex]);
