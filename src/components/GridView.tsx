@@ -8,7 +8,6 @@ import { Table } from '../models/Table';
 import styles from './Grid.module.scss';
 import { drawRoundedRect } from '../utils';
 import { Grid } from '../models/Gird';
-import { Column } from '../models/Column';
 
 function GridView({
   grid,
@@ -47,7 +46,7 @@ function GridView({
     ctx.fillText(
       table.name,
       (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
-      (table.rect.row + 2.5) * Grid.CELL_SIZE
+      (table.rect.row + 2.5) * Grid.CELL_SIZE,
     );
     ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
     ctx.shadowColor = "rgba(0, 0, 0, 0.2)"; // Shadow color (black with 50% opacity)
@@ -61,8 +60,18 @@ function GridView({
     ctx.stroke();
   }, []);
 
-  const drawTableColumns = useCallback((ctx: CanvasRenderingContext2D, columns: Column[]) => {
-    console.log(ctx, columns);
+  const drawTableColumns = useCallback((ctx: CanvasRenderingContext2D, table: Table) => {
+    ctx.fillStyle = "black";
+    ctx.font = "20px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    table.columns.forEach(column => {
+      ctx.fillText(
+        `${column.keyType} ${column.name} ${column.columnType}`,
+        (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
+        (table.rect.row + 5.5) * Grid.CELL_SIZE,
+      );
+    });
   }, []);
 
   const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
@@ -92,7 +101,7 @@ function GridView({
         stroke: false,
       });
       drawTableName(ctx, table);
-      drawTableColumns(ctx, table.columns);
+      drawTableColumns(ctx, table);
     });
   }, [
     tables,
