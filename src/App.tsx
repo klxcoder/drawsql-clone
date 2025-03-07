@@ -20,7 +20,7 @@ function App() {
     grid.addTable(new Table({
       name: 'notification',
       rect: new Rect({
-        col: 15,
+        col: 30,
         row: 15,
         width: 20,
         height: 10,
@@ -39,9 +39,9 @@ function App() {
       name: 'overlap',
       rect: new Rect({
         col: 10,
-        row: 10,
-        width: 25,
-        height: 10, // Rect will enforce this height to 4, because 4 is minimal height
+        row: 8,
+        width: 22,
+        height: 12,
       }),
     }));
   }, [grid]);
