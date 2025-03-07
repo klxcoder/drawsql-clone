@@ -80,18 +80,6 @@ function GridView({
           stroke: false,
         });
       }
-      if (grid.selectedColumnIndex !== -1) {
-        drawRoundedRect({
-          ctx,
-          x: table.rect.col * Grid.CELL_SIZE,
-          y: (table.rect.row + 4 + grid.selectedColumnIndex * 3) * Grid.CELL_SIZE,
-          width: table.rect.width * Grid.CELL_SIZE,
-          height: 3 * Grid.CELL_SIZE,
-          radius: Grid.CELL_SIZE / 2,
-          shadowOffset: 1,
-          stroke: false,
-        });
-      }
     }
     ctx.fillStyle = "black";
     table.columns.forEach((column, index) => {
@@ -101,7 +89,7 @@ function GridView({
         (table.rect.row + 5.5 + 3 * index) * Grid.CELL_SIZE,
       );
     });
-  }, [grid.hoveredTable, grid.hoveredColumnIndex, grid.selectedColumnIndex]);
+  }, [grid.hoveredTable, grid.hoveredColumnIndex]);
 
   const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
     tables.forEach(table => {
@@ -130,13 +118,29 @@ function GridView({
         stroke: false,
       });
       drawTableName(ctx, table);
+      if (table === grid.selectedTable && grid.selectedColumnIndex !== -1) {
+        ctx.save();
+        ctx.fillStyle = "antiquewhite";
+        drawRoundedRect({
+          ctx,
+          x: table.rect.col * Grid.CELL_SIZE,
+          y: (table.rect.row + 4 + grid.selectedColumnIndex * 3) * Grid.CELL_SIZE,
+          width: table.rect.width * Grid.CELL_SIZE,
+          height: 3 * Grid.CELL_SIZE,
+          radius: Grid.CELL_SIZE / 2,
+          shadowOffset: 1,
+          stroke: false,
+        });
+        ctx.restore();
+      }
       drawTableColumns(ctx, table);
     });
   }, [
     tables,
-    drawTableName,
     grid.hoveredTable,
     grid.selectedTable,
+    grid.selectedColumnIndex,
+    drawTableName,
     drawTableColumns,
   ]);
 
