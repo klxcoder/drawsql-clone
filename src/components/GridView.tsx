@@ -1,4 +1,9 @@
-import { useCallback, useLayoutEffect, useRef } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 import { Table } from '../models/Table';
 import styles from './Grid.module.scss';
 import { drawRoundedRect } from '../utils';
@@ -71,22 +76,54 @@ function GridView({
     });
   }, [tables, drawTableName]);
 
+  const drawMouseCell = useCallback((ctx: CanvasRenderingContext2D) => {
+    const { col, row } = grid.mouseCell;
+    ctx.fillStyle = "rgba(0, 0, 255, 0.15)";
+    drawRoundedRect(
+      ctx,
+      col * Grid.CELL_SIZE,
+      row * Grid.CELL_SIZE,
+      Grid.CELL_SIZE,
+      Grid.CELL_SIZE,
+      Grid.CELL_SIZE / 2,
+    );
+  }, [grid.mouseCell]);
+
   const draw = useCallback(() => {
     const canvas: HTMLCanvasElement | null = canvasRef.current;
     if (!canvas) return;
     const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
     if (!ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawDots(ctx);
     drawTables(ctx);
-  }, [drawTables]);
+    drawMouseCell(ctx);
+  }, [drawTables, drawMouseCell]);
+
+  useEffect(() => {
+    const canvas: HTMLCanvasElement | null = canvasRef.current;
+    if (!canvas) return;
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      grid.updateMouseCell({ x, y });
+    })
+  }, [grid]);
 
   useLayoutEffect(() => {
+    let frameId: number;
+
     const animate = () => {
       draw();
+      frameId = requestAnimationFrame(animate);
     };
-    const frameId: number = requestAnimationFrame(animate);
+
+    frameId = requestAnimationFrame(animate);
+
     return () => cancelAnimationFrame(frameId);
   }, [draw]);
+
 
   return (
     <div className={styles.grid}>
