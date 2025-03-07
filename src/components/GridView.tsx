@@ -29,6 +29,14 @@ function GridView({
     }
   }
 
+  const bufferRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    bufferRef.current = document.createElement("canvas");
+    bufferRef.current.width = Grid.MAX_COLS * Grid.CELL_SIZE;
+    bufferRef.current.height = Grid.MAX_ROWS * Grid.CELL_SIZE;
+  }, []);
+
   const drawTableName = useCallback((ctx: CanvasRenderingContext2D, table: Table) => {
     // Draw the text centered inside the rectangle
     ctx.fillStyle = "black";
@@ -102,26 +110,20 @@ function GridView({
   }, [grid.mouseCell]);
 
   const draw = useCallback(() => {
+    //
     const canvas: HTMLCanvasElement | null = canvasRef.current;
-    if (!canvas) return;
+    const buffer: HTMLCanvasElement | null = canvasRef.current;
+    if (!canvas || !buffer) return;
+    //
     const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Create an offscreen buffer
-    const buffer = document.createElement("canvas");
-    buffer.width = canvas.width;
-    buffer.height = canvas.height;
     const bufferCtx = buffer.getContext("2d");
-    if (!bufferCtx) return;
-
+    if (!ctx || !bufferCtx) return;
     // Draw everything on the buffer
     bufferCtx.clearRect(0, 0, buffer.width, buffer.height);
     drawDots(bufferCtx);
     drawTables(bufferCtx);
     drawMouseCell(bufferCtx);
-
     // Copy the buffer to the main canvas in one step
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(buffer, 0, 0);
 
   }, [drawTables, drawMouseCell]);
