@@ -106,10 +106,24 @@ function GridView({
     if (!canvas) return;
     const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
     if (!ctx) return;
+
+    // Create an offscreen buffer
+    const buffer = document.createElement("canvas");
+    buffer.width = canvas.width;
+    buffer.height = canvas.height;
+    const bufferCtx = buffer.getContext("2d");
+    if (!bufferCtx) return;
+
+    // Draw everything on the buffer
+    bufferCtx.clearRect(0, 0, buffer.width, buffer.height);
+    drawDots(bufferCtx);
+    drawTables(bufferCtx);
+    drawMouseCell(bufferCtx);
+
+    // Copy the buffer to the main canvas in one step
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawDots(ctx);
-    drawTables(ctx);
-    drawMouseCell(ctx);
+    ctx.drawImage(buffer, 0, 0);
+
   }, [drawTables, drawMouseCell]);
 
   useEffect(() => {
