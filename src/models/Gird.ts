@@ -12,9 +12,9 @@ export class Grid {
 
   public readonly tables: Table[] = [];
 
-  public hoveredTable: Table | null = null;
+  public hoveredTable: Table | undefined;
 
-  public selectedTable: Table | null = null;
+  public selectedTable: Table | undefined;
 
   public readonly mouseCell: RowCol = {
     row: -1,
@@ -25,7 +25,7 @@ export class Grid {
     this.tables.push(table);
   }
 
-  private updateHoveredTable() {
+  private getMostTopTable(): Table | undefined {
     for (const table of this.tables.reverse()) {
       if (
         this.mouseCell.col >= table.rect.col &&
@@ -33,16 +33,21 @@ export class Grid {
         this.mouseCell.row >= table.rect.row &&
         this.mouseCell.row < table.rect.row + table.rect.height
       ) {
-        this.hoveredTable = table;
-        return;
+        return table;
       }
     }
   }
 
+  // Call this function when mouse move on canvas
   public updateMouseCell(xy: XY) {
     this.mouseCell.col = Math.round(xy.x / Grid.CELL_SIZE);
     this.mouseCell.row = Math.round(xy.y / Grid.CELL_SIZE);
-    this.updateHoveredTable();
+    this.hoveredTable = this.getMostTopTable();
+  }
+
+  // Call this function when mouse click on canvas
+  public click() {
+    this.selectedTable = this.getMostTopTable();
   }
 
   constructor() {

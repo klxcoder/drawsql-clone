@@ -9,6 +9,7 @@ export const drawRoundedRect = ({
   height,
   radius,
   shadowOffset,
+  stroke,
 }: {
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -17,12 +18,16 @@ export const drawRoundedRect = ({
   height: number,
   radius: number,
   shadowOffset: number,
+  stroke: boolean,
 }) => {
   ctx.save();
+  //
+  ctx.strokeStyle = 'rgba(0,0,255, 0.5)';
+  ctx.lineWidth = 10;
   // Set shadow properties
   ctx.shadowColor = "rgba(0, 0, 0, 0.4)"; // Shadow color (black with 40% opacity)
-  ctx.shadowBlur = 2 * shadowOffset; // Blur intensity
-  ctx.shadowOffsetX = shadowOffset; // Shadow offset to the right
+  ctx.shadowBlur = 4 * shadowOffset; // Blur intensity
+  ctx.shadowOffsetX = -shadowOffset; // Shadow offset to the right
   ctx.shadowOffsetY = shadowOffset; // Shadow offset downward
   // Draw the rounded rectangle
   ctx.beginPath();
@@ -37,5 +42,8 @@ export const drawRoundedRect = ({
   ctx.arc(x + radius, y + radius, radius, Math.PI, (Math.PI * 3) / 2);
   ctx.closePath();
   ctx.fill();
+  if (stroke) {
+    ctx.stroke();
+  }
   ctx.restore();
 };

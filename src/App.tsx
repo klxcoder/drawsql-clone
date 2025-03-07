@@ -12,7 +12,7 @@ function App() {
       rect: {
         col: 1,
         row: 1,
-        width: 15,
+        width: 25,
         height: 10,
       }
     }));
@@ -21,8 +21,17 @@ function App() {
       rect: {
         col: 15,
         row: 15,
-        width: 15,
+        width: 20,
         height: 10,
+      }
+    }));
+    grid.addTable(new Table({
+      name: 'x',
+      rect: {
+        col: 35,
+        row: 35,
+        width: 5,
+        height: 3,
       }
     }));
   }, [grid]);

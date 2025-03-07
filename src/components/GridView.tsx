@@ -55,6 +55,7 @@ function GridView({
   const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
     tables.forEach(table => {
       ctx.fillStyle = table.color;
+      // Draw table
       drawRoundedRect({
         ctx,
         x: table.rect.col * Grid.CELL_SIZE,
@@ -63,6 +64,7 @@ function GridView({
         height: table.rect.height * Grid.CELL_SIZE,
         radius: Grid.CELL_SIZE / 2,
         shadowOffset: table === grid.hoveredTable ? 5 : 1,
+        stroke: table === grid.selectedTable,
       })
       ctx.fillStyle = 'ivory';
       drawRoundedRect({
@@ -70,13 +72,19 @@ function GridView({
         x: table.rect.col * Grid.CELL_SIZE,
         y: (table.rect.row + 1) * Grid.CELL_SIZE,
         width: table.rect.width * Grid.CELL_SIZE,
-        height: table.rect.height * Grid.CELL_SIZE,
+        height: (table.rect.height - 1) * Grid.CELL_SIZE,
         radius: Grid.CELL_SIZE / 2,
         shadowOffset: 1,
+        stroke: false,
       })
       drawTableName(ctx, table);
     });
-  }, [tables, drawTableName, grid.hoveredTable]);
+  }, [
+    tables,
+    drawTableName,
+    grid.hoveredTable,
+    grid.selectedTable,
+  ]);
 
   const drawMouseCell = useCallback((ctx: CanvasRenderingContext2D) => {
     const { col, row } = grid.mouseCell;
@@ -89,6 +97,7 @@ function GridView({
       height: Grid.CELL_SIZE,
       radius: Grid.CELL_SIZE / 2,
       shadowOffset: 1,
+      stroke: false,
     });
   }, [grid.mouseCell]);
 
@@ -111,7 +120,10 @@ function GridView({
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       grid.updateMouseCell({ x, y });
-    })
+    });
+    canvas.addEventListener('click', () => {
+      grid.click();
+    });
   }, [grid]);
 
   useLayoutEffect(() => {
