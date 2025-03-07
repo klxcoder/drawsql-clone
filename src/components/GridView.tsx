@@ -4,9 +4,12 @@ import {
   useLayoutEffect,
   useRef,
 } from 'react';
-import { Table } from '../models/Table';
 import styles from './Grid.module.scss';
-import { drawDots, drawMouseCell, drawTables } from '../utils';
+import {
+  drawDots,
+  drawMouseCell,
+  drawTables,
+} from '../utils';
 import { Grid } from '../models/Grid';
 
 function GridView({
@@ -14,7 +17,6 @@ function GridView({
 }: {
   grid: Grid,
 }) {
-  const tables: Table[] = grid.tables;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -37,9 +39,8 @@ function GridView({
     if (!ctx || !bufferCtx) return;
     // Draw everything on the buffer
     bufferCtx.clearRect(0, 0, buffer.width, buffer.height);
-
     drawDots(bufferCtx);
-    drawTables(bufferCtx, tables, grid.hoveredTable, grid.selectedTable, grid.hoveredColumnIndex, grid.selectedColumnIndex);
+    drawTables(bufferCtx, grid.tables, grid.hoveredTable, grid.selectedTable, grid.hoveredColumnIndex, grid.selectedColumnIndex);
     drawMouseCell(bufferCtx, grid.mouseCell);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
@@ -49,7 +50,7 @@ function GridView({
     grid.selectedColumnIndex,
     grid.selectedTable,
     grid.mouseCell,
-    tables,
+    grid.tables,
   ]);
 
   useEffect(() => {
