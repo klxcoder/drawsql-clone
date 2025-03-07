@@ -144,32 +144,38 @@ export const drawTables = (
     hoveredTable: Table | undefined,
     hoveredColumnIndex: number,
   ) => {
-    ctx.fillStyle = "antiquewhite";
-    ctx.font = "18px 'Lucida Console', monospace";
-    // Draw hovered column
-    if (table === hoveredTable) {
-      if (hoveredColumnIndex !== -1) {
-        drawRoundedRect({
-          ctx,
-          x: table.rect.col * Grid.CELL_SIZE,
-          y: (table.rect.row + 4 + hoveredColumnIndex * 3) * Grid.CELL_SIZE,
-          width: table.rect.width * Grid.CELL_SIZE,
-          height: 3 * Grid.CELL_SIZE,
-          radius: Grid.CELL_SIZE / 2,
-          shadowOffset: 1,
-          stroke: false,
-        });
+
+    const drawHoveredColumn = () => {
+      if (table === hoveredTable) {
+        if (hoveredColumnIndex !== -1) {
+          ctx.fillStyle = "antiquewhite";
+          drawRoundedRect({
+            ctx,
+            x: table.rect.col * Grid.CELL_SIZE,
+            y: (table.rect.row + 4 + hoveredColumnIndex * 3) * Grid.CELL_SIZE,
+            width: table.rect.width * Grid.CELL_SIZE,
+            height: 3 * Grid.CELL_SIZE,
+            radius: Grid.CELL_SIZE / 2,
+            shadowOffset: 1,
+            stroke: false,
+          });
+        }
       }
     }
-    // Draw text
-    ctx.fillStyle = "black";
-    table.columns.forEach((column, index) => {
-      ctx.fillText(
-        `${column.keyType} ${column.name} ${column.columnType}`,
-        (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
-        (table.rect.row + 5.5 + 3 * index) * Grid.CELL_SIZE,
-      );
-    });
+
+    const drawText = () => {
+      ctx.fillStyle = "black";
+      table.columns.forEach((column, index) => {
+        ctx.fillText(
+          `${column.keyType} ${column.name} ${column.columnType}`,
+          (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
+          (table.rect.row + 5.5 + 3 * index) * Grid.CELL_SIZE,
+        );
+      });
+    }
+    ctx.font = "18px 'Lucida Console', monospace";
+    drawHoveredColumn();
+    drawText();
   }
 
   tables.forEach(table => {
