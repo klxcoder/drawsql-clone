@@ -6,7 +6,7 @@ import {
 } from 'react';
 import { Table } from '../models/Table';
 import styles from './Grid.module.scss';
-import { drawDots, drawRoundedRect } from '../utils';
+import { drawDots, drawRoundedRect, drawTableName } from '../utils';
 import { Grid } from '../models/Grid';
 
 function GridView({
@@ -24,31 +24,6 @@ function GridView({
     bufferRef.current = document.createElement("canvas");
     bufferRef.current.width = Grid.MAX_COLS * Grid.CELL_SIZE;
     bufferRef.current.height = Grid.MAX_ROWS * Grid.CELL_SIZE;
-  }, []);
-
-  const drawTableName = useCallback((ctx: CanvasRenderingContext2D, table: Table) => {
-    // Draw the text centered inside the rectangle
-    ctx.fillStyle = "black";
-    ctx.font = "20px Arial";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(
-      table.name,
-      (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
-      // Table name start at 2.5
-      (table.rect.row + 2.5) * Grid.CELL_SIZE,
-    );
-    ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
-    ctx.shadowColor = "rgba(0, 0, 0, 0.2)"; // Shadow color (black with 50% opacity)
-    ctx.shadowBlur = 1; // Blur intensity
-    ctx.shadowOffsetX = 1; // Shadow offset to the right
-    ctx.shadowOffsetY = 1; // Shadow offset downward
-    ctx.beginPath();
-    // Shadow below table name start at 3.8
-    ctx.moveTo(table.rect.col * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
-    ctx.lineTo((table.rect.col + table.rect.width) * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
-    ctx.closePath();
-    ctx.stroke();
   }, []);
 
   const drawTableColumns = useCallback((ctx: CanvasRenderingContext2D, table: Table) => {
@@ -129,7 +104,6 @@ function GridView({
     grid.hoveredTable,
     grid.selectedTable,
     grid.selectedColumnIndex,
-    drawTableName,
     drawTableColumns,
   ]);
 

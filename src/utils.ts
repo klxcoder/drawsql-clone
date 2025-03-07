@@ -1,4 +1,5 @@
 import { Grid } from "./models/Grid";
+import { Table } from "./models/Table";
 
 export const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
 
@@ -59,4 +60,29 @@ export const drawDots = (ctx: CanvasRenderingContext2D) => {
       ctx.fill();
     }
   }
+}
+
+export const drawTableName = (ctx: CanvasRenderingContext2D, table: Table) => {
+  // Draw the text centered inside the rectangle
+  ctx.fillStyle = "black";
+  ctx.font = "20px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(
+    table.name,
+    (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
+    // Table name start at 2.5
+    (table.rect.row + 2.5) * Grid.CELL_SIZE,
+  );
+  ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
+  ctx.shadowColor = "rgba(0, 0, 0, 0.2)"; // Shadow color (black with 50% opacity)
+  ctx.shadowBlur = 1; // Blur intensity
+  ctx.shadowOffsetX = 1; // Shadow offset to the right
+  ctx.shadowOffsetY = 1; // Shadow offset downward
+  ctx.beginPath();
+  // Shadow below table name start at 3.8
+  ctx.moveTo(table.rect.col * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
+  ctx.lineTo((table.rect.col + table.rect.width) * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
+  ctx.closePath();
+  ctx.stroke();
 }
