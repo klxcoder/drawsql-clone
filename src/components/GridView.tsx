@@ -7,7 +7,7 @@ import {
 import { Table } from '../models/Table';
 import styles from './Grid.module.scss';
 import { drawRoundedRect } from '../utils';
-import { Grid } from '../models/Gird';
+import { Grid } from '../models/Grid';
 
 function GridView({
   grid,

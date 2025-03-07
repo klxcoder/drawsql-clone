@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './App.module.scss';
 import GridView from './components/GridView';
 import { Table } from './models/Table';
-import { Grid } from './models/Gird';
+import { Grid } from './models/Grid';
 import { Column } from './models/Column';
 import { RowCol } from './models/RowCol';
 
