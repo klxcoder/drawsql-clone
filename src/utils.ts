@@ -53,7 +53,6 @@ const drawRoundedRect = ({
 };
 
 export const drawDots = (ctx: CanvasRenderingContext2D) => {
-  ctx.save();
   ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
   for (let col = 1; col < Grid.MAX_COLS; col++) {
     for (let row = 1; row < Grid.MAX_ROWS; row++) {
@@ -62,7 +61,6 @@ export const drawDots = (ctx: CanvasRenderingContext2D) => {
       ctx.fill();
     }
   }
-  ctx.restore();
 }
 
 export const drawTables = (
@@ -103,7 +101,6 @@ export const drawTables = (
   }
 
   const drawTableName = (table: Table) => {
-    ctx.save();
     // Draw the text centered inside the rectangle
     ctx.fillStyle = "black"; // Text color
     ctx.font = "bold 20px 'Lucida Console', monospace";
@@ -125,11 +122,9 @@ export const drawTables = (
     ctx.lineTo((table.rect.col + table.rect.width) * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
     ctx.closePath();
     ctx.stroke();
-    ctx.save();
   }
 
   const drawSelectedColumn = (table: Table) => {
-    ctx.save();
     ctx.fillStyle = "antiquewhite";
     drawRoundedRect({
       ctx,
@@ -141,7 +136,6 @@ export const drawTables = (
       shadowOffset: 1,
       stroke: false,
     });
-    ctx.restore();
   }
 
   const drawTableColumns = (
@@ -150,7 +144,6 @@ export const drawTables = (
     hoveredTable: Table | undefined,
     hoveredColumnIndex: number,
   ) => {
-    ctx.save();
     ctx.fillStyle = "antiquewhite";
     ctx.font = "18px 'Lucida Console', monospace";
     // Draw hovered column
@@ -177,10 +170,8 @@ export const drawTables = (
         (table.rect.row + 5.5 + 3 * index) * Grid.CELL_SIZE,
       );
     });
-    ctx.restore();
   }
 
-  ctx.save();
   tables.forEach(table => {
     drawTableBackground1(table);
     drawTableBackground2(table);
@@ -189,12 +180,10 @@ export const drawTables = (
       drawSelectedColumn(table);
     }
     drawTableColumns(ctx, table, hoveredTable, hoveredColumnIndex);
-    ctx.restore();
   });
 };
 
 export const drawMouseCell = (ctx: CanvasRenderingContext2D, mouseCell: RowCol) => {
-  ctx.save();
   const { col, row } = mouseCell;
   ctx.fillStyle = "rgba(0, 0, 255, 0.15)";
   drawRoundedRect({
@@ -207,5 +196,4 @@ export const drawMouseCell = (ctx: CanvasRenderingContext2D, mouseCell: RowCol) 
     shadowOffset: 1,
     stroke: false,
   });
-  ctx.restore();
 }
