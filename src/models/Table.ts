@@ -23,7 +23,7 @@ export class Table {
       row: rowCol.row,
       col: rowCol.col,
       width: 30,
-      height: 6 + 3 * columns.length + 1,
+      height: 5 + 3 * columns.length,
     });
     this.columns = columns;
     this.rect.width = 30;
