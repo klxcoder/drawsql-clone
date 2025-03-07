@@ -28,7 +28,28 @@ function App() {
     grid.addTable(new Table({
       name: 'notification',
       rowCol: new RowCol(30, 15),
-      columns: [],
+      columns: [
+        new Column({
+          keyType: 'PK',
+          name: 'notification_id',
+          columnType: 'bigint',
+        }),
+        new Column({
+          keyType: 'FK',
+          name: 'person_id',
+          columnType: 'bigint',
+        }),
+        new Column({
+          keyType: '',
+          name: 'content',
+          columnType: 'text',
+        }),
+        new Column({
+          keyType: '',
+          name: 'created_at',
+          columnType: 'timestamp',
+        }),
+      ],
     }));
     grid.addTable(new Table({
       name: 'x',
