@@ -62,6 +62,7 @@ function GridView({
         table.rect.width * Grid.CELL_SIZE,
         table.rect.height * Grid.CELL_SIZE,
         Grid.CELL_SIZE / 2,
+        1,
       )
       ctx.fillStyle = 'ivory';
       drawRoundedRect(
@@ -71,6 +72,7 @@ function GridView({
         table.rect.width * Grid.CELL_SIZE,
         table.rect.height * Grid.CELL_SIZE,
         Grid.CELL_SIZE / 2,
+        1,
       )
       drawTableName(ctx, table);
     });
@@ -86,6 +88,7 @@ function GridView({
       Grid.CELL_SIZE,
       Grid.CELL_SIZE,
       Grid.CELL_SIZE / 2,
+      1,
     );
   }, [grid.mouseCell]);
 
