@@ -1,5 +1,28 @@
 .tableForm {
-  color: red;
   position: fixed;
   left: 10px;
+
+  .tableName {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .columns {
+    .column {
+      display: flex;
+
+      .keyType {
+        width: 35px;
+      }
+
+      .columnName {
+        width: 250px;
+      }
+
+      .columnType {
+        width: 100px;
+      }
+    }
+  }
 }
