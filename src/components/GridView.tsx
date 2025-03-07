@@ -6,7 +6,7 @@ import {
 } from 'react';
 import { Table } from '../models/Table';
 import styles from './Grid.module.scss';
-import { drawDots, drawRoundedRect, drawTableColumns, drawTableName } from '../utils';
+import { drawDots, drawRoundedRect, drawTables } from '../utils';
 import { Grid } from '../models/Grid';
 
 function GridView({
@@ -25,58 +25,6 @@ function GridView({
     bufferRef.current.width = Grid.MAX_COLS * Grid.CELL_SIZE;
     bufferRef.current.height = Grid.MAX_ROWS * Grid.CELL_SIZE;
   }, []);
-
-  const drawTables = useCallback((ctx: CanvasRenderingContext2D) => {
-    tables.forEach(table => {
-      ctx.fillStyle = table.color;
-      // Draw table border
-      drawRoundedRect({
-        ctx,
-        x: table.rect.col * Grid.CELL_SIZE,
-        y: table.rect.row * Grid.CELL_SIZE,
-        width: table.rect.width * Grid.CELL_SIZE,
-        height: table.rect.height * Grid.CELL_SIZE,
-        radius: Grid.CELL_SIZE / 2,
-        shadowOffset: table === grid.hoveredTable ? 5 : 1,
-        stroke: table === grid.selectedTable,
-      });
-      // draw line below table header
-      ctx.fillStyle = 'ivory';
-      drawRoundedRect({
-        ctx,
-        x: table.rect.col * Grid.CELL_SIZE,
-        y: (table.rect.row + 1) * Grid.CELL_SIZE,
-        width: table.rect.width * Grid.CELL_SIZE,
-        height: (table.rect.height - 1) * Grid.CELL_SIZE,
-        radius: Grid.CELL_SIZE / 2,
-        shadowOffset: 1,
-        stroke: false,
-      });
-      drawTableName(ctx, table);
-      if (table === grid.selectedTable && grid.selectedColumnIndex !== -1) {
-        ctx.save();
-        ctx.fillStyle = "antiquewhite";
-        drawRoundedRect({
-          ctx,
-          x: table.rect.col * Grid.CELL_SIZE,
-          y: (table.rect.row + 4 + grid.selectedColumnIndex * 3) * Grid.CELL_SIZE,
-          width: table.rect.width * Grid.CELL_SIZE,
-          height: 3 * Grid.CELL_SIZE,
-          radius: Grid.CELL_SIZE / 2,
-          shadowOffset: 1,
-          stroke: false,
-        });
-        ctx.restore();
-      }
-      drawTableColumns(ctx, table, grid.hoveredTable, grid.hoveredColumnIndex);
-    });
-  }, [
-    tables,
-    grid.hoveredTable,
-    grid.hoveredColumnIndex,
-    grid.selectedTable,
-    grid.selectedColumnIndex,
-  ]);
 
   const drawMouseCell = useCallback((ctx: CanvasRenderingContext2D) => {
     const { col, row } = grid.mouseCell;
@@ -104,13 +52,20 @@ function GridView({
     if (!ctx || !bufferCtx) return;
     // Draw everything on the buffer
     bufferCtx.clearRect(0, 0, buffer.width, buffer.height);
+
     drawDots(bufferCtx);
-    drawTables(bufferCtx);
+    drawTables(bufferCtx, tables, grid.hoveredTable, grid.selectedTable, grid.hoveredColumnIndex, grid.selectedColumnIndex);
     drawMouseCell(bufferCtx);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
-
-  }, [drawTables, drawMouseCell]);
+  }, [
+    drawMouseCell,
+    grid.hoveredColumnIndex,
+    grid.hoveredTable,
+    grid.selectedColumnIndex,
+    grid.selectedTable,
+    tables,
+  ]);
 
   useEffect(() => {
     const canvas = canvasRef.current;

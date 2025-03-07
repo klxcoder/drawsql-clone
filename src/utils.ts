@@ -120,3 +120,56 @@ export const drawTableColumns = (
     );
   });
 }
+
+export const drawTables = (
+  ctx: CanvasRenderingContext2D,
+  tables: Table[],
+  hoveredTable: Table | undefined,
+  selectedTable: Table | undefined,
+  hoveredColumnIndex: number,
+  selectedColumnIndex: number,
+) => {
+  tables.forEach(table => {
+    ctx.fillStyle = table.color;
+    // Draw table border
+    drawRoundedRect({
+      ctx,
+      x: table.rect.col * Grid.CELL_SIZE,
+      y: table.rect.row * Grid.CELL_SIZE,
+      width: table.rect.width * Grid.CELL_SIZE,
+      height: table.rect.height * Grid.CELL_SIZE,
+      radius: Grid.CELL_SIZE / 2,
+      shadowOffset: table === hoveredTable ? 5 : 1,
+      stroke: table === selectedTable,
+    });
+    // draw line below table header
+    ctx.fillStyle = 'ivory';
+    drawRoundedRect({
+      ctx,
+      x: table.rect.col * Grid.CELL_SIZE,
+      y: (table.rect.row + 1) * Grid.CELL_SIZE,
+      width: table.rect.width * Grid.CELL_SIZE,
+      height: (table.rect.height - 1) * Grid.CELL_SIZE,
+      radius: Grid.CELL_SIZE / 2,
+      shadowOffset: 1,
+      stroke: false,
+    });
+    drawTableName(ctx, table);
+    if (table === selectedTable && selectedColumnIndex !== -1) {
+      ctx.save();
+      ctx.fillStyle = "antiquewhite";
+      drawRoundedRect({
+        ctx,
+        x: table.rect.col * Grid.CELL_SIZE,
+        y: (table.rect.row + 4 + selectedColumnIndex * 3) * Grid.CELL_SIZE,
+        width: table.rect.width * Grid.CELL_SIZE,
+        height: 3 * Grid.CELL_SIZE,
+        radius: Grid.CELL_SIZE / 2,
+        shadowOffset: 1,
+        stroke: false,
+      });
+      ctx.restore();
+    }
+    drawTableColumns(ctx, table, hoveredTable, hoveredColumnIndex);
+  });
+};
