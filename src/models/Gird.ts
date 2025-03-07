@@ -26,7 +26,7 @@ export class Grid {
   }
 
   private getMostTopTable(): Table | undefined {
-    for (const table of this.tables.reverse()) {
+    for (const table of [...this.tables].reverse()) {
       if (
         this.mouseCell.col >= table.rect.col &&
         this.mouseCell.col < table.rect.col + table.rect.width &&
