@@ -1,15 +1,15 @@
 import classNames from 'classnames';
-import { TableData } from '../models/Table';
 import styles from './TableForm.module.scss';
+import { GridData } from '../models/Grid';
 
 function TableForm({
-  table,
+  gridData,
   onChangeTableName,
   onChangeColumnKeyType,
   onChangeColumnName,
   onChangeColumnType,
 }: {
-  table: TableData,
+  gridData: GridData,
   onChangeTableName: (newName: string) => void,
   onChangeColumnKeyType: (columnName: string, newKeyType: string) => void,
   onChangeColumnName: (columnName: string, newName: string) => void,
@@ -20,12 +20,12 @@ function TableForm({
       <div className={styles.tableName}>
         <input
           placeholder='table1'
-          value={table.name}
+          value={gridData.selectedTable?.name}
           onChange={(e) => onChangeTableName(e.target.value)}
         />
       </div>
       <div className={styles.columns}>
-        {table.columns.map((column, index) => (
+        {gridData.selectedTable?.columns.map((column, index) => (
           <div
             className={styles.column}
             key={index}
@@ -33,18 +33,24 @@ function TableForm({
             <input
               className={classNames(
                 styles.keyType,
-                styles.selected,
+                gridData.selectedColumnIndex === index ? styles.selected : '',
               )}
               value={column.keyType}
               onChange={(e) => onChangeColumnKeyType(column.name, e.target.value)}
             />
             <input
-              className={styles.columnName}
+              className={classNames(
+                styles.columnName,
+                gridData.selectedColumnIndex === index ? styles.selected : '',
+              )}
               value={column.name}
               onChange={(e) => onChangeColumnName(column.name, e.target.value)}
             />
             <input
-              className={styles.columnType}
+              className={classNames(
+                styles.columnType,
+                gridData.selectedColumnIndex === index ? styles.selected : '',
+              )}
               value={column.columnType}
               onChange={(e) => onChangeColumnType(column.name, e.target.value)}
             />

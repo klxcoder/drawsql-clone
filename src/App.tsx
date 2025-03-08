@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import styles from './App.module.scss';
-import { Grid } from './models/Grid';
+import { Grid, GridData } from './models/Grid';
 
 import TableForm from './components/TableForm';
 import { getInitialGrid } from './utils';
 import GridView from './components/GridView';
-import { Table, TableData } from './models/Table';
+import { Table } from './models/Table';
 import { Column } from './models/Column';
 
 function App() {
   const [grid] = useState<Grid>(getInitialGrid);
-  const [tableData, setTableData] = useState<TableData>();
+  const [gridData, setGridData] = useState<GridData>();
   return (
     <div className={styles.app}>
-      {tableData && <TableForm
-        table={tableData}
+      {gridData && <TableForm
+        gridData={gridData}
         onChangeTableName={(newName) => {
           newName = newName.trim();
           if (newName === '') return;
@@ -25,27 +25,27 @@ function App() {
           }
           {
             // Change the table name to `newName`
-            const table: Table | undefined = grid.tables.find(t => t.name === tableData.name);
+            const table: Table | undefined = grid.tables.find(t => t.name === gridData.selectedTable?.name);
             if (!table) return;
             table.name = newName;
             // Update UI
-            setTableData(table.getData());
+            setGridData(grid.getData());
           }
         }}
         onChangeColumnKeyType={(columnName, newKeyType) => {
           newKeyType = newKeyType.trim();
-          const table: Table | undefined = grid.tables.find(t => t.name === tableData.name);
+          const table: Table | undefined = grid.tables.find(t => t.name === gridData.selectedTable?.name);
           if (!table) return;
           const column: Column | undefined = table.columns.find(c => c.name === columnName);
           if (!column) return;
           column.keyType = newKeyType.substring(0, 2).toUpperCase();
           // Update UI
-          setTableData(table.getData());
+          setGridData(grid.getData());
         }}
         onChangeColumnName={(columnName, newName) => {
           newName = newName.trim();
           if (newName === '') return;
-          const table: Table | undefined = grid.tables.find(t => t.name === tableData.name);
+          const table: Table | undefined = grid.tables.find(t => t.name === gridData.selectedTable?.name);
           if (!table) return;
           {
             // If column `newName` already exist => exit
@@ -60,13 +60,13 @@ function App() {
           }
           {
             // Update UI
-            setTableData(table.getData());
+            setGridData(grid.getData());
           }
         }}
         onChangeColumnType={(columnName, newType) => {
           newType = newType.trim();
           if (newType === '') return;
-          const table: Table | undefined = grid.tables.find(t => t.name === tableData.name);
+          const table: Table | undefined = grid.tables.find(t => t.name === gridData.selectedTable?.name);
           if (!table) return;
           {
             // Change the column type to `newType`
@@ -76,13 +76,13 @@ function App() {
           }
           {
             // Update UI
-            setTableData(table.getData());
+            setGridData(grid.getData());
           }
         }}
       />}
       <GridView
         grid={grid}
-        setTableData={setTableData}
+        setGridData={setGridData}
       />
     </div>
   )

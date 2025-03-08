@@ -1,6 +1,11 @@
 import { RowCol } from "./RowCol";
-import { Table } from "./Table";
+import { Table, TableData } from "./Table";
 import { XY } from "./XY";
+
+export type GridData = {
+  selectedTable: TableData | undefined,
+  selectedColumnIndex: number,
+}
 
 export class Grid {
 
@@ -75,6 +80,13 @@ export class Grid {
     }
     // assign seleted column index
     this.selectedColumnIndex = this.hoveredColumnIndex;
+  }
+
+  public getData(): GridData {
+    return {
+      selectedTable: this.selectedTable?.getData(),
+      selectedColumnIndex: this.selectedColumnIndex,
+    }
   }
 
   constructor() {
