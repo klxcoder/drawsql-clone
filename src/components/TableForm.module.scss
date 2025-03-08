@@ -1,6 +1,9 @@
 .tableForm {
   position: fixed;
   left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 
   input {
     padding: 2px 4px;
@@ -18,8 +21,13 @@
   }
 
   .columns {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
     .column {
       display: flex;
+      gap: 2px;
 
       input.selected {
         background-color: bisque;
