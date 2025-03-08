@@ -33,4 +33,4 @@
     + Whenever click: call setTableData(the clicked tableData)
 
 # Todo
-  + grid table that can getData, putData
+  + call grid.update() and then setTableData(grid.getTableData())

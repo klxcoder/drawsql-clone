@@ -5,7 +5,7 @@ import { Grid } from './models/Grid';
 import TableForm from './components/TableForm';
 import { getInitialGrid } from './utils';
 import GridView from './components/GridView';
-import { TableData } from './models/Table';
+import { Table, TableData } from './models/Table';
 
 function App() {
   const [grid] = useState<Grid>(getInitialGrid);
@@ -14,7 +14,12 @@ function App() {
     <div className={styles.app}>
       {tableData && <TableForm
         table={tableData}
-        onChangeTableName={(name) => console.log('Will change table name to ', name)}
+        onChangeTableName={(name) => {
+          const table: Table | undefined = grid.tables.find(t => t.name === tableData.name);
+          if (!table) return;
+          table.name = name;
+          setTableData(table.getData());
+        }}
       />}
       <GridView
         grid={grid}
