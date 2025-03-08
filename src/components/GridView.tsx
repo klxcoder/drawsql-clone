@@ -73,20 +73,26 @@ function GridView({
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      grid.updateMouseCell({ x, y });
+      grid.mouseMove({ x, y });
     };
 
-    const onClick = () => {
-      grid.click();
+    const onMouseDown = () => {
+      grid.mouseDown();
       setGridData(grid.getData());
     }
 
+    const onMouseUp = () => {
+      grid.isDragging = false;
+    }
+
     canvas.addEventListener('mousemove', onMouseMove);
-    canvas.addEventListener('click', onClick);
+    canvas.addEventListener('mousedown', onMouseDown);
+    canvas.addEventListener('mouseup', onMouseUp);
 
     return () => {
       canvas.removeEventListener('mousemove', onMouseMove);
-      canvas.removeEventListener('click', onClick);
+      canvas.removeEventListener('mousedown', onMouseDown);
+      canvas.removeEventListener('mouseup', onMouseUp);
     };
   }, [grid, setGridData]);
 

@@ -7,4 +7,6 @@
   - Total of row: 4 + 3 * column.length
 
 # Todo
-  + focus on input row will update selectedColumn (navigate with tab)
+  + Can move table around
+  + When click => will save the lastMouseCell
+  + When move mouse => if mousedown => update the selected table with the current mouseCell

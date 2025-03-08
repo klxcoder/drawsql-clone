@@ -27,6 +27,12 @@ export class Grid {
 
   public readonly mouseCell: RowCol = new RowCol(-1, -1);
 
+  private readonly lastMouseCell: RowCol = new RowCol(-1, -1);
+
+  private readonly lastTableRowCol: RowCol = new RowCol(-1, -1);
+
+  public isDragging: boolean = false;
+
   public addTable(table: Table) {
     this.tables.push(table);
   }
@@ -45,16 +51,17 @@ export class Grid {
   }
 
   // Call this function when mouse move on canvas
-  public updateMouseCell(xy: XY) {
+  public mouseMove(xy: XY) {
     this.mouseCell.col = Math.round(xy.x / Grid.CELL_SIZE);
     this.mouseCell.row = Math.round(xy.y / Grid.CELL_SIZE);
     this.hoveredTable = this.getMostTopTable();
+    // 
     if (!this.hoveredTable) {
       this.hoveredColumnIndex = -1;
       return;
     }
     {
-      // Calculate this.hoveredColumn
+      // Calculate this.hoveredColumnIndex
       const index = Math.floor((this.mouseCell.row - this.hoveredTable.rowCol.row - 4) / 3);
       if (index >= 0 && index < this.hoveredTable.columns.length) {
         this.hoveredColumnIndex = index;
@@ -62,10 +69,14 @@ export class Grid {
         this.hoveredColumnIndex = -1;
       }
     }
+    if (this.isDragging && this.selectedTable) {
+      // Handle table move
+      this.selectedTable.rowCol.col = this.lastTableRowCol.col + this.mouseCell.col - this.lastMouseCell.col;
+      this.selectedTable.rowCol.row = this.lastTableRowCol.row + this.mouseCell.row - this.lastMouseCell.row;
+    }
   }
 
-  // Call this function when mouse click on canvas
-  public click() {
+  public mouseDown() {
     this.selectedTable = this.getMostTopTable();
     if (!this.selectedTable) {
       this.selectedColumnIndex = -1;
@@ -78,8 +89,15 @@ export class Grid {
         this.tables.push(this.selectedTable);
       }
     }
-    // assign seleted column index
+    // save seleted column index
     this.selectedColumnIndex = this.hoveredColumnIndex;
+    this.isDragging = true;
+    // save lastMouseCell
+    this.lastMouseCell.col = this.mouseCell.col;
+    this.lastMouseCell.row = this.mouseCell.row;
+    // save lastTableRowCol
+    this.lastTableRowCol.col = this.selectedTable.rowCol.col;
+    this.lastTableRowCol.row = this.selectedTable.rowCol.row;
   }
 
   public getData(): GridData {
