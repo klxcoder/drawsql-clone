@@ -24,6 +24,7 @@ function TableForm({
           placeholder='table1'
           value={gridData.selectedTable.name}
           onChange={(e) => onChangeTableName(e.target.value)}
+          onClick={() => onSelectColumnIndex(-1)}
         />
       </div>
       <div className={styles.columns}>
