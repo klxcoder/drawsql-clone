@@ -6,11 +6,13 @@ function TableForm({
   onChangeTableName,
   onChangeColumnKeyType,
   onChangeColumnName,
+  onChangeColumnType,
 }: {
   table: TableData,
   onChangeTableName: (newName: string) => void,
   onChangeColumnKeyType: (columnName: string, newKeyType: string) => void,
   onChangeColumnName: (columnName: string, newName: string) => void,
+  onChangeColumnType: (columnName: string, newType: string) => void,
 }) {
   return (
     <div className={styles.tableForm}>
@@ -40,7 +42,7 @@ function TableForm({
             <input
               className={styles.columnType}
               value={column.columnType}
-              onChange={() => { }}
+              onChange={(e) => onChangeColumnType(column.name, e.target.value)}
             />
           </div>
         ))}

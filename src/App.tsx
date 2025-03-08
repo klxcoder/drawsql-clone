@@ -63,6 +63,22 @@ function App() {
             setTableData(table.getData());
           }
         }}
+        onChangeColumnType={(columnName, newType) => {
+          newType = newType.trim();
+          if (newType === '') return;
+          const table: Table | undefined = grid.tables.find(t => t.name === tableData.name);
+          if (!table) return;
+          {
+            // Change the column type to `newType`
+            const column: Column | undefined = table.columns.find(c => c.name === columnName);
+            if (!column) return;
+            column.columnType = newType;
+          }
+          {
+            // Update UI
+            setTableData(table.getData());
+          }
+        }}
       />}
       <GridView
         grid={grid}
