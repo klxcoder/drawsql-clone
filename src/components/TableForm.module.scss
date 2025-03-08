@@ -2,6 +2,10 @@
   position: fixed;
   left: 10px;
 
+  input {
+    padding: 2px 4px;
+  }
+
   .tableName {
     display: flex;
     justify-content: center;
@@ -9,6 +13,7 @@
 
     input {
       text-align: center;
+      width: 100%;
     }
   }
 
@@ -22,6 +27,7 @@
 
       input.keyType {
         width: 35px;
+        text-align: center;
       }
 
       input.columnName {
