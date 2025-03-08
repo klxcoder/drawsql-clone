@@ -40,6 +40,9 @@ export class Table {
   }
 
   public removeColumn(index: number) {
+    if (this.columns.length <= 1) {
+      return;
+    }
     this.columns.splice(index, 1);
     this.widthHeight = this.getWidthHeight();
   }

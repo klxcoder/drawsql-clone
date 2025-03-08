@@ -32,7 +32,7 @@ function TableForm({
         />
       </div>
       <div className={styles.columns}>
-        {gridData.selectedTable.columns.map((column, index) => (
+        {gridData.selectedTable.columns.map((column, index, columns) => (
           <div
             className={styles.column}
             key={index}
@@ -72,6 +72,7 @@ function TableForm({
               title='Remove column'
               className={styles.btnRemoveColumn}
               onClick={() => onRemoveColumn(index)}
+              disabled={columns.length === 1}
             >-</button>
           </div>
         ))}
