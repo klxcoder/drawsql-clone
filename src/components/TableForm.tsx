@@ -18,16 +18,16 @@ function TableForm({
   onSelectColumnIndex: (index: number) => void,
 }) {
   return (
-    <div className={styles.tableForm}>
+    gridData.selectedTable && <div className={styles.tableForm}>
       <div className={styles.tableName}>
         <input
           placeholder='table1'
-          value={gridData.selectedTable?.name}
+          value={gridData.selectedTable.name}
           onChange={(e) => onChangeTableName(e.target.value)}
         />
       </div>
       <div className={styles.columns}>
-        {gridData.selectedTable?.columns.map((column, index) => (
+        {gridData.selectedTable.columns.map((column, index) => (
           <div
             className={styles.column}
             key={index}
