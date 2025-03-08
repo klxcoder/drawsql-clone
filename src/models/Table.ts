@@ -1,12 +1,11 @@
 import { randomColor } from "../utils";
 import { Column } from "./Column";
 import { Rect } from "./Rect";
-import { RowCol } from "./RowCol";
+import { RowCol, RowColData } from "./RowCol";
 
 export type TableData = {
   name: string,
-  row: number,
-  col: number,
+  rowCol: RowColData,
   columns: ({
     keyType: string,
     name: string,
@@ -22,8 +21,10 @@ export class Table {
 
   public getTableData: () => TableData = () => ({
     name: this.name,
-    row: this.rect.row,
-    col: this.rect.col,
+    rowCol: {
+      row: this.rect.row,
+      col: this.rect.col,
+    },
     columns: this.columns,
   })
 

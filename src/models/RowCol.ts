@@ -1,3 +1,8 @@
+export type RowColData = {
+  row: number,
+  col: number
+}
+
 export class RowCol {
   public row: number;
   public col: number;
