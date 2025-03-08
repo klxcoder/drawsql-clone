@@ -1,11 +1,11 @@
+import { TableData } from '../App';
 import styles from './TableForm.module.scss';
-import { Table } from '../models/Table';
 
 function TableForm({
   table,
   onChangeTableName,
 }: {
-  table: Table,
+  table: TableData,
   onChangeTableName: (newName: string) => void,
 }) {
   return (

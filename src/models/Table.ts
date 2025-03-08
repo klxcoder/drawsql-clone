@@ -1,3 +1,4 @@
+import { TableData } from "../App";
 import { randomColor } from "../utils";
 import { Column } from "./Column";
 import { Rect } from "./Rect";
@@ -8,6 +9,13 @@ export class Table {
   public rect: Rect; // size
   public columns: Column[];
   public color: string;
+
+  public getTableData: () => TableData = () => ({
+    name: this.name,
+    row: this.rect.row,
+    col: this.rect.col,
+    columns: this.columns,
+  })
 
   constructor({
     name,

@@ -11,14 +11,14 @@ import {
   drawTables,
 } from '../utils';
 import { Grid } from '../models/Grid';
-import { Table } from '../models/Table';
+import { TableData } from '../App';
 
 function GridView({
   grid,
-  setTable,
+  setTableData,
 }: {
   grid: Grid,
-  setTable: React.Dispatch<React.SetStateAction<Table | undefined>>,
+  setTableData: React.Dispatch<React.SetStateAction<TableData | undefined>>,
 }) {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -79,7 +79,7 @@ function GridView({
 
     const onClick = () => {
       grid.click();
-      setTable(grid.selectedTable);
+      setTableData(grid.selectedTable?.getTableData());
     }
 
     canvas.addEventListener('mousemove', onMouseMove);
@@ -89,7 +89,7 @@ function GridView({
       canvas.removeEventListener('mousemove', onMouseMove);
       canvas.removeEventListener('click', onClick);
     };
-  }, [grid, setTable]);
+  }, [grid, setTableData]);
 
   useLayoutEffect(() => {
     let frameId: number;
