@@ -90,6 +90,10 @@ function App() {
           grid.selectedTable?.addColumnAfter(index);
           setGridData(grid.getData());
         }}
+        onRemoveColumn={(index) => {
+          grid.selectedTable?.removeColumn(index);
+          setGridData(grid.getData());
+        }}
       />}
       <GridView
         grid={grid}

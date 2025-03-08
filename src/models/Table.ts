@@ -39,6 +39,11 @@ export class Table {
     this.widthHeight = this.getWidthHeight();
   }
 
+  public removeColumn(index: number) {
+    this.columns.splice(index, 1);
+    this.widthHeight = this.getWidthHeight();
+  }
+
   private getWidthHeight(): WidthHeight {
     return new WidthHeight(35, 4 + 3 * this.columns.length)
   }
