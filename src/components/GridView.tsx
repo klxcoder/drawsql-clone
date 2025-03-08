@@ -11,7 +11,7 @@ import {
   drawTables,
 } from '../utils';
 import { Grid } from '../models/Grid';
-import { TableData } from '../App';
+import { TableData } from '../models/Table';
 
 function GridView({
   grid,

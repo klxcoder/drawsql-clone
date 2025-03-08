@@ -5,17 +5,7 @@ import { Grid } from './models/Grid';
 import TableForm from './components/TableForm';
 import { getInitialGrid } from './utils';
 import GridView from './components/GridView';
-
-export type TableData = {
-  name: string,
-  row: number,
-  col: number,
-  columns: ({
-    keyType: string,
-    name: string,
-    columnType: string,
-  })[],
-}
+import { TableData } from './models/Table';
 
 function App() {
   const [grid] = useState<Grid>(getInitialGrid);

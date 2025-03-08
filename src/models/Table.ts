@@ -1,8 +1,18 @@
-import { TableData } from "../App";
 import { randomColor } from "../utils";
 import { Column } from "./Column";
 import { Rect } from "./Rect";
 import { RowCol } from "./RowCol";
+
+export type TableData = {
+  name: string,
+  row: number,
+  col: number,
+  columns: ({
+    keyType: string,
+    name: string,
+    columnType: string,
+  })[],
+}
 
 export class Table {
   public name: string;

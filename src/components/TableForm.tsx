@@ -1,4 +1,4 @@
-import { TableData } from '../App';
+import { TableData } from '../models/Table';
 import styles from './TableForm.module.scss';
 
 function TableForm({
