@@ -34,7 +34,6 @@ function App() {
         }}
         onChangeColumnKeyType={(columnName, newKeyType) => {
           newKeyType = newKeyType.trim();
-          // Change the table name to `newName`
           const table: Table | undefined = grid.tables.find(t => t.name === tableData.name);
           if (!table) return;
           const column: Column | undefined = table.columns.find(c => c.name === columnName);
@@ -42,6 +41,27 @@ function App() {
           column.keyType = newKeyType.substring(0, 2).toUpperCase();
           // Update UI
           setTableData(table.getData());
+        }}
+        onChangeColumnName={(columnName, newName) => {
+          newName = newName.trim();
+          if (newName === '') return;
+          const table: Table | undefined = grid.tables.find(t => t.name === tableData.name);
+          if (!table) return;
+          {
+            // If column `newName` already exist => exit
+            const column: Column | undefined = table.columns.find(c => c.name === newName);
+            if (column) return;
+          }
+          {
+            // Change the column name to `newName`
+            const column: Column | undefined = table.columns.find(c => c.name === columnName);
+            if (!column) return;
+            column.name = newName;
+          }
+          {
+            // Update UI
+            setTableData(table.getData());
+          }
         }}
       />}
       <GridView
