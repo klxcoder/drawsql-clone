@@ -8,12 +8,14 @@ function TableForm({
   onChangeColumnKeyType,
   onChangeColumnName,
   onChangeColumnType,
+  onSelectColumnIndex,
 }: {
   gridData: GridData,
   onChangeTableName: (newName: string) => void,
   onChangeColumnKeyType: (columnName: string, newKeyType: string) => void,
   onChangeColumnName: (columnName: string, newName: string) => void,
   onChangeColumnType: (columnName: string, newType: string) => void,
+  onSelectColumnIndex: (index: number) => void,
 }) {
   return (
     <div className={styles.tableForm}>
@@ -37,6 +39,7 @@ function TableForm({
               )}
               value={column.keyType}
               onChange={(e) => onChangeColumnKeyType(column.name, e.target.value)}
+              onClick={() => onSelectColumnIndex(index)}
             />
             <input
               className={classNames(
@@ -45,6 +48,7 @@ function TableForm({
               )}
               value={column.name}
               onChange={(e) => onChangeColumnName(column.name, e.target.value)}
+              onClick={() => onSelectColumnIndex(index)}
             />
             <input
               className={classNames(
@@ -53,6 +57,7 @@ function TableForm({
               )}
               value={column.columnType}
               onChange={(e) => onChangeColumnType(column.name, e.target.value)}
+              onClick={() => onSelectColumnIndex(index)}
             />
           </div>
         ))}

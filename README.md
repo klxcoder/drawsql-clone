@@ -7,5 +7,4 @@
   - Total of row: 4 + 3 * column.length
 
 # Todo
-  + grid have method getData
-  + Click on column will focus on the input row
+  + Click on input row will update selectedColumn

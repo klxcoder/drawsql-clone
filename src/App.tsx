@@ -79,6 +79,10 @@ function App() {
             setGridData(grid.getData());
           }
         }}
+        onSelectColumnIndex={(index) => {
+          grid.selectedColumnIndex = index;
+          setGridData(grid.getData());
+        }}
       />}
       <GridView
         grid={grid}
