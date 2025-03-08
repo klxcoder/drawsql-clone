@@ -54,6 +54,17 @@ export class Table {
     return new WidthHeight(35, 4 + 3 * this.columns.length)
   }
 
+  private getSanitizeColumns(columns: Column[]): Column[] {
+    if (columns.length === 0) {
+      columns.push(new Column({
+        keyType: 'PK',
+        name: `${this.name}_id`,
+        columnType: 'bigint',
+      }));
+    }
+    return columns;
+  }
+
   constructor({
     name,
     rowCol,
@@ -66,7 +77,7 @@ export class Table {
     //
     this.name = name;
     this.rowCol = rowCol;
-    this.columns = columns;
+    this.columns = this.getSanitizeColumns(columns);
     //
     this.widthHeight = this.getWidthHeight();
     this.color = randomColor();
