@@ -18,7 +18,7 @@ function GridView({
   setTableData,
 }: {
   grid: Grid,
-  setTableData: React.Dispatch<React.SetStateAction<TableData | undefined>>,
+  setTableData: (tableData: TableData | undefined) => void,
 }) {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
