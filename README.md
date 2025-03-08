@@ -8,10 +8,6 @@
 
 # TODO
   - Can CRUD table
-  - a dedicated UI for editing/adding table
-  - a component TableForm.tsx
-  - table name
-  - each row have 3 fields
   - a button Add/Update
-  - Where does state store at?
+  - Where does state store at -> at the top of App
   - state is store at App contains all tables?

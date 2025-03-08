@@ -1,3 +1,4 @@
+import { Column } from "./models/Column";
 import { Grid } from "./models/Grid";
 import { RowCol } from "./models/RowCol";
 import { Table } from "./models/Table";
@@ -203,4 +204,61 @@ export const drawMouseCell = (ctx: CanvasRenderingContext2D, mouseCell: RowCol) 
     shadowOffset: 1,
     stroke: false,
   });
+}
+
+export const getInitialGrid: () => Grid = () => {
+  const grid = new Grid();
+  grid.addTable(new Table({
+    name: 'student',
+    rowCol: new RowCol(1, 1),
+    columns: [
+      new Column({
+        keyType: 'PK',
+        name: 'person_id',
+        columnType: 'bigint',
+      }),
+      new Column({
+        keyType: '',
+        name: 'description',
+        columnType: 'text',
+      }),
+    ],
+  }));
+  grid.addTable(new Table({
+    name: 'notification',
+    rowCol: new RowCol(30, 15),
+    columns: [
+      new Column({
+        keyType: 'PK',
+        name: 'notification_id',
+        columnType: 'bigint',
+      }),
+      new Column({
+        keyType: 'FK',
+        name: 'person_id',
+        columnType: 'bigint',
+      }),
+      new Column({
+        keyType: '',
+        name: 'content',
+        columnType: 'text',
+      }),
+      new Column({
+        keyType: '',
+        name: 'created_at',
+        columnType: 'timestamp',
+      }),
+    ],
+  }));
+  grid.addTable(new Table({
+    name: 'x',
+    rowCol: new RowCol(35, 35),
+    columns: [],
+  }));
+  grid.addTable(new Table({
+    name: 'overlap',
+    rowCol: new RowCol(10, 8),
+    columns: [],
+  }));
+  return grid;
 }
