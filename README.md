@@ -1,4 +1,9 @@
-# Table on grid structure
+# Live demo
+
+- https://klxcoder.github.io/drawsql-clone/
+
+# Table on grid structure note
+
   - Row 0: colorful
   - Row 1,2,3: table name
   - Line before row 4: Seperate table name and tabe columns
@@ -7,6 +12,7 @@
   - Total of row: 4 + 3 * column.length
 
 # Todo
+
   + Can move table around
   + When click => will save the lastMouseCell
   + When move mouse => if mousedown => update the selected table with the current mouseCell
