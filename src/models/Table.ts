@@ -40,7 +40,10 @@ export class Table {
   }
 
   public removeColumn(index: number) {
-    if (this.columns.length <= 1) {
+    if (
+      this.columns.length <= 1 ||
+      this.columns[index].keyType === 'PK'
+    ) {
       return;
     }
     this.columns.splice(index, 1);

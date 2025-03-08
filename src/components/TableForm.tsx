@@ -72,7 +72,7 @@ function TableForm({
               title='Remove column'
               className={styles.btnRemoveColumn}
               onClick={() => onRemoveColumn(index)}
-              disabled={columns.length === 1}
+              disabled={columns.length === 1 || column.keyType === 'PK'}
             >-</button>
           </div>
         ))}
