@@ -21,11 +21,14 @@ export class Table {
   public widthHeight: WidthHeight;
   public color: string;
 
-  public getTableData: () => TableData = () => ({
-    name: this.name,
-    rowCol: this.rowCol.getRowColData(),
-    columns: this.columns,
-  })
+  public getData: () => TableData = () => {
+    return {
+      name: this.name,
+      rowCol: this.rowCol.getRowColData(),
+      columns: this.columns,
+    }
+  };
+
 
   constructor({
     name,

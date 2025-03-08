@@ -79,7 +79,7 @@ function GridView({
 
     const onClick = () => {
       grid.click();
-      setTableData(grid.selectedTable?.getTableData());
+      setTableData(grid.selectedTable?.getData());
     }
 
     canvas.addEventListener('mousemove', onMouseMove);
