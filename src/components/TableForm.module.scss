@@ -38,6 +38,28 @@
         width: 100px;
       }
 
+      button.btnAddColumn {
+        background-color: #28a745;
+        color: #fff;
+        border: 1px solid #28a745;
+      }
+
+      button.btnAddColumn:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+      }
+
+      button.btnRemoveColumn {
+        background-color: #dc3545;
+        color: #fff;
+        border: 1px solid #dc3545;
+      }
+
+      button.btnRemoveColumn:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+      }
+
       button.btnAddColumn,
       button.btnRemoveColumn {
         width: 30px;
