@@ -12,6 +12,10 @@
     .column {
       display: flex;
 
+      .selected {
+        background-color: bisque;
+      }
+
       .keyType {
         width: 35px;
       }

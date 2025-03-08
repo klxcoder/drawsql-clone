@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { TableData } from '../models/Table';
 import styles from './TableForm.module.scss';
 
@@ -30,7 +31,10 @@ function TableForm({
             key={index}
           >
             <input
-              className={styles.keyType}
+              className={classNames(
+                styles.keyType,
+                styles.selected,
+              )}
               value={column.keyType}
               onChange={(e) => onChangeColumnKeyType(column.name, e.target.value)}
             />
