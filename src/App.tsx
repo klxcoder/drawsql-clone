@@ -6,6 +6,7 @@ import TableForm from './components/TableForm';
 import { getInitialGrid } from './utils';
 import GridView from './components/GridView';
 import { Table, TableData } from './models/Table';
+import { Column } from './models/Column';
 
 function App() {
   const [grid] = useState<Grid>(getInitialGrid);
@@ -30,6 +31,17 @@ function App() {
             // Update UI
             setTableData(table.getData());
           }
+        }}
+        onChangeColumnKeyType={(columnName, newKeyType) => {
+          newKeyType = newKeyType.trim();
+          // Change the table name to `newName`
+          const table: Table | undefined = grid.tables.find(t => t.name === tableData.name);
+          if (!table) return;
+          const column: Column | undefined = table.columns.find(c => c.name === columnName);
+          if (!column) return;
+          column.keyType = newKeyType.substring(0, 2).toUpperCase();
+          // Update UI
+          setTableData(table.getData());
         }}
       />}
       <GridView

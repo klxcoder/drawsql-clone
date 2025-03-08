@@ -4,9 +4,11 @@ import styles from './TableForm.module.scss';
 function TableForm({
   table,
   onChangeTableName,
+  onChangeColumnKeyType,
 }: {
   table: TableData,
   onChangeTableName: (newName: string) => void,
+  onChangeColumnKeyType: (columnName: string, newKeyType: string) => void,
 }) {
   return (
     <div className={styles.tableForm}>
@@ -26,7 +28,7 @@ function TableForm({
             <input
               className={styles.keyType}
               value={column.keyType}
-              onChange={() => { }}
+              onChange={(e) => onChangeColumnKeyType(column.name, e.target.value)}
             />
             <input
               className={styles.columnName}
