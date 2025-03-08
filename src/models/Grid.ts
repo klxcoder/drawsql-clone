@@ -58,9 +58,7 @@ export class Grid {
     // 
     if (!this.hoveredTable) {
       this.hoveredColumnIndex = -1;
-      return;
-    }
-    {
+    } else {
       // Calculate this.hoveredColumnIndex
       const index = Math.floor((this.mouseCell.row - this.hoveredTable.rowCol.row - 4) / 3);
       if (index >= 0 && index < this.hoveredTable.columns.length) {
