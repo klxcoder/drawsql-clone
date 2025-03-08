@@ -7,4 +7,4 @@
   - Total of row: 4 + 3 * column.length
 
 # Todo
-  + Click on input row will update selectedColumn
+  + focus on input row will update selectedColumn (navigate with tab)

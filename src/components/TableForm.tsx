@@ -34,6 +34,8 @@ function TableForm({
           <div
             className={styles.column}
             key={index}
+            onFocus={() => onSelectColumnIndex(index)}
+            onClick={() => onSelectColumnIndex(index)}
           >
             <input
               className={classNames(
@@ -42,7 +44,6 @@ function TableForm({
               )}
               value={column.keyType}
               onChange={(e) => onChangeColumnKeyType(column.name, e.target.value)}
-              onClick={() => onSelectColumnIndex(index)}
             />
             <input
               className={classNames(
@@ -51,7 +52,6 @@ function TableForm({
               )}
               value={column.name}
               onChange={(e) => onChangeColumnName(column.name, e.target.value)}
-              onClick={() => onSelectColumnIndex(index)}
             />
             <input
               className={classNames(
@@ -60,7 +60,6 @@ function TableForm({
               )}
               value={column.columnType}
               onChange={(e) => onChangeColumnType(column.name, e.target.value)}
-              onClick={() => onSelectColumnIndex(index)}
             />
             <button
               title='Add column'
