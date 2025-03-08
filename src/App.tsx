@@ -12,7 +12,10 @@ function App() {
   const [grid] = useState<Grid>(getInitialGrid);
   const [gridData, setGridData] = useState<GridData>();
   return (
-    <div className={styles.app}>
+    <div
+      className={styles.app}
+      onContextMenu={(e) => e.preventDefault()}
+    >
       {gridData && <TableForm
         gridData={gridData}
         onChangeTableName={(newName) => {
