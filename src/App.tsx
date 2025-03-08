@@ -83,6 +83,10 @@ function App() {
           grid.selectedColumnIndex = index;
           setGridData(grid.getData());
         }}
+        onAddColumnAfter={(index) => {
+          grid.selectedTable?.addColumnAfter(index);
+          setGridData(grid.getData());
+        }}
       />}
       <GridView
         grid={grid}

@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { randomColor } from "../utils";
 import { Column } from "./Column";
 import { RowCol, RowColData } from "./RowCol";
@@ -29,6 +30,19 @@ export class Table {
     }
   };
 
+  public addColumnAfter(index: number) {
+    this.columns.splice(index + 1, 0, new Column({
+      keyType: '',
+      name: nanoid(5),
+      columnType: 'bigint',
+    }));
+    this.widthHeight = this.getWidthHeight();
+  }
+
+  private getWidthHeight(): WidthHeight {
+    return new WidthHeight(35, 4 + 3 * this.columns.length)
+  }
+
   constructor({
     name,
     rowCol,
@@ -43,7 +57,7 @@ export class Table {
     this.rowCol = rowCol;
     this.columns = columns;
     //
-    this.widthHeight = new WidthHeight(35, 4 + 3 * columns.length);
+    this.widthHeight = this.getWidthHeight();
     this.color = randomColor();
   }
 }

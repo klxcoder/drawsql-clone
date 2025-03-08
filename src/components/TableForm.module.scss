@@ -12,20 +12,25 @@
     .column {
       display: flex;
 
-      .selected {
+      input.selected {
         background-color: bisque;
       }
 
-      .keyType {
+      input.keyType {
         width: 35px;
       }
 
-      .columnName {
+      input.columnName {
         width: 250px;
       }
 
-      .columnType {
+      input.columnType {
         width: 100px;
+      }
+
+      button.btnAddColumn {
+        width: 30px;
+        height: 30px;
       }
     }
   }
