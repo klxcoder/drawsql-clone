@@ -20,10 +20,7 @@ export class Grid {
 
   public selectedColumnIndex: number = -1;
 
-  public readonly mouseCell: RowCol = {
-    row: -1,
-    col: -1,
-  }
+  public readonly mouseCell: RowCol = new RowCol(-1, -1);
 
   public addTable(table: Table) {
     this.tables.push(table);
@@ -32,10 +29,10 @@ export class Grid {
   private getMostTopTable(): Table | undefined {
     for (const table of [...this.tables].reverse()) {
       if (
-        this.mouseCell.col >= table.rect.col &&
-        this.mouseCell.col < table.rect.col + table.rect.width &&
-        this.mouseCell.row >= table.rect.row &&
-        this.mouseCell.row < table.rect.row + table.rect.height
+        this.mouseCell.col >= table.rowCol.col &&
+        this.mouseCell.col < table.rowCol.col + table.widthHeight.width &&
+        this.mouseCell.row >= table.rowCol.row &&
+        this.mouseCell.row < table.rowCol.row + table.widthHeight.height
       ) {
         return table;
       }
@@ -53,7 +50,7 @@ export class Grid {
     }
     {
       // Calculate this.hoveredColumn
-      const index = Math.floor((this.mouseCell.row - this.hoveredTable.rect.row - 4) / 3);
+      const index = Math.floor((this.mouseCell.row - this.hoveredTable.rowCol.row - 4) / 3);
       if (index >= 0 && index < this.hoveredTable.columns.length) {
         this.hoveredColumnIndex = index;
       } else {

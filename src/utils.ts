@@ -77,10 +77,10 @@ export const drawTables = (
     ctx.fillStyle = table.color;
     drawRoundedRect({
       ctx,
-      x: table.rect.col * Grid.CELL_SIZE,
-      y: table.rect.row * Grid.CELL_SIZE,
-      width: table.rect.width * Grid.CELL_SIZE,
-      height: table.rect.height * Grid.CELL_SIZE,
+      x: table.rowCol.col * Grid.CELL_SIZE,
+      y: table.rowCol.row * Grid.CELL_SIZE,
+      width: table.widthHeight.width * Grid.CELL_SIZE,
+      height: table.widthHeight.height * Grid.CELL_SIZE,
       radius: Grid.CELL_SIZE / 2,
       shadowOffset: table === hoveredTable ? 5 : 1,
       stroke: table === selectedTable,
@@ -91,10 +91,10 @@ export const drawTables = (
     ctx.fillStyle = 'ivory';
     drawRoundedRect({
       ctx,
-      x: table.rect.col * Grid.CELL_SIZE,
-      y: (table.rect.row + 1) * Grid.CELL_SIZE,
-      width: table.rect.width * Grid.CELL_SIZE,
-      height: (table.rect.height - 1) * Grid.CELL_SIZE,
+      x: table.rowCol.col * Grid.CELL_SIZE,
+      y: (table.rowCol.row + 1) * Grid.CELL_SIZE,
+      width: table.widthHeight.width * Grid.CELL_SIZE,
+      height: (table.widthHeight.height - 1) * Grid.CELL_SIZE,
       radius: Grid.CELL_SIZE / 2,
       shadowOffset: 1,
       stroke: false,
@@ -107,9 +107,9 @@ export const drawTables = (
     ctx.font = "bold 20px 'Lucida Console', monospace";
     ctx.fillText(
       table.name,
-      (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
+      (table.rowCol.col + table.widthHeight.width / 2) * Grid.CELL_SIZE,
       // Table name start at 2.5
-      (table.rect.row + 2.5) * Grid.CELL_SIZE,
+      (table.rowCol.row + 2.5) * Grid.CELL_SIZE,
     );
     // Draw border below table name
     ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
@@ -119,8 +119,8 @@ export const drawTables = (
     ctx.shadowOffsetY = 1; // Shadow offset downward
     ctx.beginPath();
     // Shadow below table name start at 3.8
-    ctx.moveTo(table.rect.col * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
-    ctx.lineTo((table.rect.col + table.rect.width) * Grid.CELL_SIZE, (table.rect.row + 3.8) * Grid.CELL_SIZE);
+    ctx.moveTo(table.rowCol.col * Grid.CELL_SIZE, (table.rowCol.row + 3.8) * Grid.CELL_SIZE);
+    ctx.lineTo((table.rowCol.col + table.widthHeight.width) * Grid.CELL_SIZE, (table.rowCol.row + 3.8) * Grid.CELL_SIZE);
     ctx.closePath();
     ctx.stroke();
   }
@@ -129,9 +129,9 @@ export const drawTables = (
     ctx.fillStyle = "antiquewhite";
     drawRoundedRect({
       ctx,
-      x: table.rect.col * Grid.CELL_SIZE,
-      y: (table.rect.row + 4 + selectedColumnIndex * 3) * Grid.CELL_SIZE,
-      width: table.rect.width * Grid.CELL_SIZE,
+      x: table.rowCol.col * Grid.CELL_SIZE,
+      y: (table.rowCol.row + 4 + selectedColumnIndex * 3) * Grid.CELL_SIZE,
+      width: table.widthHeight.width * Grid.CELL_SIZE,
       height: 3 * Grid.CELL_SIZE,
       radius: Grid.CELL_SIZE / 2,
       shadowOffset: 1,
@@ -152,9 +152,9 @@ export const drawTables = (
           ctx.fillStyle = "antiquewhite";
           drawRoundedRect({
             ctx,
-            x: table.rect.col * Grid.CELL_SIZE,
-            y: (table.rect.row + 4 + hoveredColumnIndex * 3) * Grid.CELL_SIZE,
-            width: table.rect.width * Grid.CELL_SIZE,
+            x: table.rowCol.col * Grid.CELL_SIZE,
+            y: (table.rowCol.row + 4 + hoveredColumnIndex * 3) * Grid.CELL_SIZE,
+            width: table.widthHeight.width * Grid.CELL_SIZE,
             height: 3 * Grid.CELL_SIZE,
             radius: Grid.CELL_SIZE / 2,
             shadowOffset: 1,
@@ -170,8 +170,8 @@ export const drawTables = (
       table.columns.forEach((column, index) => {
         ctx.fillText(
           `${column.keyType.padEnd(2, ' ')} | ${column.name.padEnd(25 - column.columnType.length, ' ')} ${column.columnType}`,
-          (table.rect.col + table.rect.width / 2) * Grid.CELL_SIZE,
-          (table.rect.row + 5.5 + 3 * index) * Grid.CELL_SIZE,
+          (table.rowCol.col + table.widthHeight.width / 2) * Grid.CELL_SIZE,
+          (table.rowCol.row + 5.5 + 3 * index) * Grid.CELL_SIZE,
         );
       });
     }

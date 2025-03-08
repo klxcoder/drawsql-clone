@@ -1,7 +1,7 @@
 import { randomColor } from "../utils";
 import { Column } from "./Column";
-import { Rect } from "./Rect";
 import { RowCol, RowColData } from "./RowCol";
+import { WidthHeight } from "./WidthHeight";
 
 export type TableData = {
   name: string,
@@ -15,16 +15,15 @@ export type TableData = {
 
 export class Table {
   public name: string;
-  public rect: Rect; // size
+  public rowCol: RowCol;
   public columns: Column[];
+  //
+  public widthHeight: WidthHeight;
   public color: string;
 
   public getTableData: () => TableData = () => ({
     name: this.name,
-    rowCol: {
-      row: this.rect.row,
-      col: this.rect.col,
-    },
+    rowCol: this.rowCol.getRowColData(),
     columns: this.columns,
   })
 
@@ -37,14 +36,12 @@ export class Table {
     rowCol: RowCol,
     columns: Column[],
   }) {
+    //
     this.name = name;
-    this.rect = new Rect({
-      row: rowCol.row,
-      col: rowCol.col,
-      width: 35,
-      height: 4 + 3 * columns.length,
-    });
+    this.rowCol = rowCol;
     this.columns = columns;
+    //
+    this.widthHeight = new WidthHeight(35, 4 + 3 * columns.length);
     this.color = randomColor();
   }
 }
