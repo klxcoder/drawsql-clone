@@ -14,11 +14,22 @@ function App() {
     <div className={styles.app}>
       {tableData && <TableForm
         table={tableData}
-        onChangeTableName={(name) => {
-          const table: Table | undefined = grid.tables.find(t => t.name === tableData.name);
-          if (!table) return;
-          table.name = name;
-          setTableData(table.getData());
+        onChangeTableName={(newName) => {
+          newName = newName.trim();
+          if (newName === '') return;
+          {
+            // If table `newName` already exist => exit
+            const table: Table | undefined = grid.tables.find(t => t.name === newName);
+            if (table) return;
+          }
+          {
+            // Change the table name to `newName`
+            const table: Table | undefined = grid.tables.find(t => t.name === tableData.name);
+            if (!table) return;
+            table.name = newName;
+            // Update UI
+            setTableData(table.getData());
+          }
         }}
       />}
       <GridView

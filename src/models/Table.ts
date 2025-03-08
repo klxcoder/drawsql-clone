@@ -29,7 +29,6 @@ export class Table {
     }
   };
 
-
   constructor({
     name,
     rowCol,
