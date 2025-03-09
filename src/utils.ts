@@ -10,6 +10,19 @@ export function getRandomInt(a: number, b: number) {
   return Math.floor(Math.random() * (b - a + 1)) + a;
 }
 
+export function download<T>(dataObj: T) {
+  const jsonStr = JSON.stringify(dataObj, null, 2);
+  const blob = new Blob([jsonStr], { type: "application/json" });
+
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "dataObj.json";
+  link.click();
+
+  URL.revokeObjectURL(link.href);
+}
+
+
 // Function to draw a rounded rectangle
 const drawRoundedRect = ({
   ctx,

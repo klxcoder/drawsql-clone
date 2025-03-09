@@ -112,6 +112,31 @@ function App() {
           grid.selectedTable = table;
           setGridData(grid.getData());
         }}
+        onImport={() => {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = ".json";
+
+          input.addEventListener("change", (event) => {
+            const file = (event.target as HTMLInputElement)?.files?.[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              try {
+                const gridData = JSON.parse(e.target?.result as string);
+                grid.setGridData(gridData);
+                setGridData(grid.getData());
+              } catch (error) {
+                console.error("Invalid JSON file:", error);
+              }
+            };
+
+            reader.readAsText(file);
+          });
+
+          input.click();
+        }}
       />
       <GridView
         grid={grid}

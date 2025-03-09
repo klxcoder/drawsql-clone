@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import styles from './TableForm.module.scss';
 import { GridData } from '../models/Grid';
+import { download } from '../utils';
 
 function TableForm({
   gridData,
@@ -13,6 +14,7 @@ function TableForm({
   onRemoveColumn,
   onRemoveTable,
   onAddTable,
+  onImport,
 }: {
   gridData: GridData,
   onChangeTableName: (newName: string) => void,
@@ -24,6 +26,7 @@ function TableForm({
   onRemoveColumn: (index: number) => void,
   onRemoveTable: () => void,
   onAddTable: () => void,
+  onImport: () => void,
 }) {
   return (
     <div className={styles.tableForm}>
@@ -98,12 +101,14 @@ function TableForm({
           <button
             title='Export ERD data'
             className={styles.btnExport}
-          // onClick={() => onExport()}
+            onClick={() => {
+              download<GridData>(gridData);
+            }}
           >Export</button>
           <button
             title='Import ERD data'
             className={styles.btnImport}
-          // onClick={() => onImport()}
+            onClick={() => onImport()}
           >Import</button>
         </div>
       </div>}

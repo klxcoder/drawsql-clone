@@ -128,6 +128,11 @@ export class Grid {
     }
   }
 
+  public setGridData(gridData: GridData) {
+    console.log(gridData);
+    // How to check if gridData is a valid GridData
+  }
+
   constructor() {
   }
 }
