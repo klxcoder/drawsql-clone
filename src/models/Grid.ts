@@ -41,6 +41,21 @@ export class Grid {
     this.tables.push(table);
   }
 
+  public removeTable(tableName: string) {
+    const index: number = this.tables.findIndex(t => t.name === tableName);
+    if (index === -1) return;
+    const table: Table = this.tables[index];
+    if (table === this.hoveredTable) {
+      this.hoveredTable = undefined;
+      this.hoveredColumnIndex = -1;
+    }
+    if (table === this.selectedTable) {
+      this.selectedTable = undefined;
+      this.selectedColumnIndex = -1;
+    }
+    this.tables.splice(index, 1);
+  }
+
   private getMostTopTable(): Table | undefined {
     for (const table of [...this.tables].reverse()) {
       if (

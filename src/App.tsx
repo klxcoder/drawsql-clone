@@ -94,6 +94,10 @@ function App() {
           grid.selectedTable?.removeColumn(index);
           setGridData(grid.getData());
         }}
+        onRemoveTable={() => {
+          grid.removeTable(grid.selectedTable?.name || '');
+          setGridData(grid.getData());
+        }}
       />
       <GridView
         grid={grid}

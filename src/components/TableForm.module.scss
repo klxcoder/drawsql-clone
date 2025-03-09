@@ -22,6 +22,22 @@
       text-align: center;
       width: 100%;
     }
+
+    button.btnRemoveTable {
+      background-color: #dc3545;
+      color: #fff;
+      border: 1px solid #dc3545;
+    }
+
+    button.btnRemoveTable:hover {
+      background-color: #c82333;
+      border-color: #bd2130;
+    }
+
+    button.btnRemoveTable {
+      width: 30px;
+      height: 30px;
+    }
   }
 
   .columns {

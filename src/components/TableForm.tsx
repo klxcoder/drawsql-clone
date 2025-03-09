@@ -11,6 +11,7 @@ function TableForm({
   onSelectColumnIndex,
   onAddColumnAfter,
   onRemoveColumn,
+  onRemoveTable,
 }: {
   gridData: GridData,
   onChangeTableName: (newName: string) => void,
@@ -20,6 +21,7 @@ function TableForm({
   onSelectColumnIndex: (index: number) => void,
   onAddColumnAfter: (index: number) => void,
   onRemoveColumn: (index: number) => void,
+  onRemoveTable: () => void,
 }) {
   return (
     gridData.selectedTable ? <div className={styles.tableForm}>
@@ -30,6 +32,11 @@ function TableForm({
           onChange={(e) => onChangeTableName(e.target.value)}
           onClick={() => onSelectColumnIndex(-1)}
         />
+        <button
+          title='Remove table'
+          className={styles.btnRemoveTable}
+          onClick={() => onRemoveTable()}
+        >-</button>
       </div>
       <div className={styles.columns}>
         {gridData.selectedTable.columns.map((column, index, columns) => (
