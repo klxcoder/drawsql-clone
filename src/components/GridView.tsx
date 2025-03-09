@@ -1,7 +1,6 @@
 import {
   useCallback,
   useEffect,
-  useLayoutEffect,
   useRef,
 } from 'react';
 import styles from './Grid.module.scss';
@@ -98,17 +97,8 @@ function GridView({
     };
   }, [grid, setGridData]);
 
-  useLayoutEffect(() => {
-    let frameId: number;
-
-    const animate = () => {
-      draw();
-      frameId = requestAnimationFrame(animate);
-    };
-
-    frameId = requestAnimationFrame(animate);
-
-    return () => cancelAnimationFrame(frameId);
+  useEffect(() => {
+    draw();
   }, [draw]);
 
   return (
