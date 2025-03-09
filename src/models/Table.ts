@@ -1,8 +1,10 @@
-import { nanoid } from "nanoid";
 import { randomColor } from "../utils";
 import { Column } from "./Column";
 import { RowCol, RowColData } from "./RowCol";
 import { WidthHeight, WidthHeightData } from "./WidthHeight";
+import { customAlphabet } from 'nanoid';
+
+const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz', 5);
 
 export type TableData = {
   name: string,

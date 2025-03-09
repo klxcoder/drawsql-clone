@@ -12,7 +12,6 @@
   - Total of row: 4 + 3 * column.length
 
 # Todo
-  - Can add table
   - Can export data
   - Can import data
   - Can show dots before and after columns

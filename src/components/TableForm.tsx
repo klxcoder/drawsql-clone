@@ -12,6 +12,7 @@ function TableForm({
   onAddColumnAfter,
   onRemoveColumn,
   onRemoveTable,
+  onAddTable,
 }: {
   gridData: GridData,
   onChangeTableName: (newName: string) => void,
@@ -22,6 +23,7 @@ function TableForm({
   onAddColumnAfter: (index: number) => void,
   onRemoveColumn: (index: number) => void,
   onRemoveTable: () => void,
+  onAddTable: () => void,
 }) {
   return (
     gridData.selectedTable ? <div className={styles.tableForm}>
@@ -84,7 +86,12 @@ function TableForm({
           </div>
         ))}
       </div>
-    </div> : <div className={styles.tableForm}></div>
+    </div> : <div className={styles.tableForm}>
+      <button
+        className={styles.btnAddTable}
+        onClick={() => onAddTable()}
+      >Add table</button>
+    </div>
   )
 }
 

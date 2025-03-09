@@ -7,6 +7,10 @@ import { getInitialGrid } from './utils';
 import GridView from './components/GridView';
 import { Table } from './models/Table';
 import { Column } from './models/Column';
+import { RowCol } from './models/RowCol';
+import { customAlphabet } from 'nanoid';
+
+const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz', 5);
 
 function App() {
   const [grid] = useState<Grid>(getInitialGrid);
@@ -96,6 +100,14 @@ function App() {
         }}
         onRemoveTable={() => {
           grid.removeTable(grid.selectedTable?.name || '');
+          setGridData(grid.getData());
+        }}
+        onAddTable={() => {
+          grid.addTable(new Table({
+            name: nanoid(5),
+            rowCol: new RowCol(10, 8),
+            columns: [],
+          }));
           setGridData(grid.getData());
         }}
       />

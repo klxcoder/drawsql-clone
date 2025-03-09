@@ -9,6 +9,18 @@
   padding: 10px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
 
+  button.btnAddTable {
+    background-color: #28a745;
+    color: #fff;
+    border: 1px solid #28a745;
+    border-radius: 5px;
+  }
+
+  button.btnAddTable:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+
   input {
     padding: 2px 4px;
   }
