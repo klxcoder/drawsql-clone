@@ -26,71 +26,87 @@ function TableForm({
   onAddTable: () => void,
 }) {
   return (
-    gridData.selectedTable ? <div className={styles.tableForm}>
-      <div className={styles.tableName}>
-        <input
-          placeholder='table1'
-          value={gridData.selectedTable.name}
-          onChange={(e) => onChangeTableName(e.target.value)}
-          onClick={() => onSelectColumnIndex(-1)}
-        />
-        <button
-          title='Remove table'
-          className={styles.btnRemoveTable}
-          onClick={() => onRemoveTable()}
-        >-</button>
-      </div>
-      <div className={styles.columns}>
-        {gridData.selectedTable.columns.map((column, index, columns) => (
-          <div
-            className={styles.column}
-            key={index}
-            onFocus={() => onSelectColumnIndex(index)}
-            onClick={() => onSelectColumnIndex(index)}
-          >
-            <input
-              className={classNames(
-                styles.keyType,
-                gridData.selectedColumnIndex === index ? styles.selected : '',
-              )}
-              value={column.keyType}
-              onChange={(e) => onChangeColumnKeyType(column.name, e.target.value)}
-            />
-            <input
-              className={classNames(
-                styles.columnName,
-                gridData.selectedColumnIndex === index ? styles.selected : '',
-              )}
-              value={column.name}
-              onChange={(e) => onChangeColumnName(column.name, e.target.value)}
-            />
-            <input
-              className={classNames(
-                styles.columnType,
-                gridData.selectedColumnIndex === index ? styles.selected : '',
-              )}
-              value={column.columnType}
-              onChange={(e) => onChangeColumnType(column.name, e.target.value)}
-            />
-            <button
-              title='Add column'
-              className={styles.btnAddColumn}
-              onClick={() => onAddColumnAfter(index)}
-            >+</button>
-            <button
-              title='Remove column'
-              className={styles.btnRemoveColumn}
-              onClick={() => onRemoveColumn(index)}
-              disabled={columns.length === 1 || column.keyType === 'PK'}
-            >-</button>
-          </div>
-        ))}
-      </div>
-    </div> : <div className={styles.tableForm}>
-      <button
-        className={styles.btnAddTable}
-        onClick={() => onAddTable()}
-      >Add table</button>
+    <div className={styles.tableForm}>
+      {gridData.selectedTable ? <div className={styles.selectedTable}>
+        <div className={styles.tableName}>
+          <input
+            placeholder='table1'
+            value={gridData.selectedTable.name}
+            onChange={(e) => onChangeTableName(e.target.value)}
+            onClick={() => onSelectColumnIndex(-1)}
+          />
+          <button
+            title='Remove table'
+            className={styles.btnRemoveTable}
+            onClick={() => onRemoveTable()}
+          >-</button>
+        </div>
+        <div className={styles.columns}>
+          {gridData.selectedTable.columns.map((column, index, columns) => (
+            <div
+              className={styles.column}
+              key={index}
+              onFocus={() => onSelectColumnIndex(index)}
+              onClick={() => onSelectColumnIndex(index)}
+            >
+              <input
+                className={classNames(
+                  styles.keyType,
+                  gridData.selectedColumnIndex === index ? styles.selected : '',
+                )}
+                value={column.keyType}
+                onChange={(e) => onChangeColumnKeyType(column.name, e.target.value)}
+              />
+              <input
+                className={classNames(
+                  styles.columnName,
+                  gridData.selectedColumnIndex === index ? styles.selected : '',
+                )}
+                value={column.name}
+                onChange={(e) => onChangeColumnName(column.name, e.target.value)}
+              />
+              <input
+                className={classNames(
+                  styles.columnType,
+                  gridData.selectedColumnIndex === index ? styles.selected : '',
+                )}
+                value={column.columnType}
+                onChange={(e) => onChangeColumnType(column.name, e.target.value)}
+              />
+              <button
+                title='Add column'
+                className={styles.btnAddColumn}
+                onClick={() => onAddColumnAfter(index)}
+              >+</button>
+              <button
+                title='Remove column'
+                className={styles.btnRemoveColumn}
+                onClick={() => onRemoveColumn(index)}
+                disabled={columns.length === 1 || column.keyType === 'PK'}
+              >-</button>
+            </div>
+          ))}
+        </div>
+      </div> : <div className={styles.buttonsLayout}>
+        <div className={styles.top}>
+          <button
+            className={styles.btnAddTable}
+            onClick={() => onAddTable()}
+          >Add table</button>
+        </div>
+        <div className={styles.bottom}>
+          <button
+            title='Export ERD data'
+            className={styles.btnExport}
+          // onClick={() => onExport()}
+          >Export</button>
+          <button
+            title='Import ERD data'
+            className={styles.btnImport}
+          // onClick={() => onImport()}
+          >Import</button>
+        </div>
+      </div>}
     </div>
   )
 }

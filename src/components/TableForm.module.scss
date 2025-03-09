@@ -9,101 +9,126 @@
   padding: 10px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
 
-  button.btnAddTable {
-    background-color: #28a745;
-    color: #fff;
-    border: 1px solid #28a745;
-    border-radius: 5px;
-  }
-
-  button.btnAddTable:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
-  }
-
-  input {
-    padding: 2px 4px;
-  }
-
-  .tableName {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+  .selectedTable {
     input {
-      text-align: center;
-      width: 100%;
+      padding: 2px 4px;
     }
 
-    button.btnRemoveTable {
-      background-color: #dc3545;
-      color: #fff;
-      border: 1px solid #dc3545;
-    }
-
-    button.btnRemoveTable:hover {
-      background-color: #c82333;
-      border-color: #bd2130;
-    }
-
-    button.btnRemoveTable {
-      width: 30px;
-      height: 30px;
-    }
-  }
-
-  .columns {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-
-    .column {
+    .tableName {
       display: flex;
-      gap: 2px;
+      justify-content: center;
+      align-items: center;
 
-      input.selected {
-        background-color: bisque;
-      }
-
-      input.keyType {
-        width: 35px;
+      input {
         text-align: center;
+        width: 100%;
       }
 
-      input.columnName {
-        flex: 1;
-      }
-
-      input.columnType {
-        width: 100px;
-      }
-
-      button.btnAddColumn {
-        background-color: #28a745;
-        color: #fff;
-        border: 1px solid #28a745;
-      }
-
-      button.btnAddColumn:hover {
-        background-color: #218838;
-        border-color: #1e7e34;
-      }
-
-      button.btnRemoveColumn {
+      button.btnRemoveTable {
         background-color: #dc3545;
         color: #fff;
         border: 1px solid #dc3545;
       }
 
-      button.btnRemoveColumn:hover {
+      button.btnRemoveTable:hover {
         background-color: #c82333;
         border-color: #bd2130;
       }
 
-      button.btnAddColumn,
-      button.btnRemoveColumn {
+      button.btnRemoveTable {
         width: 30px;
         height: 30px;
+      }
+    }
+
+    .columns {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .column {
+        display: flex;
+        gap: 2px;
+
+        input.selected {
+          background-color: bisque;
+        }
+
+        input.keyType {
+          width: 35px;
+          text-align: center;
+        }
+
+        input.columnName {
+          flex: 1;
+        }
+
+        input.columnType {
+          width: 100px;
+        }
+
+        button.btnAddColumn {
+          background-color: #28a745;
+          color: #fff;
+          border: 1px solid #28a745;
+        }
+
+        button.btnAddColumn:hover {
+          background-color: #218838;
+          border-color: #1e7e34;
+        }
+
+        button.btnRemoveColumn {
+          background-color: #dc3545;
+          color: #fff;
+          border: 1px solid #dc3545;
+        }
+
+        button.btnRemoveColumn:hover {
+          background-color: #c82333;
+          border-color: #bd2130;
+        }
+
+        button.btnAddColumn,
+        button.btnRemoveColumn {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+  }
+
+  .buttonsLayout {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .top {
+
+      button.btnAddTable {
+        width: 100%;
+        background-color: #28a745;
+        color: #fff;
+        border: 1px solid #28a745;
+        border-radius: 5px;
+      }
+
+      button.btnAddTable:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+      }
+    }
+
+
+    .bottom {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+
+      button {
+        padding: 2px 3px;
       }
     }
   }
