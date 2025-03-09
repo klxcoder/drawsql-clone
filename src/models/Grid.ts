@@ -13,9 +13,9 @@ export type GridData = {
 
 export class Grid {
 
-  public static MAX_COLS = 90;
+  public static MAX_COLS = 200;
 
-  public static MAX_ROWS = 70;
+  public static MAX_ROWS = 100;
 
   public static CELL_SIZE = 10;
 
