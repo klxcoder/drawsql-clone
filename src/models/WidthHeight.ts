@@ -1,9 +1,11 @@
+import { Data } from "./Data";
+
 export type WidthHeightData = {
   width: number,
   height: number
 }
 
-export class WidthHeight {
+export class WidthHeight extends Data<WidthHeightData> {
   public width: number;
   public height: number;
 
@@ -14,7 +16,13 @@ export class WidthHeight {
     }
   }
 
+  public setData(data: WidthHeightData) {
+    this.width = data.width;
+    this.height = data.height;
+  }
+
   constructor(width: number, height: number) {
+    super();
     this.width = width;
     this.height = height;
   }

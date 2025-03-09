@@ -1,5 +1,6 @@
 import { randomColor } from "../utils";
 import { Column } from "./Column";
+import { Data } from "./Data";
 import { RowCol, RowColData } from "./RowCol";
 import { WidthHeight, WidthHeightData } from "./WidthHeight";
 import { customAlphabet } from 'nanoid';
@@ -18,7 +19,7 @@ export type TableData = {
   color: string,
 }
 
-export class Table {
+export class Table extends Data<TableData> {
   public name: string;
   public rowCol: RowCol;
   public columns: Column[];
@@ -30,11 +31,17 @@ export class Table {
     return {
       name: this.name,
       rowCol: this.rowCol.getData(),
-      columns: this.columns,
+      columns: this.columns.map(column => column.getData()),
       widthHeight: this.widthHeight.getData(),
       color: this.color,
     }
   };
+
+  public setData(data: TableData) {
+    this.name = data.name;
+    this.rowCol.setData(data.rowCol);
+    this.columns.map(column => column.setData())
+  }
 
   public addColumnAfter(index: number) {
     this.columns.splice(index + 1, 0, new Column({
@@ -80,6 +87,7 @@ export class Table {
     rowCol: RowCol,
     columns: Column[],
   }) {
+    super();
     //
     this.name = name;
     this.rowCol = rowCol;
