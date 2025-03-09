@@ -125,7 +125,7 @@ function App() {
             reader.onload = (e) => {
               try {
                 const gridData = JSON.parse(e.target?.result as string);
-                grid.setGridData(gridData);
+                grid.setData(gridData);
                 setGridData(grid.getData());
               } catch (error) {
                 console.error("Invalid JSON file:", error);
