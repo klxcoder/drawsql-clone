@@ -22,7 +22,7 @@ function TableForm({
   onRemoveColumn: (index: number) => void,
 }) {
   return (
-    gridData.selectedTable && <div className={styles.tableForm}>
+    gridData.selectedTable ? <div className={styles.tableForm}>
       <div className={styles.tableName}>
         <input
           placeholder='table1'
@@ -77,7 +77,7 @@ function TableForm({
           </div>
         ))}
       </div>
-    </div>
+    </div> : <div className={styles.tableForm}></div>
   )
 }
 
