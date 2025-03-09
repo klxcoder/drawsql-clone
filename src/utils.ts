@@ -184,7 +184,7 @@ export const drawTables = (
     drawTableBackground1(table);
     drawTableBackground2(table);
     drawTableName(table);
-    if (table === selectedTable && selectedColumnIndex !== -1) {
+    if (table.name === selectedTable?.name && selectedColumnIndex !== -1) {
       drawSelectedColumn(table);
     }
     drawTableColumns(ctx, table, hoveredTable, hoveredColumnIndex);
