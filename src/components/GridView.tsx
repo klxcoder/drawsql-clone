@@ -75,6 +75,7 @@ function GridView({
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       grid.mouseMove({ x, y });
+      setGridData(grid.getData());
     };
 
     const onMouseDown = () => {
