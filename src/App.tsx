@@ -3,7 +3,7 @@ import styles from './App.module.scss';
 import { Grid, GridData } from './models/Grid';
 
 import TableForm from './components/TableForm';
-import { getInitialGrid } from './utils';
+import { getInitialGrid, getRandomInt } from './utils';
 import GridView from './components/GridView';
 import { Table } from './models/Table';
 import { Column } from './models/Column';
@@ -103,11 +103,13 @@ function App() {
           setGridData(grid.getData());
         }}
         onAddTable={() => {
-          grid.addTable(new Table({
+          const table: Table = new Table({
             name: nanoid(5),
-            rowCol: new RowCol(10, 8),
+            rowCol: new RowCol(getRandomInt(1, 20), getRandomInt(1, 20)),
             columns: [],
-          }));
+          })
+          grid.addTable(table);
+          grid.selectedTable = table;
           setGridData(grid.getData());
         }}
       />

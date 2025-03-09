@@ -5,6 +5,11 @@ import { Table, TableData } from "./models/Table";
 
 export const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
 
+// Random integer between a and b (both inclusive
+export function getRandomInt(a: number, b: number) {
+  return Math.floor(Math.random() * (b - a + 1)) + a;
+}
+
 // Function to draw a rounded rectangle
 const drawRoundedRect = ({
   ctx,
