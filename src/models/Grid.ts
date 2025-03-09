@@ -109,7 +109,7 @@ export class Grid {
       tables: this.tables.map(table => table.getData()),
       hoveredTable: this.hoveredTable?.getData(),
       hoveredColumnIndex: this.hoveredColumnIndex,
-      mouseCell: this.mouseCell.getRowColData(),
+      mouseCell: this.mouseCell.getData(),
     }
   }
 

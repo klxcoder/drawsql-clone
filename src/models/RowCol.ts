@@ -7,7 +7,7 @@ export class RowCol {
   public row: number;
   public col: number;
 
-  public getRowColData: () => RowColData = () => {
+  public getData: () => RowColData = () => {
     return {
       row: this.row,
       col: this.col,

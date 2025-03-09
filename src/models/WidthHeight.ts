@@ -7,7 +7,7 @@ export class WidthHeight {
   public width: number;
   public height: number;
 
-  public getWidthHeightData: () => WidthHeightData = () => {
+  public getData: () => WidthHeightData = () => {
     return {
       width: this.width,
       height: this.height,

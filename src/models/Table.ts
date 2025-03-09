@@ -27,9 +27,9 @@ export class Table {
   public getData: () => TableData = () => {
     return {
       name: this.name,
-      rowCol: this.rowCol.getRowColData(),
+      rowCol: this.rowCol.getData(),
       columns: this.columns,
-      widthHeight: this.widthHeight.getWidthHeightData(),
+      widthHeight: this.widthHeight.getData(),
       color: this.color,
     }
   };
