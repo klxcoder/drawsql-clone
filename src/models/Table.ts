@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import { randomColor } from "../utils";
 import { Column } from "./Column";
 import { RowCol, RowColData } from "./RowCol";
-import { WidthHeight } from "./WidthHeight";
+import { WidthHeight, WidthHeightData } from "./WidthHeight";
 
 export type TableData = {
   name: string,
@@ -12,6 +12,8 @@ export type TableData = {
     name: string,
     columnType: string,
   })[],
+  widthHeight: WidthHeightData,
+  color: string,
 }
 
 export class Table {
@@ -27,6 +29,8 @@ export class Table {
       name: this.name,
       rowCol: this.rowCol.getRowColData(),
       columns: this.columns,
+      widthHeight: this.widthHeight.getWidthHeightData(),
+      color: this.color,
     }
   };
 

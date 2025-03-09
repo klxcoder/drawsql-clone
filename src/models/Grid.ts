@@ -1,10 +1,14 @@
-import { RowCol } from "./RowCol";
+import { RowCol, RowColData } from "./RowCol";
 import { Table, TableData } from "./Table";
 import { XY } from "./XY";
 
 export type GridData = {
   selectedTable: TableData | undefined,
   selectedColumnIndex: number,
+  tables: TableData[],
+  hoveredTable: TableData | undefined,
+  hoveredColumnIndex: number,
+  mouseCell: RowColData,
 }
 
 export class Grid {
@@ -102,6 +106,10 @@ export class Grid {
     return {
       selectedTable: this.selectedTable?.getData(),
       selectedColumnIndex: this.selectedColumnIndex,
+      tables: this.tables.map(table => table.getData()),
+      hoveredTable: this.hoveredTable?.getData(),
+      hoveredColumnIndex: this.hoveredColumnIndex,
+      mouseCell: this.mouseCell.getRowColData(),
     }
   }
 

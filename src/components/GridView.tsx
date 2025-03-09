@@ -13,9 +13,11 @@ import { Grid, GridData } from '../models/Grid';
 
 function GridView({
   grid,
+  gridData,
   setGridData,
 }: {
   grid: Grid,
+  gridData: GridData,
   setGridData: (gridData: GridData) => void,
 }) {
 
@@ -46,22 +48,22 @@ function GridView({
     drawDots(bufferCtx);
     drawTables(
       bufferCtx,
-      grid.tables,
-      grid.hoveredTable,
-      grid.selectedTable,
-      grid.hoveredColumnIndex,
-      grid.selectedColumnIndex,
+      gridData.tables,
+      gridData.hoveredTable,
+      gridData.selectedTable,
+      gridData.hoveredColumnIndex,
+      gridData.selectedColumnIndex,
     );
-    drawMouseCell(bufferCtx, grid.mouseCell);
+    drawMouseCell(bufferCtx, gridData.mouseCell);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
   }, [
-    grid.hoveredColumnIndex,
-    grid.hoveredTable,
-    grid.selectedColumnIndex,
-    grid.selectedTable,
-    grid.mouseCell,
-    grid.tables,
+    gridData.hoveredColumnIndex,
+    gridData.hoveredTable,
+    gridData.selectedColumnIndex,
+    gridData.selectedTable,
+    gridData.mouseCell,
+    gridData.tables,
   ]);
 
   useEffect(() => {

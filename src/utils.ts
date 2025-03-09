@@ -1,7 +1,7 @@
 import { Column } from "./models/Column";
 import { Grid } from "./models/Grid";
-import { RowCol } from "./models/RowCol";
-import { Table } from "./models/Table";
+import { RowCol, RowColData } from "./models/RowCol";
+import { Table, TableData } from "./models/Table";
 
 export const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
 
@@ -66,14 +66,14 @@ export const drawDots = (ctx: CanvasRenderingContext2D) => {
 
 export const drawTables = (
   ctx: CanvasRenderingContext2D,
-  tables: Table[],
-  hoveredTable: Table | undefined,
-  selectedTable: Table | undefined,
+  tables: TableData[],
+  hoveredTable: TableData | undefined,
+  selectedTable: TableData | undefined,
   hoveredColumnIndex: number,
   selectedColumnIndex: number,
 ) => {
 
-  const drawTableBackground1 = (table: Table) => {
+  const drawTableBackground1 = (table: TableData) => {
     ctx.fillStyle = table.color;
     drawRoundedRect({
       ctx,
@@ -87,7 +87,7 @@ export const drawTables = (
     });
   }
 
-  const drawTableBackground2 = (table: Table) => {
+  const drawTableBackground2 = (table: TableData) => {
     ctx.fillStyle = 'ivory';
     drawRoundedRect({
       ctx,
@@ -101,7 +101,7 @@ export const drawTables = (
     });
   }
 
-  const drawTableName = (table: Table) => {
+  const drawTableName = (table: TableData) => {
     // Draw the text centered inside the rectangle
     ctx.fillStyle = "black"; // Text color
     ctx.font = "bold 20px 'Lucida Console', monospace";
@@ -125,7 +125,7 @@ export const drawTables = (
     ctx.stroke();
   }
 
-  const drawSelectedColumn = (table: Table) => {
+  const drawSelectedColumn = (table: TableData) => {
     ctx.fillStyle = "antiquewhite";
     drawRoundedRect({
       ctx,
@@ -141,8 +141,8 @@ export const drawTables = (
 
   const drawTableColumns = (
     ctx: CanvasRenderingContext2D,
-    table: Table,
-    hoveredTable: Table | undefined,
+    table: TableData,
+    hoveredTable: TableData | undefined,
     hoveredColumnIndex: number,
   ) => {
 
@@ -191,7 +191,7 @@ export const drawTables = (
   });
 };
 
-export const drawMouseCell = (ctx: CanvasRenderingContext2D, mouseCell: RowCol) => {
+export const drawMouseCell = (ctx: CanvasRenderingContext2D, mouseCell: RowColData) => {
   const { col, row } = mouseCell;
   ctx.fillStyle = "rgba(0, 0, 255, 0.15)";
   drawRoundedRect({

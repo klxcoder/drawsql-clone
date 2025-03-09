@@ -10,13 +10,13 @@ import { Column } from './models/Column';
 
 function App() {
   const [grid] = useState<Grid>(getInitialGrid);
-  const [gridData, setGridData] = useState<GridData>();
+  const [gridData, setGridData] = useState<GridData>(grid.getData());
   return (
     <div
       className={styles.app}
       onContextMenu={(e) => e.preventDefault()}
     >
-      {gridData && <TableForm
+      <TableForm
         gridData={gridData}
         onChangeTableName={(newName) => {
           newName = newName.trim();
@@ -94,9 +94,10 @@ function App() {
           grid.selectedTable?.removeColumn(index);
           setGridData(grid.getData());
         }}
-      />}
+      />
       <GridView
         grid={grid}
+        gridData={gridData}
         setGridData={setGridData}
       />
     </div>
