@@ -40,7 +40,9 @@ export class Table extends Data<TableData> {
   public setData(data: TableData) {
     this.name = data.name;
     this.rowCol.setData(data.rowCol);
-    this.columns.map(column => column.setData())
+    this.columns = data.columns.map(column => new Column(column));
+    this.widthHeight.setData(data.widthHeight);
+    this.color = data.color;
   }
 
   public addColumnAfter(index: number) {

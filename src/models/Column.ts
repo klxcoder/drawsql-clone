@@ -7,9 +7,9 @@ export type ColumnData = {
 }
 
 export class Column extends Data<ColumnData> {
-  public keyType: string; // "PK", "FK", ""
-  public name: string;
-  public columnType: string;
+  public keyType: string = ''; // "PK", "FK", ""
+  public name: string = '';
+  public columnType: string = '';
 
   public getData(): ColumnData {
     return {
@@ -25,18 +25,8 @@ export class Column extends Data<ColumnData> {
     this.columnType = data.columnType;
   }
 
-  constructor({
-    keyType,
-    name,
-    columnType,
-  }: {
-    keyType: string,
-    name: string,
-    columnType: string,
-  }) {
+  constructor(columnData: ColumnData) {
     super();
-    this.keyType = keyType;
-    this.name = name;
-    this.columnType = columnType;
+    this.setData(columnData);
   }
 }
