@@ -82,6 +82,37 @@ export const drawDots = (ctx: CanvasRenderingContext2D) => {
   }
 }
 
+export const getLineSelectedHovered = ({
+  selectedTable,
+  hoveredTable,
+  selectedColumnIndex,
+  hoveredColumnIndex,
+}: {
+  selectedTable: TableData | undefined,
+  hoveredTable: TableData | undefined,
+  selectedColumnIndex: number,
+  hoveredColumnIndex: number,
+}): LineData | undefined => {
+  if (
+    selectedTable &&
+    hoveredTable &&
+    selectedColumnIndex !== -1 &&
+    hoveredColumnIndex !== -1
+  ) {
+    const line: LineData = {
+      start: {
+        table: selectedTable.name,
+        column: selectedTable.columns[selectedColumnIndex].name,
+      },
+      end: {
+        table: hoveredTable.name,
+        column: hoveredTable.columns[hoveredColumnIndex].name,
+      },
+    }
+    return line
+  }
+}
+
 export const drawLine = (
   ctx: CanvasRenderingContext2D,
   tables: TableData[],

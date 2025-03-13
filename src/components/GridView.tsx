@@ -11,6 +11,7 @@ import {
   drawLines,
   drawMouseCell,
   drawTables,
+  getLineSelectedHovered,
 } from '../utils';
 import { Grid, GridData } from '../models/Grid';
 import { LineData } from '../models/Line';
@@ -58,22 +59,15 @@ function GridView({
     bufferCtx.clearRect(0, 0, buffer.width, buffer.height);
     drawDots(bufferCtx);
     drawLines(ctx, grid.data.tables, grid.data.lines)
-    if (
-      grid.data.selectedTable &&
-      grid.data.hoveredTable &&
-      grid.data.selectedColumnIndex !== -1 &&
-      grid.data.hoveredColumnIndex !== -1
-    ) {
-      const line: LineData = {
-        start: {
-          table: grid.data.selectedTable.name,
-          column: grid.data.selectedTable.columns[grid.data.selectedColumnIndex].name,
-        },
-        end: {
-          table: grid.data.hoveredTable.name,
-          column: grid.data.hoveredTable.columns[grid.data.hoveredColumnIndex].name,
-        },
-      }
+
+    const line: LineData | undefined = getLineSelectedHovered({
+      selectedTable: grid.data.selectedTable,
+      hoveredTable: grid.data.hoveredTable,
+      selectedColumnIndex: grid.data.selectedColumnIndex,
+      hoveredColumnIndex: grid.data.hoveredColumnIndex,
+    })
+
+    if (line) {
       drawLine(ctx, grid.data.tables, line)
     }
 
@@ -116,6 +110,15 @@ function GridView({
     };
 
     const onMouseDown = () => {
+      const line: LineData | undefined = getLineSelectedHovered({
+        selectedTable: grid.data.selectedTable,
+        hoveredTable: grid.data.hoveredTable,
+        selectedColumnIndex: grid.data.selectedColumnIndex,
+        hoveredColumnIndex: grid.data.hoveredColumnIndex,
+      })
+      if (line) {
+        grid.data.lines.push(line)
+      }
       isDirty.current = true;
       grid.mouseDown();
 
@@ -124,7 +127,6 @@ function GridView({
         animationFrameId.current = requestAnimationFrame(animate);
       };
       animate();
-
       setGridData({ ...grid.data });
     }
 
