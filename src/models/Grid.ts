@@ -8,7 +8,6 @@ export type GridData = {
   tables: TableData[],
   hoveredTable: TableData | undefined,
   hoveredColumnIndex: number,
-  // mouseCell: RowColData,
 }
 
 export class Grid {
@@ -124,7 +123,6 @@ export class Grid {
       tables: this.tables.map(table => table.getData()),
       hoveredTable: this.hoveredTable?.getData(),
       hoveredColumnIndex: this.hoveredColumnIndex,
-      // mouseCell: this.mouseCell.getData(),
     }
   }
 
