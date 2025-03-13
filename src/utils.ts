@@ -101,7 +101,7 @@ export const drawLines = (
     ]
   }
 
-  const distance = (first: RowColData, second: RowColData) => {
+  const distance = (first: RowColData, second: RowColData): number => {
     const row2 = first.row - second.row
     const col2 = first.col - second.col
     return row2 * row2 + col2 * col2
@@ -113,17 +113,17 @@ export const drawLines = (
     const startTable: TableData | undefined = tables.find(t => t.name === line.start.table)
     const endTable: TableData | undefined = tables.find(t => t.name === line.end.table)
     if (!startTable || !endTable) return
-    const startIndex = startTable.columns.findIndex(c => c.name === line.start.column)
-    const endIndex = endTable.columns.findIndex(c => c.name === line.end.column)
+    const startIndex: number = startTable.columns.findIndex(c => c.name === line.start.column)
+    const endIndex: number = endTable.columns.findIndex(c => c.name === line.end.column)
     if (startIndex === -1 || endIndex === -1) return
-    const startColumnPoints = getColumnPoints(startTable, startIndex)
-    const endColumnPoints = getColumnPoints(endTable, endIndex)
+    const startColumnPoints: RowColData[] = getColumnPoints(startTable, startIndex)
+    const endColumnPoints: RowColData[] = getColumnPoints(endTable, endIndex)
     let minDistance = Number.POSITIVE_INFINITY
     let minI = 0;
     let minJ = 0;
     startColumnPoints.forEach((s, i) => {
       endColumnPoints.forEach((e, j) => {
-        const d = distance(s, e)
+        const d: number = distance(s, e)
         if (d < minDistance) {
           minDistance = d;
           minI = i;
@@ -132,9 +132,17 @@ export const drawLines = (
       })
     })
 
+    const startPoint: RowColData = startColumnPoints[minI]
+    const endPoint: RowColData = endColumnPoints[minJ]
+
     ctx.beginPath();
-    ctx.moveTo(startColumnPoints[minI].col * Grid.CELL_SIZE, startColumnPoints[minI].row * Grid.CELL_SIZE);
-    ctx.lineTo(endColumnPoints[minJ].col * Grid.CELL_SIZE, endColumnPoints[minJ].row * Grid.CELL_SIZE);
+    ctx.moveTo(startPoint.col * Grid.CELL_SIZE, startPoint.row * Grid.CELL_SIZE);
+    startPoint.col += minI === 0 ? -2 : 2
+    endPoint.col += minJ === 0 ? -2 : 2
+    ctx.lineTo(startPoint.col * Grid.CELL_SIZE, startPoint.row * Grid.CELL_SIZE);
+    ctx.lineTo(endPoint.col * Grid.CELL_SIZE, endPoint.row * Grid.CELL_SIZE);
+    endPoint.col += minJ === 0 ? 2 : -2
+    ctx.lineTo(endPoint.col * Grid.CELL_SIZE, endPoint.row * Grid.CELL_SIZE);
     ctx.strokeStyle = 'red';
     ctx.lineWidth = 2;
     ctx.stroke();
