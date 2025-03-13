@@ -88,10 +88,42 @@ export const drawLines = (
   lines: LineData[],
 ) => {
 
+  const getLeftRightPoints = (table: TableData, index: number): {
+    left: RowColData,
+    right: RowColData,
+  } => {
+    return {
+      left: {
+        row: table.rowCol.row + 5 + 3 * index,
+        col: table.rowCol.col - 1,
+      },
+      right: {
+        row: table.rowCol.row + 5 + 3 * index,
+        col: table.rowCol.col + table.widthHeight.width,
+      }
+    }
+  }
+
   const drawLine = (
     line: LineData,
   ) => {
-    console.log({ ctx, tables, line })
+    const startTable: TableData | undefined = tables.find(t => t.name === line.start.table)
+    const endTable: TableData | undefined = tables.find(t => t.name === line.end.table)
+    if (!startTable || !endTable) return
+    const startIndex = startTable.columns.findIndex(c => c.name === line.start.column)
+    const endIndex = endTable.columns.findIndex(c => c.name === line.end.column)
+    if (startIndex === -1 || endIndex === -1) return
+    const { left: startLeft } = getLeftRightPoints(startTable, startIndex)
+    const { left: endLeft } = getLeftRightPoints(endTable, endIndex)
+
+    console.log(startLeft, endLeft)
+
+    ctx.beginPath();
+    ctx.moveTo(startLeft.col * Grid.CELL_SIZE, startLeft.row * Grid.CELL_SIZE);
+    ctx.lineTo(endLeft.col * Grid.CELL_SIZE, endLeft.row * Grid.CELL_SIZE);
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.stroke();
   }
 
   lines.forEach(line => drawLine(line))
