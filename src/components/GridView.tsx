@@ -14,12 +14,12 @@ import { Grid, GridData } from '../models/Grid';
 
 function GridView({
   grid,
+  gridData,
   setGridData,
-  drawTrigger,
 }: {
   grid: Grid,
+  gridData: GridData,
   setGridData: (gridData: GridData) => void,
-  drawTrigger: number,
 }) {
   console.log('Rendered GridView')
 
@@ -127,7 +127,7 @@ function GridView({
 
   useEffect(() => {
     draw();
-  }, [draw, drawTrigger]);
+  }, [draw, gridData]);
 
   return (
     <div className={styles.grid}>

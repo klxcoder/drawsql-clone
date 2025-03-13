@@ -144,8 +144,8 @@ function App() {
       />
       <GridView
         grid={grid}
+        gridData={gridData}
         setGridData={handleGridDataChange}
-        drawTrigger={0}
       />
     </div>
   )
