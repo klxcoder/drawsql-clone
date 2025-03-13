@@ -227,28 +227,182 @@ export const getInitialGrid: () => Grid = () => {
   const grid: Grid = new Grid({
     selectedTable: undefined,
     selectedColumnIndex: -1,
-    tables: [],
+    "tables": [
+      {
+        "name": "student",
+        "rowCol": {
+          "row": 1,
+          "col": 1
+        },
+        "columns": [
+          {
+            "keyType": "PK",
+            "name": "person_id",
+            "columnType": "bigint"
+          },
+          {
+            "keyType": "",
+            "name": "description",
+            "columnType": "text"
+          }
+        ],
+        "widthHeight": {
+          "width": 35,
+          "height": 10
+        },
+        "color": "#a968d5"
+      },
+      {
+        "name": "notification",
+        "rowCol": {
+          "row": 30,
+          "col": 15
+        },
+        "columns": [
+          {
+            "keyType": "PK",
+            "name": "notification_id",
+            "columnType": "bigint"
+          },
+          {
+            "keyType": "FK",
+            "name": "person_id",
+            "columnType": "bigint"
+          },
+          {
+            "keyType": "",
+            "name": "content",
+            "columnType": "text"
+          },
+          {
+            "keyType": "",
+            "name": "created_at",
+            "columnType": "timestamp"
+          }
+        ],
+        "widthHeight": {
+          "width": 35,
+          "height": 16
+        },
+        "color": "#39a4b9"
+      },
+      {
+        "name": "x",
+        "rowCol": {
+          "row": 35,
+          "col": 35
+        },
+        "columns": [
+          {
+            "keyType": "PK",
+            "name": "x_id",
+            "columnType": "bigint"
+          }
+        ],
+        "widthHeight": {
+          "width": 35,
+          "height": 7
+        },
+        "color": "#76ade7"
+      },
+      {
+        "name": "overlap",
+        "rowCol": {
+          "row": 15,
+          "col": 47
+        },
+        "columns": [
+          {
+            "keyType": "PK",
+            "name": "overlap_id",
+            "columnType": "bigint"
+          }
+        ],
+        "widthHeight": {
+          "width": 35,
+          "height": 7
+        },
+        "color": "#69fc9e"
+      },
+      {
+        "name": "ndrbf",
+        "rowCol": {
+          "row": 67,
+          "col": 49
+        },
+        "columns": [
+          {
+            "keyType": "PK",
+            "name": "ndrbf_id",
+            "columnType": "bigint"
+          }
+        ],
+        "widthHeight": {
+          "width": 35,
+          "height": 7
+        },
+        "color": "#9a5e81"
+      },
+      {
+        "name": "ojgbi",
+        "rowCol": {
+          "row": 2,
+          "col": 45
+        },
+        "columns": [
+          {
+            "keyType": "PK",
+            "name": "ojgbi_id",
+            "columnType": "bigint"
+          }
+        ],
+        "widthHeight": {
+          "width": 35,
+          "height": 7
+        },
+        "color": "#0e4d7f"
+      },
+      {
+        "name": "bnxmj",
+        "rowCol": {
+          "row": 21,
+          "col": 3
+        },
+        "columns": [
+          {
+            "keyType": "PK",
+            "name": "bnxmj_id",
+            "columnType": "bigint"
+          }
+        ],
+        "widthHeight": {
+          "width": 35,
+          "height": 7
+        },
+        "color": "#177e8b"
+      },
+      {
+        "name": "yes",
+        "rowCol": {
+          "row": 70,
+          "col": 5
+        },
+        "columns": [
+          {
+            "keyType": "PK",
+            "name": "chiuy_id",
+            "columnType": "bigint"
+          }
+        ],
+        "widthHeight": {
+          "width": 35,
+          "height": 7
+        },
+        "color": "#a7468f"
+      }
+    ],
     hoveredTable: undefined,
     hoveredColumnIndex: -1,
   });
-  grid.addTable({
-    name: 'student',
-    rowCol: {
-      row: 1,
-      col: 1,
-    },
-    columns: [
-      {
-        "keyType": "PK",
-        "name": "person_id",
-        "columnType": "bigint"
-      }
-    ],
-    widthHeight: {
-      width: 35,
-      height: 10,
-    },
-    color: '#a968d5',
-  })
   return grid;
 }
