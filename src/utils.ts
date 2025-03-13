@@ -93,24 +93,22 @@ export const getLineSelectedHovered = ({
   selectedColumnIndex: number,
   hoveredColumnIndex: number,
 }): LineData | undefined => {
-  if (
-    selectedTable &&
-    hoveredTable &&
-    selectedColumnIndex !== -1 &&
-    hoveredColumnIndex !== -1
-  ) {
-    const line: LineData = {
-      start: {
-        table: selectedTable.name,
-        column: selectedTable.columns[selectedColumnIndex].name,
-      },
-      end: {
-        table: hoveredTable.name,
-        column: hoveredTable.columns[hoveredColumnIndex].name,
-      },
-    }
-    return line
+  if (!selectedTable) return
+  if (!hoveredTable) return
+  if (selectedColumnIndex === -1) return
+  if (hoveredColumnIndex === -1) return
+  if (selectedTable.name === hoveredTable.name && selectedColumnIndex === hoveredColumnIndex) return
+  const line: LineData = {
+    start: {
+      table: selectedTable.name,
+      column: selectedTable.columns[selectedColumnIndex].name,
+    },
+    end: {
+      table: hoveredTable.name,
+      column: hoveredTable.columns[hoveredColumnIndex].name,
+    },
   }
+  return line
 }
 
 export const drawLine = (
