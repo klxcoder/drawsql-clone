@@ -59,8 +59,8 @@ function GridView({
       grid.data.tables,
       grid.data.hoveredTable,
       grid.data.selectedTable,
-      grid.hoveredColumnIndex,
-      grid.selectedColumnIndex,
+      grid.data.hoveredColumnIndex,
+      grid.data.selectedColumnIndex,
     );
     drawMouseCell(bufferCtx, grid.mouseCell);
     // Copy the buffer to the main canvas in one step
@@ -69,9 +69,9 @@ function GridView({
     grid.data.hoveredTable,
     grid.data.selectedTable,
     grid.data.tables,
-    grid.hoveredColumnIndex,
+    grid.data.hoveredColumnIndex,
     grid.mouseCell,
-    grid.selectedColumnIndex,
+    grid.data.selectedColumnIndex,
     gridData,
     isDirty,
   ]);

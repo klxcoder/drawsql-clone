@@ -231,5 +231,24 @@ export const getInitialGrid: () => Grid = () => {
     hoveredTable: undefined,
     hoveredColumnIndex: -1,
   });
+  grid.addTable({
+    name: 'student',
+    rowCol: {
+      row: 1,
+      col: 1,
+    },
+    columns: [
+      {
+        "keyType": "PK",
+        "name": "person_id",
+        "columnType": "bigint"
+      }
+    ],
+    widthHeight: {
+      width: 35,
+      height: 10,
+    },
+    color: '#a968d5',
+  })
   return grid;
 }

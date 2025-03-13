@@ -37,22 +37,22 @@ function App() {
           if (newName === '') return;
           {
             // If table `newName` already exist => exit
-            const table: Table | undefined = grid.tables.find(t => t.data.name === newName);
+            const table: TableData | undefined = grid.data.tables.find(t => t.name === newName);
             if (table) return;
           }
           {
             // Change the table name to `newName`
-            const table: Table | undefined = grid.tables.find(t => t.data.name === gridData.selectedTable?.name);
+            const table: TableData | undefined = grid.data.tables.find(t => t.name === gridData.selectedTable?.name);
             if (!table) return;
-            table.data.name = newName;
+            table.name = newName;
             updateUI()
           }
         }}
         onChangeColumnKeyType={(columnName, newKeyType) => {
           newKeyType = newKeyType.trim();
-          const table: Table | undefined = grid.tables.find(t => t.data.name === gridData.selectedTable?.name);
+          const table: TableData | undefined = grid.data.tables.find(t => t.name === gridData.selectedTable?.name);
           if (!table) return;
-          const column: ColumnData | undefined = table.data.columns.find(c => c.name === columnName);
+          const column: ColumnData | undefined = table.columns.find(c => c.name === columnName);
           if (!column) return;
           column.keyType = newKeyType.substring(0, 2).toUpperCase();
           updateUI()
@@ -60,16 +60,16 @@ function App() {
         onChangeColumnName={(columnName, newName) => {
           newName = newName.trim();
           if (newName === '') return;
-          const table: Table | undefined = grid.tables.find(t => t.data.name === gridData.selectedTable?.name);
+          const table: TableData | undefined = grid.data.tables.find(t => t.name === gridData.selectedTable?.name);
           if (!table) return;
           {
             // If column `newName` already exist => exit
-            const column: ColumnData | undefined = table.data.columns.find(c => c.name === newName);
+            const column: ColumnData | undefined = table.columns.find(c => c.name === newName);
             if (column) return;
           }
           {
             // Change the column name to `newName`
-            const column: ColumnData | undefined = table.data.columns.find(c => c.name === columnName);
+            const column: ColumnData | undefined = table.columns.find(c => c.name === columnName);
             if (!column) return;
             column.name = newName;
           }
@@ -80,11 +80,11 @@ function App() {
         onChangeColumnType={(columnName, newType) => {
           newType = newType.trim();
           if (newType === '') return;
-          const table: Table | undefined = grid.tables.find(t => t.data.name === gridData.selectedTable?.name);
+          const table: TableData | undefined = grid.data.tables.find(t => t.name === gridData.selectedTable?.name);
           if (!table) return;
           {
             // Change the column type to `newType`
-            const column: ColumnData | undefined = table.data.columns.find(c => c.name === columnName);
+            const column: ColumnData | undefined = table.columns.find(c => c.name === columnName);
             if (!column) return;
             column.columnType = newType;
           }
@@ -93,19 +93,27 @@ function App() {
           }
         }}
         onSelectColumnIndex={(index) => {
-          grid.selectedColumnIndex = index;
+          grid.data.selectedColumnIndex = index;
           updateUI()
         }}
         onAddColumnAfter={(index) => {
-          grid.selectedTable?.addColumnAfter(index);
+          if (!grid.data.selectedTable) return
+          const table: Table = new Table(grid.data.selectedTable)
+          table.addColumnAfter(index)
+          grid.data.selectedTable = table.data
+          grid.data.tables = grid.data.tables.map(t => t.name === table.data.name ? table.data : t)
           updateUI()
         }}
         onRemoveColumn={(index) => {
-          grid.selectedTable?.removeColumn(index);
+          if (!grid.data.selectedTable) return
+          const table: Table = new Table(grid.data.selectedTable)
+          table.removeColumn(index)
+          grid.data.selectedTable = table.data
+          grid.data.tables = grid.data.tables.map(t => t.name === table.data.name ? table.data : t)
           updateUI()
         }}
         onRemoveTable={() => {
-          grid.removeTable(grid.selectedTable?.data.name || '');
+          grid.removeTable(grid.data.selectedTable?.name || '');
           updateUI()
         }}
         onAddTable={() => {
@@ -122,8 +130,8 @@ function App() {
             },
             color: '',
           }
-          const table: Table = grid.addTable(tableData);
-          grid.selectedTable = table;
+          grid.addTable(tableData);
+          grid.data.selectedTable = tableData;
           updateUI()
         }}
         onImport={() => {
