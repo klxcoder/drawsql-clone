@@ -1,4 +1,4 @@
-import { RowCol } from "./RowCol";
+import { RowColData } from "./RowCol";
 import { Table, TableData } from "./Table";
 import { XY } from "./XY";
 
@@ -28,11 +28,11 @@ export class Grid {
 
   public selectedColumnIndex: number = -1;
 
-  public readonly mouseCell: RowCol = new RowCol(-1, -1);
+  public readonly mouseCell: RowColData = { row: -1, col: -1 };
 
-  private readonly lastMouseCell: RowCol = new RowCol(-1, -1);
+  private readonly lastMouseCell: RowColData = { row: -1, col: -1 };
 
-  private readonly lastTableRowCol: RowCol = new RowCol(-1, -1);
+  private readonly lastTableRowCol: RowColData = { row: -1, col: -1 };
 
   public isDragging: boolean = false;
 
