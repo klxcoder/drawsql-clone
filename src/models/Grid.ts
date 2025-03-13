@@ -1,6 +1,6 @@
 import { Data } from "./Data";
 import { RowColData } from "./RowCol";
-import { Table, TableData } from "./Table";
+import { TableData } from "./Table";
 import { XY } from "./XY";
 
 export type GridData = {
@@ -19,16 +19,6 @@ export class Grid extends Data<GridData> {
 
   public static CELL_SIZE = 10;
 
-  public readonly tables: Table[] = [];
-
-  public hoveredTable: Table | undefined;
-
-  public selectedTable: Table | undefined;
-
-  public hoveredColumnIndex: number = -1;
-
-  public selectedColumnIndex: number = -1;
-
   public readonly mouseCell: RowColData = { row: -1, col: -1 };
 
   private readonly lastMouseCell: RowColData = { row: -1, col: -1 };
@@ -37,34 +27,32 @@ export class Grid extends Data<GridData> {
 
   public isDragging: boolean = false;
 
-  public addTable(tableData: TableData): Table {
-    const table: Table = new Table(tableData)
-    this.tables.push(table);
-    return table
+  public addTable(tableData: TableData) {
+    this.data.tables.push(tableData);
   }
 
   public removeTable(tableName: string) {
-    const index: number = this.tables.findIndex(t => t.data.name === tableName);
+    const index: number = this.data.tables.findIndex(t => t.name === tableName);
     if (index === -1) return;
-    const table: Table = this.tables[index];
-    if (table === this.hoveredTable) {
-      this.hoveredTable = undefined;
-      this.hoveredColumnIndex = -1;
+    const table: TableData = this.data.tables[index];
+    if (table === this.data.hoveredTable) {
+      this.data.hoveredTable = undefined;
+      this.data.hoveredColumnIndex = -1;
     }
-    if (table === this.selectedTable) {
-      this.selectedTable = undefined;
-      this.selectedColumnIndex = -1;
+    if (table === this.data.selectedTable) {
+      this.data.selectedTable = undefined;
+      this.data.selectedColumnIndex = -1;
     }
-    this.tables.splice(index, 1);
+    this.data.tables.splice(index, 1);
   }
 
-  private getMostTopTable(): Table | undefined {
-    for (const table of [...this.tables].reverse()) {
+  private getMostTopTable(): TableData | undefined {
+    for (const table of [...this.data.tables].reverse()) {
       if (
-        this.mouseCell.col >= table.data.rowCol.col &&
-        this.mouseCell.col < table.data.rowCol.col + table.data.widthHeight.width &&
-        this.mouseCell.row >= table.data.rowCol.row &&
-        this.mouseCell.row < table.data.rowCol.row + table.data.widthHeight.height
+        this.mouseCell.col >= table.rowCol.col &&
+        this.mouseCell.col < table.rowCol.col + table.widthHeight.width &&
+        this.mouseCell.row >= table.rowCol.row &&
+        this.mouseCell.row < table.rowCol.row + table.widthHeight.height
       ) {
         return table;
       }
@@ -75,47 +63,47 @@ export class Grid extends Data<GridData> {
   public mouseMove(xy: XY) {
     this.mouseCell.col = Math.round(xy.x / Grid.CELL_SIZE);
     this.mouseCell.row = Math.round(xy.y / Grid.CELL_SIZE);
-    this.hoveredTable = this.getMostTopTable();
+    this.data.hoveredTable = this.getMostTopTable();
     // 
-    if (!this.hoveredTable) {
-      this.hoveredColumnIndex = -1;
+    if (!this.data.hoveredTable) {
+      this.data.hoveredColumnIndex = -1;
     } else {
-      // Calculate this.hoveredColumnIndex
-      const index = Math.floor((this.mouseCell.row - this.hoveredTable.data.rowCol.row - 4) / 3);
-      if (index >= 0 && index < this.hoveredTable.data.columns.length) {
-        this.hoveredColumnIndex = index;
+      // Calculate this.data.hoveredColumnIndex
+      const index = Math.floor((this.mouseCell.row - this.data.hoveredTable.rowCol.row - 4) / 3);
+      if (index >= 0 && index < this.data.hoveredTable.columns.length) {
+        this.data.hoveredColumnIndex = index;
       } else {
-        this.hoveredColumnIndex = -1;
+        this.data.hoveredColumnIndex = -1;
       }
     }
-    if (this.isDragging && this.selectedTable) {
+    if (this.isDragging && this.data.selectedTable) {
       // Handle table move
-      this.selectedTable.data.rowCol.col = this.lastTableRowCol.col + this.mouseCell.col - this.lastMouseCell.col;
-      this.selectedTable.data.rowCol.row = this.lastTableRowCol.row + this.mouseCell.row - this.lastMouseCell.row;
+      this.data.selectedTable.rowCol.col = this.lastTableRowCol.col + this.mouseCell.col - this.lastMouseCell.col;
+      this.data.selectedTable.rowCol.row = this.lastTableRowCol.row + this.mouseCell.row - this.lastMouseCell.row;
     }
   }
 
   public mouseDown() {
-    this.selectedTable = this.getMostTopTable();
-    if (!this.selectedTable) {
-      this.selectedColumnIndex = -1;
+    this.data.selectedTable = this.getMostTopTable();
+    if (!this.data.selectedTable) {
+      this.data.selectedColumnIndex = -1;
       return;
     }
     // Bubble selected table on top
-    for (let index = 0; index < this.tables.length; index++) {
-      if (this.tables[index].data.name === this.selectedTable.data.name) {
-        this.tables.splice(index, 1);
-        this.tables.push(this.selectedTable);
+    for (let index = 0; index < this.data.tables.length; index++) {
+      if (this.data.tables[index].name === this.data.selectedTable.name) {
+        this.data.tables.splice(index, 1);
+        this.data.tables.push(this.data.selectedTable);
       }
     }
     // save seleted column index
-    this.selectedColumnIndex = this.hoveredColumnIndex;
+    this.data.selectedColumnIndex = this.data.hoveredColumnIndex;
     this.isDragging = true;
     // save lastMouseCell
     this.lastMouseCell.col = this.mouseCell.col;
     this.lastMouseCell.row = this.mouseCell.row;
     // save lastTableRowCol
-    this.lastTableRowCol.col = this.selectedTable.data.rowCol.col;
-    this.lastTableRowCol.row = this.selectedTable.data.rowCol.row;
+    this.lastTableRowCol.col = this.data.selectedTable.rowCol.col;
+    this.lastTableRowCol.row = this.data.selectedTable.rowCol.row;
   }
 }
