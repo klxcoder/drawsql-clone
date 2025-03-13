@@ -63,27 +63,50 @@ export class Grid extends Data<GridData> {
   }
 
   // Call this function when mouse move on canvas
-  public mouseMove(xy: XY) {
+  public mouseMove(xy: XY): boolean { // return true if need to repaint
     this.mouseCell.col = Math.round(xy.x / Grid.CELL_SIZE);
     this.mouseCell.row = Math.round(xy.y / Grid.CELL_SIZE);
-    this.data.hoveredTable = this.getMostTopTable();
-    // 
-    if (!this.data.hoveredTable) {
-      this.data.hoveredColumnIndex = -1;
-    } else {
-      // Calculate this.data.hoveredColumnIndex
-      const index = Math.floor((this.mouseCell.row - this.data.hoveredTable.rowCol.row - 4) / 3);
-      if (index >= 0 && index < this.data.hoveredTable.columns.length) {
-        this.data.hoveredColumnIndex = index;
-      } else {
-        this.data.hoveredColumnIndex = -1;
+    let repaint: boolean = false;
+    {
+      //
+      // Update this.data.hoveredTable
+      //
+      const _hoveredTable: TableData | undefined = this.getMostTopTable()
+      if (this.data.hoveredTable?.name !== _hoveredTable?.name) {
+        repaint = true
       }
+      this.data.hoveredTable = _hoveredTable;
     }
+    {
+      //
+      // Update this.data.hoveredColumnIndex
+      //
+      let _hoveredColumnIndex: number
+      if (!this.data.hoveredTable) {
+        _hoveredColumnIndex = -1
+      } else {
+        // Calculate this.data.hoveredColumnIndex
+        const index = Math.floor((this.mouseCell.row - this.data.hoveredTable.rowCol.row - 4) / 3);
+        if (index >= 0 && index < this.data.hoveredTable.columns.length) {
+          _hoveredColumnIndex = index
+        } else {
+          _hoveredColumnIndex = -1
+        }
+      }
+      if (this.data.hoveredColumnIndex !== _hoveredColumnIndex) {
+        repaint = true
+      }
+      this.data.hoveredColumnIndex = _hoveredColumnIndex
+    }
+    //
+    // Update this.data.selectedTable.rowCol
+    //
     if (this.isDragging && this.data.selectedTable) {
       // Handle table move
       this.data.selectedTable.rowCol.col = this.lastTableRowCol.col + this.mouseCell.col - this.lastMouseCell.col;
       this.data.selectedTable.rowCol.row = this.lastTableRowCol.row + this.mouseCell.row - this.lastMouseCell.row;
     }
+    return repaint;
   }
 
   public mouseDown() {

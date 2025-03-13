@@ -12,7 +12,7 @@
   - Total of row: 4 + 3 * column.length
 
 # Todo later
-  - Only show dots for selected column
+  - Show hover table and column
   - Can connect dots
     + Between 2 columns from 2 tables
     + Between 2 columns from 1 table (self join)

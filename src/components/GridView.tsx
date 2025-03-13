@@ -87,8 +87,10 @@ function GridView({
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      grid.mouseMove({ x, y });
-      // setGridData(grid.getData());
+      const repaint: boolean = grid.mouseMove({ x, y });
+      if (repaint) {
+        setGridData({ ...grid.data });
+      }
       isDirty.current = true;
     };
 
