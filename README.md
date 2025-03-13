@@ -11,22 +11,29 @@
   - Row 7,8,9: Second column
   - Total of row: 4 + 3 * column.length
 
-# Problem
-  - Mouse move will:
-    - Render App
-    - Render TableForm
-    - Render GridView
+# Probleam
+  - Click on canvas will rerender: App, TableForm, GridView
 
 # Desired
-  - Mouse move will
-    - Not render App
-    - Not render TableForm
-    - Not render GridView
+  - Click on canvas will not rerender: App
+  - Will rerender TableForm if necessary
+  - Will not rerender GridView, just draw
 
 # Todo
-  - Add useRef `mouseCell: RowColData;` to the component GridView
+  - Make gridDate useRef
+
+# Problem
+  - Change data from TableForm do not trigger draw in GridView
+
+# Desired
+  - Change data from TableForm will trigger draw in GridView
 
 # Todo
+  - Maybe add a random number to trigger draw
+  - useEffect with the random number above
+  - Or useEffect with dependency gridData
+
+# Todo later
   - Can import data
   - Can show dots before and after columns
   - Can connect dots
