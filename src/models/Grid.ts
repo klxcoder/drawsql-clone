@@ -1,3 +1,4 @@
+import { Data } from "./Data";
 import { RowColData } from "./RowCol";
 import { Table, TableData } from "./Table";
 import { XY } from "./XY";
@@ -10,7 +11,7 @@ export type GridData = {
   hoveredColumnIndex: number,
 }
 
-export class Grid {
+export class Grid extends Data<GridData> {
 
   public static MAX_COLS = 200;
 
@@ -41,7 +42,7 @@ export class Grid {
   }
 
   public removeTable(tableName: string) {
-    const index: number = this.tables.findIndex(t => t.name === tableName);
+    const index: number = this.tables.findIndex(t => t.data.name === tableName);
     if (index === -1) return;
     const table: Table = this.tables[index];
     if (table === this.hoveredTable) {
@@ -58,10 +59,10 @@ export class Grid {
   private getMostTopTable(): Table | undefined {
     for (const table of [...this.tables].reverse()) {
       if (
-        this.mouseCell.col >= table.rowCol.col &&
-        this.mouseCell.col < table.rowCol.col + table.widthHeight.width &&
-        this.mouseCell.row >= table.rowCol.row &&
-        this.mouseCell.row < table.rowCol.row + table.widthHeight.height
+        this.mouseCell.col >= table.data.rowCol.col &&
+        this.mouseCell.col < table.data.rowCol.col + table.data.widthHeight.width &&
+        this.mouseCell.row >= table.data.rowCol.row &&
+        this.mouseCell.row < table.data.rowCol.row + table.data.widthHeight.height
       ) {
         return table;
       }
@@ -78,8 +79,8 @@ export class Grid {
       this.hoveredColumnIndex = -1;
     } else {
       // Calculate this.hoveredColumnIndex
-      const index = Math.floor((this.mouseCell.row - this.hoveredTable.rowCol.row - 4) / 3);
-      if (index >= 0 && index < this.hoveredTable.columns.length) {
+      const index = Math.floor((this.mouseCell.row - this.hoveredTable.data.rowCol.row - 4) / 3);
+      if (index >= 0 && index < this.hoveredTable.data.columns.length) {
         this.hoveredColumnIndex = index;
       } else {
         this.hoveredColumnIndex = -1;
@@ -87,8 +88,8 @@ export class Grid {
     }
     if (this.isDragging && this.selectedTable) {
       // Handle table move
-      this.selectedTable.rowCol.col = this.lastTableRowCol.col + this.mouseCell.col - this.lastMouseCell.col;
-      this.selectedTable.rowCol.row = this.lastTableRowCol.row + this.mouseCell.row - this.lastMouseCell.row;
+      this.selectedTable.data.rowCol.col = this.lastTableRowCol.col + this.mouseCell.col - this.lastMouseCell.col;
+      this.selectedTable.data.rowCol.row = this.lastTableRowCol.row + this.mouseCell.row - this.lastMouseCell.row;
     }
   }
 
@@ -100,7 +101,7 @@ export class Grid {
     }
     // Bubble selected table on top
     for (let index = 0; index < this.tables.length; index++) {
-      if (this.tables[index].name === this.selectedTable.name) {
+      if (this.tables[index].data.name === this.selectedTable.data.name) {
         this.tables.splice(index, 1);
         this.tables.push(this.selectedTable);
       }
@@ -112,24 +113,7 @@ export class Grid {
     this.lastMouseCell.col = this.mouseCell.col;
     this.lastMouseCell.row = this.mouseCell.row;
     // save lastTableRowCol
-    this.lastTableRowCol.col = this.selectedTable.rowCol.col;
-    this.lastTableRowCol.row = this.selectedTable.rowCol.row;
-  }
-
-  public getData(): GridData {
-    return {
-      selectedTable: this.selectedTable?.getData(),
-      selectedColumnIndex: this.selectedColumnIndex,
-      tables: this.tables.map(table => table.getData()),
-      hoveredTable: this.hoveredTable?.getData(),
-      hoveredColumnIndex: this.hoveredColumnIndex,
-    }
-  }
-
-  public setData(gridData: GridData) {
-    console.log(gridData);
-  }
-
-  constructor() {
+    this.lastTableRowCol.col = this.selectedTable.data.rowCol.col;
+    this.lastTableRowCol.row = this.selectedTable.data.rowCol.row;
   }
 }
