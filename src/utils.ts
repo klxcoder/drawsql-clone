@@ -1,7 +1,6 @@
-import { Column } from "./models/Column";
 import { Grid } from "./models/Grid";
-import { RowCol, RowColData } from "./models/RowCol";
-import { Table, TableData } from "./models/Table";
+import { RowColData } from "./models/RowCol";
+import { TableData } from "./models/Table";
 
 export const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
 
@@ -225,58 +224,12 @@ export const drawMouseCell = (ctx: CanvasRenderingContext2D, mouseCell: RowColDa
 }
 
 export const getInitialGrid: () => Grid = () => {
-  const grid = new Grid();
-  grid.addTable(new Table({
-    name: 'student',
-    rowCol: new RowCol(1, 1),
-    columns: [
-      new Column({
-        keyType: 'PK',
-        name: 'person_id',
-        columnType: 'bigint',
-      }),
-      new Column({
-        keyType: '',
-        name: 'description',
-        columnType: 'text',
-      }),
-    ],
-  }));
-  grid.addTable(new Table({
-    name: 'notification',
-    rowCol: new RowCol(30, 15),
-    columns: [
-      new Column({
-        keyType: 'PK',
-        name: 'notification_id',
-        columnType: 'bigint',
-      }),
-      new Column({
-        keyType: 'FK',
-        name: 'person_id',
-        columnType: 'bigint',
-      }),
-      new Column({
-        keyType: '',
-        name: 'content',
-        columnType: 'text',
-      }),
-      new Column({
-        keyType: '',
-        name: 'created_at',
-        columnType: 'timestamp',
-      }),
-    ],
-  }));
-  grid.addTable(new Table({
-    name: 'x',
-    rowCol: new RowCol(35, 35),
-    columns: [],
-  }));
-  grid.addTable(new Table({
-    name: 'overlap',
-    rowCol: new RowCol(10, 8),
-    columns: [],
-  }));
+  const grid: Grid = new Grid({
+    selectedTable: undefined,
+    selectedColumnIndex: -1,
+    tables: [],
+    hoveredTable: undefined,
+    hoveredColumnIndex: -1,
+  });
   return grid;
 }

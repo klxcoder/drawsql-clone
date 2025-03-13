@@ -37,8 +37,10 @@ export class Grid extends Data<GridData> {
 
   public isDragging: boolean = false;
 
-  public addTable(table: Table) {
+  public addTable(tableData: TableData): Table {
+    const table: Table = new Table(tableData)
     this.tables.push(table);
+    return table
   }
 
   public removeTable(tableName: string) {

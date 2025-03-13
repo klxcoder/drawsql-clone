@@ -56,9 +56,9 @@ function GridView({
     drawDots(bufferCtx);
     drawTables(
       bufferCtx,
-      grid.tables,
-      grid.hoveredTable,
-      grid.selectedTable,
+      grid.data.tables,
+      grid.data.hoveredTable,
+      grid.data.selectedTable,
       grid.hoveredColumnIndex,
       grid.selectedColumnIndex,
     );
@@ -66,14 +66,14 @@ function GridView({
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
   }, [
+    grid.data.hoveredTable,
+    grid.data.selectedTable,
+    grid.data.tables,
     grid.hoveredColumnIndex,
-    grid.hoveredTable,
     grid.mouseCell,
     grid.selectedColumnIndex,
-    grid.selectedTable,
-    grid.tables,
-    isDirty,
     gridData,
+    isDirty,
   ]);
 
   useEffect(() => {
@@ -99,7 +99,7 @@ function GridView({
       };
       animate();
 
-      setGridData(grid.getData());
+      setGridData({ ...grid.data });
     }
 
     const onMouseUp = () => {
@@ -110,7 +110,7 @@ function GridView({
         isDirty.current = true;
         draw(); //final draw.
       }
-      setGridData(grid.getData());
+      setGridData({ ...grid.data });
     }
 
     canvas.addEventListener('mousemove', onMouseMove);
