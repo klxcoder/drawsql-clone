@@ -37,8 +37,8 @@ function GridView({
   }, []);
 
   const draw = useCallback(() => {
+    if (gridData) { ; }
     if (!isDirty.current) return; // Only draw if dirty
-    console.log('draw');
     isDirty.current = false; // Reset dirty flag after drawing
     //
     const canvas: HTMLCanvasElement | null = canvasRef.current;
@@ -56,16 +56,25 @@ function GridView({
     drawDots(bufferCtx);
     drawTables(
       bufferCtx,
-      gridData.tables,
-      gridData.hoveredTable,
-      gridData.selectedTable,
-      gridData.hoveredColumnIndex,
-      gridData.selectedColumnIndex,
+      grid.tables,
+      grid.hoveredTable,
+      grid.selectedTable,
+      grid.hoveredColumnIndex,
+      grid.selectedColumnIndex,
     );
     drawMouseCell(bufferCtx, grid.mouseCell);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
-  }, [grid, gridData, isDirty]);
+  }, [
+    grid.hoveredColumnIndex,
+    grid.hoveredTable,
+    grid.mouseCell,
+    grid.selectedColumnIndex,
+    grid.selectedTable,
+    grid.tables,
+    isDirty,
+    gridData,
+  ]);
 
   useEffect(() => {
     const canvas = canvasRef.current;

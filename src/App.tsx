@@ -13,7 +13,6 @@ import { customAlphabet } from 'nanoid';
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz', 5);
 
 function App() {
-  console.log('Rendered App')
   const [grid] = useState<Grid>(getInitialGrid);
   const [gridData, setGridData] = useState<GridData>(grid.getData());
 
