@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import styles from './App.module.scss';
 import { Grid, GridData } from './models/Grid';
 
@@ -17,7 +17,15 @@ function App() {
   const [grid] = useState<Grid>(getInitialGrid);
   const [gridData, setGridData] = useState<GridData>(grid.getData());
 
+  // Re-draw canvas if canvas is dirty
+  const isDirty = useRef<boolean>(true);
+
   const handleGridDataChange = useCallback((gridData: GridData) => setGridData(gridData), [])
+
+  const updateUI = useCallback(() => {
+    isDirty.current = true
+    setGridData(grid.getData())
+  }, [isDirty, grid])
 
   return (
     <div
@@ -39,8 +47,7 @@ function App() {
             const table: Table | undefined = grid.tables.find(t => t.name === gridData.selectedTable?.name);
             if (!table) return;
             table.name = newName;
-            // Update UI
-            setGridData(grid.getData())
+            updateUI()
           }
         }}
         onChangeColumnKeyType={(columnName, newKeyType) => {
@@ -50,8 +57,7 @@ function App() {
           const column: Column | undefined = table.columns.find(c => c.name === columnName);
           if (!column) return;
           column.keyType = newKeyType.substring(0, 2).toUpperCase();
-          // Update UI
-          setGridData(grid.getData())
+          updateUI()
         }}
         onChangeColumnName={(columnName, newName) => {
           newName = newName.trim();
@@ -70,8 +76,7 @@ function App() {
             column.name = newName;
           }
           {
-            // Update UI
-            setGridData(grid.getData())
+            updateUI()
           }
         }}
         onChangeColumnType={(columnName, newType) => {
@@ -86,25 +91,24 @@ function App() {
             column.columnType = newType;
           }
           {
-            // Update UI
-            setGridData(grid.getData())
+            updateUI()
           }
         }}
         onSelectColumnIndex={(index) => {
           grid.selectedColumnIndex = index;
-          setGridData(grid.getData())
+          updateUI()
         }}
         onAddColumnAfter={(index) => {
           grid.selectedTable?.addColumnAfter(index);
-          setGridData(grid.getData())
+          updateUI()
         }}
         onRemoveColumn={(index) => {
           grid.selectedTable?.removeColumn(index);
-          setGridData(grid.getData())
+          updateUI()
         }}
         onRemoveTable={() => {
           grid.removeTable(grid.selectedTable?.name || '');
-          setGridData(grid.getData())
+          updateUI()
         }}
         onAddTable={() => {
           const table: Table = new Table({
@@ -114,7 +118,7 @@ function App() {
           })
           grid.addTable(table);
           grid.selectedTable = table;
-          setGridData(grid.getData())
+          updateUI()
         }}
         onImport={() => {
           const input = document.createElement("input");
@@ -130,7 +134,7 @@ function App() {
               try {
                 const gridData = JSON.parse(e.target?.result as string);
                 grid.setData(gridData);
-                setGridData(grid.getData())
+                updateUI()
               } catch (error) {
                 console.error("Invalid JSON file:", error);
               }
@@ -146,6 +150,7 @@ function App() {
         grid={grid}
         gridData={gridData}
         setGridData={handleGridDataChange}
+        isDirty={isDirty}
       />
     </div>
   )

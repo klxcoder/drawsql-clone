@@ -16,10 +16,12 @@ function GridView({
   grid,
   gridData,
   setGridData,
+  isDirty,
 }: {
   grid: Grid,
   gridData: GridData,
   setGridData: (gridData: GridData) => void,
+  isDirty: React.RefObject<boolean>,
 }) {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -27,8 +29,6 @@ function GridView({
   const bufferRef = useRef<HTMLCanvasElement | null>(null);
 
   const animationFrameId = useRef<number | null>(null);
-  // Re-draw canvas if canvas is dirty
-  const isDirty = useRef<boolean>(true);
 
   useEffect(() => {
     bufferRef.current = document.createElement("canvas");
@@ -65,7 +65,7 @@ function GridView({
     drawMouseCell(bufferCtx, grid.mouseCell);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
-  }, [grid, gridData]);
+  }, [grid, gridData, isDirty]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -115,7 +115,7 @@ function GridView({
       canvas.removeEventListener('mouseup', onMouseUp);
       canvas.removeEventListener('mouseleave', onMouseUp);
     };
-  }, [grid, setGridData, draw]);
+  }, [grid, setGridData, draw, isDirty]);
 
   useEffect(() => {
     draw();
