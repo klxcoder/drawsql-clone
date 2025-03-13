@@ -88,20 +88,23 @@ export const drawLines = (
   lines: LineData[],
 ) => {
 
-  const getLeftRightPoints = (table: TableData, index: number): {
-    left: RowColData,
-    right: RowColData,
-  } => {
-    return {
-      left: {
+  const getColumnPoints = (table: TableData, index: number): RowColData[] => {
+    return [
+      {
         row: table.rowCol.row + 5 + 3 * index,
         col: table.rowCol.col - 1,
       },
-      right: {
+      {
         row: table.rowCol.row + 5 + 3 * index,
         col: table.rowCol.col + table.widthHeight.width,
       }
-    }
+    ]
+  }
+
+  const distance = (first: RowColData, second: RowColData) => {
+    const row2 = first.row - second.row
+    const col2 = first.col - second.col
+    return row2 * row2 + col2 * col2
   }
 
   const drawLine = (
@@ -113,14 +116,25 @@ export const drawLines = (
     const startIndex = startTable.columns.findIndex(c => c.name === line.start.column)
     const endIndex = endTable.columns.findIndex(c => c.name === line.end.column)
     if (startIndex === -1 || endIndex === -1) return
-    const { left: startLeft } = getLeftRightPoints(startTable, startIndex)
-    const { left: endLeft } = getLeftRightPoints(endTable, endIndex)
-
-    console.log(startLeft, endLeft)
+    const startColumnPoints = getColumnPoints(startTable, startIndex)
+    const endColumnPoints = getColumnPoints(endTable, endIndex)
+    let minDistance = Number.POSITIVE_INFINITY
+    let minI = 0;
+    let minJ = 0;
+    startColumnPoints.forEach((s, i) => {
+      endColumnPoints.forEach((e, j) => {
+        const d = distance(s, e)
+        if (d < minDistance) {
+          minDistance = d;
+          minI = i;
+          minJ = j;
+        }
+      })
+    })
 
     ctx.beginPath();
-    ctx.moveTo(startLeft.col * Grid.CELL_SIZE, startLeft.row * Grid.CELL_SIZE);
-    ctx.lineTo(endLeft.col * Grid.CELL_SIZE, endLeft.row * Grid.CELL_SIZE);
+    ctx.moveTo(startColumnPoints[minI].col * Grid.CELL_SIZE, startColumnPoints[minI].row * Grid.CELL_SIZE);
+    ctx.lineTo(endColumnPoints[minJ].col * Grid.CELL_SIZE, endColumnPoints[minJ].row * Grid.CELL_SIZE);
     ctx.strokeStyle = 'red';
     ctx.lineWidth = 2;
     ctx.stroke();
