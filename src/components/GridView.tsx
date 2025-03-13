@@ -14,12 +14,13 @@ import { Grid, GridData } from '../models/Grid';
 
 function GridView({
   grid,
+  gridData,
   setGridData,
 }: {
   grid: Grid,
+  gridData: GridData,
   setGridData: (gridData: GridData) => void,
 }) {
-  console.log('Rendered GridView')
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -55,16 +56,16 @@ function GridView({
     drawDots(bufferCtx);
     drawTables(
       bufferCtx,
-      grid.tables,
-      grid.hoveredTable,
-      grid.selectedTable,
-      grid.hoveredColumnIndex,
-      grid.selectedColumnIndex,
+      gridData.tables,
+      gridData.hoveredTable,
+      gridData.selectedTable,
+      gridData.hoveredColumnIndex,
+      gridData.selectedColumnIndex,
     );
     drawMouseCell(bufferCtx, grid.mouseCell);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
-  }, [grid]);
+  }, [grid, gridData]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
