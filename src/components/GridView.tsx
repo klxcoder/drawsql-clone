@@ -87,6 +87,7 @@ function GridView({
 
     const onMouseUp = () => {
       grid.isDragging = false;
+      setGridData(grid.getData());
     }
 
     canvas.addEventListener('mousemove', onMouseMove);
