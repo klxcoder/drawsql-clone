@@ -26,6 +26,8 @@ function GridView({
   const bufferRef = useRef<HTMLCanvasElement | null>(null);
 
   const animationFrameId = useRef<number | null>(null);
+  // Re-draw canvas if canvas is dirty
+  const isDirty = useRef<boolean>(true);
 
   useEffect(() => {
     bufferRef.current = document.createElement("canvas");
@@ -34,6 +36,9 @@ function GridView({
   }, []);
 
   const draw = useCallback(() => {
+    if (!isDirty.current) return; // Only draw if dirty
+    console.log('draw');
+    isDirty.current = false; // Reset dirty flag after drawing
     //
     const canvas: HTMLCanvasElement | null = canvasRef.current;
     const buffer: HTMLCanvasElement | null = canvasRef.current;
@@ -78,9 +83,11 @@ function GridView({
       const y = e.clientY - rect.top;
       grid.mouseMove({ x, y });
       // setGridData(grid.getData());
+      isDirty.current = true;
     };
 
     const onMouseDown = () => {
+      isDirty.current = true;
       grid.mouseDown();
 
       const animate = () => {
@@ -97,6 +104,7 @@ function GridView({
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
         animationFrameId.current = null;
+        isDirty.current = true;
         draw(); //final draw.
       }
       // setGridData(grid.getData());
