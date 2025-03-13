@@ -11,11 +11,11 @@ export type TableData = {
   name: string,
   rowCol: RowColData,
   columns: ColumnData[],
+  widthHeight: WidthHeightData | undefined,
+  color: string | undefined,
 }
 
 export class Table extends Data<TableData> {
-  public widthHeight: WidthHeightData;
-  public color: string;
 
   public addColumnAfter(index: number) {
     this.data.columns.splice(index + 1, 0, {
@@ -23,7 +23,7 @@ export class Table extends Data<TableData> {
       name: nanoid(5),
       columnType: 'bigint',
     })
-    this.widthHeight = this.getWidthHeight();
+    this.data.widthHeight = this.getWidthHeight();
   }
 
   public removeColumn(index: number) {
@@ -34,7 +34,7 @@ export class Table extends Data<TableData> {
       return;
     }
     this.data.columns.splice(index, 1);
-    this.widthHeight = this.getWidthHeight();
+    this.data.widthHeight = this.getWidthHeight();
   }
 
   private getWidthHeight(): WidthHeightData {
@@ -59,7 +59,7 @@ export class Table extends Data<TableData> {
     super(data);
     //
     this.data.columns = this.getSanitizeColumns(this.data.columns)
-    this.widthHeight = this.getWidthHeight();
-    this.color = randomColor();
+    this.data.widthHeight = this.getWidthHeight();
+    this.data.color = randomColor();
   }
 }
