@@ -22,7 +22,6 @@ export function download<T>(dataObj: T) {
   URL.revokeObjectURL(link.href);
 }
 
-
 // Function to draw a rounded rectangle
 const drawRoundedRect = ({
   ctx,
