@@ -348,24 +348,23 @@ export const drawMouseCell = (ctx: CanvasRenderingContext2D, mouseCell: RowColDa
 
 export const getInitialGrid: () => Grid = () => {
   const grid: Grid = new Grid({
-    selectedTable: undefined,
-    selectedColumnIndex: -1,
-    tables: [
+    "selectedColumnIndex": -1,
+    "tables": [
       {
-        "name": "student",
+        "name": "asset_types",
         "rowCol": {
-          "row": 1,
-          "col": 1
+          "row": 6,
+          "col": 11
         },
         "columns": [
           {
             "keyType": "PK",
-            "name": "person_id",
+            "name": "asset_type_code",
             "columnType": "bigint"
           },
           {
             "keyType": "",
-            "name": "description",
+            "name": "asset_type_description",
             "columnType": "text"
           }
         ],
@@ -373,52 +372,52 @@ export const getInitialGrid: () => Grid = () => {
           "width": 35,
           "height": 10
         },
-        "color": "#a968d5"
+        "color": "#85c06d"
       },
       {
-        "name": "notification",
+        "name": "it_assets",
         "rowCol": {
-          "row": 30,
-          "col": 15
+          "row": 31,
+          "col": 17
         },
         "columns": [
           {
             "keyType": "PK",
-            "name": "notification_id",
+            "name": "asset_id",
             "columnType": "bigint"
           },
           {
             "keyType": "FK",
-            "name": "person_id",
+            "name": "asset_type_code",
             "columnType": "bigint"
           },
           {
             "keyType": "",
-            "name": "content",
+            "name": "description",
             "columnType": "text"
           },
           {
             "keyType": "",
-            "name": "created_at",
-            "columnType": "timestamp"
+            "name": "other_details",
+            "columnType": "text"
           }
         ],
         "widthHeight": {
           "width": 35,
           "height": 16
         },
-        "color": "#39a4b9"
+        "color": "#3f8a5b"
       },
       {
-        "name": "x",
+        "name": "employee_assets",
         "rowCol": {
-          "row": 35,
-          "col": 35
+          "row": 36,
+          "col": 63
         },
         "columns": [
           {
             "keyType": "PK",
-            "name": "x_id",
+            "name": "asset_id",
             "columnType": "bigint"
           }
         ],
@@ -426,18 +425,18 @@ export const getInitialGrid: () => Grid = () => {
           "width": 35,
           "height": 7
         },
-        "color": "#76ade7"
+        "color": "#a80e1d"
       },
       {
-        "name": "overlap",
+        "name": "employees",
         "rowCol": {
-          "row": 15,
-          "col": 47
+          "row": 58,
+          "col": 72
         },
         "columns": [
           {
             "keyType": "PK",
-            "name": "overlap_id",
+            "name": "employee_id",
             "columnType": "bigint"
           }
         ],
@@ -445,103 +444,102 @@ export const getInitialGrid: () => Grid = () => {
           "width": 35,
           "height": 7
         },
-        "color": "#69fc9e"
+        "color": "#6d29ec"
       },
       {
-        "name": "ndrbf",
+        "name": "it_asset_inventory",
         "rowCol": {
-          "row": 67,
-          "col": 49
+          "row": 58,
+          "col": 11
         },
         "columns": [
           {
             "keyType": "PK",
-            "name": "ndrbf_id",
+            "name": "it_asset_inventory_id",
+            "columnType": "bigint"
+          },
+          {
+            "keyType": "FK",
+            "name": "asset_id",
+            "columnType": "bigint"
+          },
+          {
+            "keyType": "",
+            "name": "inventory_date",
+            "columnType": "text"
+          },
+          {
+            "keyType": "",
+            "name": "number_assigned",
             "columnType": "bigint"
           }
         ],
         "widthHeight": {
           "width": 35,
-          "height": 7
+          "height": 16
         },
-        "color": "#9a5e81"
-      },
-      {
-        "name": "ojgbi",
-        "rowCol": {
-          "row": 2,
-          "col": 45
-        },
-        "columns": [
-          {
-            "keyType": "PK",
-            "name": "ojgbi_id",
-            "columnType": "bigint"
-          }
-        ],
-        "widthHeight": {
-          "width": 35,
-          "height": 7
-        },
-        "color": "#0e4d7f"
-      },
-      {
-        "name": "bnxmj",
-        "rowCol": {
-          "row": 21,
-          "col": 3
-        },
-        "columns": [
-          {
-            "keyType": "PK",
-            "name": "bnxmj_id",
-            "columnType": "bigint"
-          }
-        ],
-        "widthHeight": {
-          "width": 35,
-          "height": 7
-        },
-        "color": "#177e8b"
-      },
-      {
-        "name": "yes",
-        "rowCol": {
-          "row": 70,
-          "col": 5
-        },
-        "columns": [
-          {
-            "keyType": "PK",
-            "name": "chiuy_id",
-            "columnType": "bigint"
-          }
-        ],
-        "widthHeight": {
-          "width": 35,
-          "height": 7
-        },
-        "color": "#a7468f"
+        "color": "#18bebe"
       }
     ],
-    lines: [
+    "lines": [
       {
-        start: {
-          table: 'student',
-          column: 'person_id',
+        "start": {
+          "table": "student",
+          "column": "person_id"
         },
-        end: {
-          table: 'x',
-          column: 'x_id',
+        "end": {
+          "table": "x",
+          "column": "x_id"
+        }
+      },
+      {
+        "start": {
+          "table": "asset_types",
+          "column": "asset_type_code"
+        },
+        "end": {
+          "table": "it_assets",
+          "column": "asset_type_code"
+        }
+      },
+      {
+        "start": {
+          "table": "it_assets",
+          "column": "asset_id"
+        },
+        "end": {
+          "table": "it_asset_inventory",
+          "column": "asset_id"
+        }
+      },
+      {
+        "start": {
+          "table": "it_assets",
+          "column": "asset_id"
+        },
+        "end": {
+          "table": "employee_assets",
+          "column": "asset_id"
+        }
+      },
+      {
+        "start": {
+          "table": "employees",
+          "column": "employee_id"
+        },
+        "end": {
+          "table": "it_asset_inventory",
+          "column": "asset_id"
         }
       }
     ],
+    "hoveredColumnIndex": -1,
+    "canvasOffset": {
+      "top": 0,
+      "left": 0
+    },
+    selectedTable: undefined,
     hoveredTable: undefined,
-    hoveredColumnIndex: -1,
-    canvasOffset: {
-      top: 0,
-      left: 0,
-    }
   });
   return grid;
 }
