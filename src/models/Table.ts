@@ -1,100 +1,64 @@
 import { randomColor } from "../utils";
-import { Column } from "./Column";
+import { ColumnData } from "./Column";
 import { Data } from "./Data";
-import { RowCol, RowColData } from "./RowCol";
-import { WidthHeight, WidthHeightData } from "./WidthHeight";
+import { RowColData } from "./RowCol";
 import { customAlphabet } from 'nanoid';
+import { WidthHeightData } from "./WidthHeight";
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz', 5);
 
 export type TableData = {
   name: string,
   rowCol: RowColData,
-  columns: ({
-    keyType: string,
-    name: string,
-    columnType: string,
-  })[],
-  widthHeight: WidthHeightData,
-  color: string,
+  columns: ColumnData[],
 }
 
 export class Table extends Data<TableData> {
-  public name: string;
-  public rowCol: RowCol;
-  public columns: Column[];
-  //
-  public widthHeight: WidthHeight;
+  public widthHeight: WidthHeightData;
   public color: string;
 
-  public getData: () => TableData = () => {
-    return {
-      name: this.name,
-      rowCol: this.rowCol.getData(),
-      columns: this.columns.map(column => column.getData()),
-      widthHeight: this.widthHeight.getData(),
-      color: this.color,
-    }
-  };
-
-  public setData(data: TableData) {
-    this.name = data.name;
-    this.rowCol.setData(data.rowCol);
-    this.columns = data.columns.map(column => new Column(column));
-    this.widthHeight.setData(data.widthHeight);
-    this.color = data.color;
-  }
-
   public addColumnAfter(index: number) {
-    this.columns.splice(index + 1, 0, new Column({
+    this.data.columns.splice(index + 1, 0, {
       keyType: '',
       name: nanoid(5),
       columnType: 'bigint',
-    }));
+    })
     this.widthHeight = this.getWidthHeight();
   }
 
   public removeColumn(index: number) {
     if (
-      this.columns.length <= 1 ||
-      this.columns[index].keyType === 'PK'
+      this.data.columns.length <= 1 ||
+      this.data.columns[index].keyType === 'PK'
     ) {
       return;
     }
-    this.columns.splice(index, 1);
+    this.data.columns.splice(index, 1);
     this.widthHeight = this.getWidthHeight();
   }
 
-  private getWidthHeight(): WidthHeight {
-    return new WidthHeight(35, 4 + 3 * this.columns.length)
+  private getWidthHeight(): WidthHeightData {
+    return {
+      width: 35,
+      height: 4 + 3 * this.data.columns.length,
+    }
   }
 
-  private getSanitizeColumns(columns: Column[]): Column[] {
+  private getSanitizeColumns(columns: ColumnData[]): ColumnData[] {
     if (columns.length === 0) {
-      columns.push(new Column({
+      columns.push({
         keyType: 'PK',
-        name: `${this.name}_id`,
+        name: `${this.data.name}_id`,
         columnType: 'bigint',
-      }));
+      })
     }
     return columns;
   }
 
-  constructor({
-    name,
-    rowCol,
-    columns,
-  }: {
-    name: string,
-    rowCol: RowCol,
-    columns: Column[],
-  }) {
-    super();
+  constructor(data: TableData) {
+    super(data);
     //
-    this.name = name;
-    this.rowCol = rowCol;
-    this.columns = this.getSanitizeColumns(columns);
-    //
+    this.data.columns = this.getSanitizeColumns(this.data.columns)
     this.widthHeight = this.getWidthHeight();
     this.color = randomColor();
   }
