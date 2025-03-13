@@ -11,6 +11,23 @@
   - Row 7,8,9: Second column
   - Total of row: 4 + 3 * column.length
 
+# Problem
+  - Mouse move will:
+    - Render App
+    - Render TableForm
+    - Render GridView
+
+# Desired
+  - Mouse move will
+    - Not render App
+    - Not render TableForm
+    - Just re-render GridView
+
+# Todo
+  - Remove `mouseCell: RowColData;` from GridData
+  - Add state `mouseCell: RowColData;` to the component GridView
+  - Let GridView manage its own state `mouseCell`
+
 # Todo
   - Can import data
   - Can show dots before and after columns

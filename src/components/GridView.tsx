@@ -2,6 +2,7 @@ import {
   useCallback,
   useEffect,
   useRef,
+  useState,
 } from 'react';
 import styles from './Grid.module.scss';
 import {
@@ -10,6 +11,7 @@ import {
   drawTables,
 } from '../utils';
 import { Grid, GridData } from '../models/Grid';
+import { RowColData } from '../models/RowCol';
 
 function GridView({
   grid,
@@ -20,10 +22,12 @@ function GridView({
   gridData: GridData,
   setGridData: (gridData: GridData) => void,
 }) {
+  console.log('Rendered GridView')
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const bufferRef = useRef<HTMLCanvasElement | null>(null);
+  const [mouseCell, setMouseCell] = useState<RowColData>({ row: -1, col: -1 })
 
   useEffect(() => {
     bufferRef.current = document.createElement("canvas");
@@ -54,7 +58,7 @@ function GridView({
       gridData.hoveredColumnIndex,
       gridData.selectedColumnIndex,
     );
-    drawMouseCell(bufferCtx, gridData.mouseCell);
+    drawMouseCell(bufferCtx, mouseCell);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
   }, [
@@ -62,8 +66,8 @@ function GridView({
     gridData.hoveredTable,
     gridData.selectedColumnIndex,
     gridData.selectedTable,
-    gridData.mouseCell,
     gridData.tables,
+    mouseCell,
   ]);
 
   useEffect(() => {
@@ -75,7 +79,11 @@ function GridView({
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       grid.mouseMove({ x, y });
-      setGridData(grid.getData());
+      // setGridData(grid.getData());
+      setMouseCell({
+        row: grid.mouseCell.row,
+        col: grid.mouseCell.col,
+      })
     };
 
     const onMouseDown = () => {

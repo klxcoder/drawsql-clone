@@ -15,6 +15,7 @@ const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz', 5);
 function App() {
   const [grid] = useState<Grid>(getInitialGrid);
   const [gridData, setGridData] = useState<GridData>(grid.getData());
+  console.log('Rendered App')
   return (
     <div
       className={styles.app}

@@ -28,6 +28,7 @@ function TableForm({
   onAddTable: () => void,
   onImport: () => void,
 }) {
+  console.log('Rendered TableForm')
   return (
     <div className={styles.tableForm}>
       {gridData.selectedTable ? <div className={styles.selectedTable}>
