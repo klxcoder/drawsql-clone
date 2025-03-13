@@ -1,4 +1,5 @@
 import {
+  memo,
   useCallback,
   useEffect,
   useRef,
@@ -14,10 +15,11 @@ import { Grid, GridData } from '../models/Grid';
 function GridView({
   grid,
   setGridData,
+  drawTrigger,
 }: {
   grid: Grid,
-  gridData: GridData,
   setGridData: (gridData: GridData) => void,
+  drawTrigger: number,
 }) {
   console.log('Rendered GridView')
 
@@ -125,7 +127,7 @@ function GridView({
 
   useEffect(() => {
     draw();
-  }, [draw]);
+  }, [draw, drawTrigger]);
 
   return (
     <div className={styles.grid}>
@@ -138,4 +140,4 @@ function GridView({
   )
 }
 
-export default GridView
+export default memo(GridView);

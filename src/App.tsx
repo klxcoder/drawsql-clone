@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import styles from './App.module.scss';
 import { Grid, GridData } from './models/Grid';
 
@@ -13,16 +13,19 @@ import { customAlphabet } from 'nanoid';
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz', 5);
 
 function App() {
-  const [grid] = useState<Grid>(getInitialGrid);
-  const gridData = useRef<GridData>(grid.getData());
   console.log('Rendered App')
+  const [grid] = useState<Grid>(getInitialGrid);
+  const [gridData, setGridData] = useState<GridData>(grid.getData());
+
+  const handleGridDataChange = useCallback((gridData: GridData) => setGridData(gridData), [])
+
   return (
     <div
       className={styles.app}
       onContextMenu={(e) => e.preventDefault()}
     >
       <TableForm
-        gridData={gridData.current}
+        gridData={gridData}
         onChangeTableName={(newName) => {
           newName = newName.trim();
           if (newName === '') return;
@@ -33,27 +36,27 @@ function App() {
           }
           {
             // Change the table name to `newName`
-            const table: Table | undefined = grid.tables.find(t => t.name === gridData.current.selectedTable?.name);
+            const table: Table | undefined = grid.tables.find(t => t.name === gridData.selectedTable?.name);
             if (!table) return;
             table.name = newName;
             // Update UI
-            gridData.current = grid.getData()
+            setGridData(grid.getData())
           }
         }}
         onChangeColumnKeyType={(columnName, newKeyType) => {
           newKeyType = newKeyType.trim();
-          const table: Table | undefined = grid.tables.find(t => t.name === gridData.current.selectedTable?.name);
+          const table: Table | undefined = grid.tables.find(t => t.name === gridData.selectedTable?.name);
           if (!table) return;
           const column: Column | undefined = table.columns.find(c => c.name === columnName);
           if (!column) return;
           column.keyType = newKeyType.substring(0, 2).toUpperCase();
           // Update UI
-          gridData.current = grid.getData()
+          setGridData(grid.getData())
         }}
         onChangeColumnName={(columnName, newName) => {
           newName = newName.trim();
           if (newName === '') return;
-          const table: Table | undefined = grid.tables.find(t => t.name === gridData.current.selectedTable?.name);
+          const table: Table | undefined = grid.tables.find(t => t.name === gridData.selectedTable?.name);
           if (!table) return;
           {
             // If column `newName` already exist => exit
@@ -68,13 +71,13 @@ function App() {
           }
           {
             // Update UI
-            gridData.current = grid.getData()
+            setGridData(grid.getData())
           }
         }}
         onChangeColumnType={(columnName, newType) => {
           newType = newType.trim();
           if (newType === '') return;
-          const table: Table | undefined = grid.tables.find(t => t.name === gridData.current.selectedTable?.name);
+          const table: Table | undefined = grid.tables.find(t => t.name === gridData.selectedTable?.name);
           if (!table) return;
           {
             // Change the column type to `newType`
@@ -84,24 +87,24 @@ function App() {
           }
           {
             // Update UI
-            gridData.current = grid.getData()
+            setGridData(grid.getData())
           }
         }}
         onSelectColumnIndex={(index) => {
           grid.selectedColumnIndex = index;
-          gridData.current = grid.getData()
+          setGridData(grid.getData())
         }}
         onAddColumnAfter={(index) => {
           grid.selectedTable?.addColumnAfter(index);
-          gridData.current = grid.getData()
+          setGridData(grid.getData())
         }}
         onRemoveColumn={(index) => {
           grid.selectedTable?.removeColumn(index);
-          gridData.current = grid.getData()
+          setGridData(grid.getData())
         }}
         onRemoveTable={() => {
           grid.removeTable(grid.selectedTable?.name || '');
-          gridData.current = grid.getData()
+          setGridData(grid.getData())
         }}
         onAddTable={() => {
           const table: Table = new Table({
@@ -111,7 +114,7 @@ function App() {
           })
           grid.addTable(table);
           grid.selectedTable = table;
-          gridData.current = grid.getData()
+          setGridData(grid.getData())
         }}
         onImport={() => {
           const input = document.createElement("input");
@@ -127,7 +130,7 @@ function App() {
               try {
                 const gridData = JSON.parse(e.target?.result as string);
                 grid.setData(gridData);
-                gridData.current = grid.getData()
+                setGridData(grid.getData())
               } catch (error) {
                 console.error("Invalid JSON file:", error);
               }
@@ -141,10 +144,8 @@ function App() {
       />
       <GridView
         grid={grid}
-        gridData={gridData.current}
-        setGridData={(_gridData) => {
-          gridData.current = _gridData
-        }}
+        setGridData={handleGridDataChange}
+        drawTrigger={0}
       />
     </div>
   )

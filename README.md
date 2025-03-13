@@ -11,16 +11,15 @@
   - Row 7,8,9: Second column
   - Total of row: 4 + 3 * column.length
 
-# Probleam
-  - Click on canvas will rerender: App, TableForm, GridView
+# Problem
+  - Select table on GridView do not show table on TableForm
 
 # Desired
-  - Click on canvas will not rerender: App
-  - Will rerender TableForm if necessary
-  - Will not rerender GridView, just draw
+  - Select table on GridView will show table on TableForm
 
 # Todo
-  - Make gridDate useRef
+  - GridView will render once
+  - GridView only draw when drawTrigger change
 
 # Problem
   - Change data from TableForm do not trigger draw in GridView
