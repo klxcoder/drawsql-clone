@@ -29,6 +29,8 @@ export class Grid extends Data<GridData> {
 
   private readonly lastTableRowCol: RowColData = { row: -1, col: -1 };
 
+  private readonly lastCanvasOffset: TopLeftData = { top: 0, left: 0 }
+
   public isDragging: boolean = false;
 
   public addTable(tableData: TableData) {
@@ -110,30 +112,51 @@ export class Grid extends Data<GridData> {
         this.data.selectedTable.rowCol.row = this.lastTableRowCol.row + this.mouseCell.row - this.lastMouseCell.row;
       }
     }
+    {
+      //
+      // Update this.data.canvasOffset
+      //
+      if (this.isDragging && !this.data.selectedTable) {
+        console.log('here2')
+        // Handle canvas move
+        this.data.canvasOffset.left = this.lastCanvasOffset.left + this.mouseCell.col - this.lastMouseCell.col;
+        this.data.canvasOffset.top = this.lastCanvasOffset.top + this.mouseCell.row - this.lastMouseCell.row;
+      }
+    }
     return repaint;
   }
 
   public mouseDown() {
+    {
+      //
+      this.isDragging = true;
+      // save lastMouseCell
+      this.lastMouseCell.col = this.mouseCell.col;
+      this.lastMouseCell.row = this.mouseCell.row;
+    }
+    //
     this.data.selectedTable = this.getMostTopTable();
     if (!this.data.selectedTable) {
       this.data.selectedColumnIndex = -1;
       return;
     }
-    // Bubble selected table on top
-    for (let index = 0; index < this.data.tables.length; index++) {
-      if (this.data.tables[index].name === this.data.selectedTable.name) {
-        this.data.tables.splice(index, 1);
-        this.data.tables.push(this.data.selectedTable);
+    if (this.data.selectedTable) {
+      // Bubble selected table on top
+      for (let index = 0; index < this.data.tables.length; index++) {
+        if (this.data.tables[index].name === this.data.selectedTable.name) {
+          this.data.tables.splice(index, 1);
+          this.data.tables.push(this.data.selectedTable);
+        }
       }
+      // save selectedColumnIndex
+      this.data.selectedColumnIndex = this.data.hoveredColumnIndex;
+      // save lastTableRowCol
+      this.lastTableRowCol.col = this.data.selectedTable.rowCol.col;
+      this.lastTableRowCol.row = this.data.selectedTable.rowCol.row;
+    } else {
+      // save lastCanvasOffset
+      this.lastCanvasOffset.top = this.data.canvasOffset.top
+      this.lastCanvasOffset.left = this.data.canvasOffset.left
     }
-    // save seleted column index
-    this.data.selectedColumnIndex = this.data.hoveredColumnIndex;
-    this.isDragging = true;
-    // save lastMouseCell
-    this.lastMouseCell.col = this.mouseCell.col;
-    this.lastMouseCell.row = this.mouseCell.row;
-    // save lastTableRowCol
-    this.lastTableRowCol.col = this.data.selectedTable.rowCol.col;
-    this.lastTableRowCol.row = this.data.selectedTable.rowCol.row;
   }
 }
