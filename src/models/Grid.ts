@@ -1,7 +1,7 @@
 import { Data } from "./Data";
 import { LineData } from "./Line";
 import { RowColData } from "./RowCol";
-import { TableData } from "./Table";
+import { Table, TableData } from "./Table";
 import { XY } from "./XY";
 
 export type GridData = {
@@ -30,7 +30,8 @@ export class Grid extends Data<GridData> {
   public isDragging: boolean = false;
 
   public addTable(tableData: TableData) {
-    this.data.tables.push(tableData);
+    const table: Table = new Table(tableData)
+    this.data.tables.push(table.data);
   }
 
   public removeTable(tableName: string) {
