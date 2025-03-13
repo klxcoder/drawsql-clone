@@ -161,6 +161,11 @@ function GridView({
   return (
     <div className={styles.grid}>
       <canvas
+        style={{
+          position: 'relative',
+          top: grid.data.canvasOffset.top * Grid.CELL_SIZE,
+          left: grid.data.canvasOffset.left * Grid.CELL_SIZE,
+        }}
         ref={canvasRef}
         width={Grid.MAX_COLS * Grid.CELL_SIZE}
         height={Grid.MAX_ROWS * Grid.CELL_SIZE}

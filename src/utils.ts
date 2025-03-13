@@ -538,6 +538,10 @@ export const getInitialGrid: () => Grid = () => {
     ],
     hoveredTable: undefined,
     hoveredColumnIndex: -1,
+    canvasOffset: {
+      top: 0,
+      left: 0,
+    }
   });
   return grid;
 }

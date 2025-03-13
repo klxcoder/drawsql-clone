@@ -2,6 +2,7 @@ import { Data } from "./Data";
 import { LineData } from "./Line";
 import { RowColData } from "./RowCol";
 import { Table, TableData } from "./Table";
+import { TopLeftData } from "./TopLeft";
 import { XY } from "./XY";
 
 export type GridData = {
@@ -11,6 +12,7 @@ export type GridData = {
   lines: LineData[],
   hoveredTable: TableData | undefined,
   hoveredColumnIndex: number,
+  canvasOffset: TopLeftData,
 }
 
 export class Grid extends Data<GridData> {
