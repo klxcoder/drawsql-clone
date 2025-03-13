@@ -1,9 +1,8 @@
 export abstract class Data<T> {
 
-  public abstract getData(): T;
+  public data: T
 
-  public abstract setData(data: T): void;
-
-  constructor() {
+  constructor(data: T) {
+    this.data = data
   }
 }
