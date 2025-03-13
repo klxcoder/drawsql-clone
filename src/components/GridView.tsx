@@ -81,12 +81,12 @@ function GridView({
 
     const onMouseDown = () => {
       grid.mouseDown();
-      setGridData(grid.getData());
+      // setGridData(grid.getData());
     }
 
     const onMouseUp = () => {
       grid.isDragging = false;
-      setGridData(grid.getData());
+      // setGridData(grid.getData());
     }
 
     canvas.addEventListener('mousemove', onMouseMove);
