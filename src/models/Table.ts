@@ -11,8 +11,8 @@ export type TableData = {
   name: string,
   rowCol: RowColData,
   columns: ColumnData[],
-  widthHeight: WidthHeightData | undefined,
-  color: string | undefined,
+  widthHeight: WidthHeightData,
+  color: string,
 }
 
 export class Table extends Data<TableData> {
