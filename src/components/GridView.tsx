@@ -2,7 +2,6 @@ import {
   useCallback,
   useEffect,
   useRef,
-  useState,
 } from 'react';
 import styles from './Grid.module.scss';
 import {
@@ -27,7 +26,7 @@ function GridView({
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const bufferRef = useRef<HTMLCanvasElement | null>(null);
-  const [mouseCell, setMouseCell] = useState<RowColData>({ row: -1, col: -1 })
+  const mouseCell = useRef<RowColData>(grid.mouseCell)
 
   useEffect(() => {
     bufferRef.current = document.createElement("canvas");
@@ -58,7 +57,7 @@ function GridView({
       gridData.hoveredColumnIndex,
       gridData.selectedColumnIndex,
     );
-    drawMouseCell(bufferCtx, mouseCell);
+    drawMouseCell(bufferCtx, mouseCell.current);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
   }, [
@@ -80,10 +79,7 @@ function GridView({
       const y = e.clientY - rect.top;
       grid.mouseMove({ x, y });
       // setGridData(grid.getData());
-      setMouseCell({
-        row: grid.mouseCell.row,
-        col: grid.mouseCell.col,
-      })
+      draw();
     };
 
     const onMouseDown = () => {
@@ -106,7 +102,7 @@ function GridView({
       canvas.removeEventListener('mouseup', onMouseUp);
       canvas.removeEventListener('mouseleave', onMouseUp);
     };
-  }, [grid, setGridData]);
+  }, [grid, setGridData, draw]);
 
   useEffect(() => {
     draw();

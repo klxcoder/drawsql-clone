@@ -21,12 +21,10 @@
   - Mouse move will
     - Not render App
     - Not render TableForm
-    - Just re-render GridView
+    - Not render GridView
 
 # Todo
-  - Remove `mouseCell: RowColData;` from GridData
-  - Add state `mouseCell: RowColData;` to the component GridView
-  - Let GridView manage its own state `mouseCell`
+  - Add useRef `mouseCell: RowColData;` to the component GridView
 
 # Todo
   - Can import data
