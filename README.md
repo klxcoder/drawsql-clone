@@ -11,17 +11,7 @@
   - Row 7,8,9: Second column
   - Total of row: 4 + 3 * column.length
 
-# Problem
-  - Change data from TableForm do not trigger draw in GridView
-
-# Desired
-  - Change data from TableForm will trigger draw in GridView
-
-# Todo
-  - forwardRef? useImperativeHandle?
-
 # Todo later
-  - Can import data
   - Can show dots before and after columns
   - Can connect dots
     + Between 2 columns from 2 tables

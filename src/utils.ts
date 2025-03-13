@@ -192,9 +192,30 @@ export const drawTables = (
         );
       });
     }
+
+    const drawDots = () => {
+      ctx.fillStyle = "blue";
+
+      table.columns.forEach((_, index) => {
+        ctx.fillRect(
+          (table.rowCol.col - 1) * Grid.CELL_SIZE,
+          (table.rowCol.row + 5 + 3 * index) * Grid.CELL_SIZE,
+          8,
+          8,
+        );
+        ctx.fillRect(
+          (table.rowCol.col + table.widthHeight.width) * Grid.CELL_SIZE,
+          (table.rowCol.row + 5 + 3 * index) * Grid.CELL_SIZE,
+          8,
+          8,
+        );
+      });
+    }
+
     ctx.font = "18px 'Lucida Console', monospace";
     drawHoveredColumn();
     drawText();
+    drawDots();
   }
 
   tables.forEach(table => {
