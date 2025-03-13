@@ -7,11 +7,13 @@ import {
 import styles from './Grid.module.scss';
 import {
   drawDots,
+  drawLine,
   drawLines,
   drawMouseCell,
   drawTables,
 } from '../utils';
 import { Grid, GridData } from '../models/Grid';
+import { LineData } from '../models/Line';
 
 function GridView({
   grid,
@@ -56,6 +58,25 @@ function GridView({
     bufferCtx.clearRect(0, 0, buffer.width, buffer.height);
     drawDots(bufferCtx);
     drawLines(ctx, grid.data.tables, grid.data.lines)
+    if (
+      grid.data.selectedTable &&
+      grid.data.hoveredTable &&
+      grid.data.selectedColumnIndex !== -1 &&
+      grid.data.hoveredColumnIndex !== -1
+    ) {
+      const line: LineData = {
+        start: {
+          table: grid.data.selectedTable.name,
+          column: grid.data.selectedTable.columns[grid.data.selectedColumnIndex].name,
+        },
+        end: {
+          table: grid.data.hoveredTable.name,
+          column: grid.data.hoveredTable.columns[grid.data.hoveredColumnIndex].name,
+        },
+      }
+      drawLine(ctx, grid.data.tables, line)
+    }
+
     drawTables(
       bufferCtx,
       grid.data.tables,

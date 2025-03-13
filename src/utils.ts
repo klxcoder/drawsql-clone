@@ -82,10 +82,10 @@ export const drawDots = (ctx: CanvasRenderingContext2D) => {
   }
 }
 
-export const drawLines = (
+export const drawLine = (
   ctx: CanvasRenderingContext2D,
   tables: TableData[],
-  lines: LineData[],
+  line: LineData,
 ) => {
 
   const getColumnPoints = (table: TableData, index: number): RowColData[] => {
@@ -107,49 +107,50 @@ export const drawLines = (
     return row2 * row2 + col2 * col2
   }
 
-  const drawLine = (
-    line: LineData,
-  ) => {
-    const startTable: TableData | undefined = tables.find(t => t.name === line.start.table)
-    const endTable: TableData | undefined = tables.find(t => t.name === line.end.table)
-    if (!startTable || !endTable) return
-    const startIndex: number = startTable.columns.findIndex(c => c.name === line.start.column)
-    const endIndex: number = endTable.columns.findIndex(c => c.name === line.end.column)
-    if (startIndex === -1 || endIndex === -1) return
-    const startColumnPoints: RowColData[] = getColumnPoints(startTable, startIndex)
-    const endColumnPoints: RowColData[] = getColumnPoints(endTable, endIndex)
-    let minDistance = Number.POSITIVE_INFINITY
-    let minI = 0;
-    let minJ = 0;
-    startColumnPoints.forEach((s, i) => {
-      endColumnPoints.forEach((e, j) => {
-        const d: number = distance(s, e)
-        if (d < minDistance) {
-          minDistance = d;
-          minI = i;
-          minJ = j;
-        }
-      })
+  const startTable: TableData | undefined = tables.find(t => t.name === line.start.table)
+  const endTable: TableData | undefined = tables.find(t => t.name === line.end.table)
+  if (!startTable || !endTable) return
+  const startIndex: number = startTable.columns.findIndex(c => c.name === line.start.column)
+  const endIndex: number = endTable.columns.findIndex(c => c.name === line.end.column)
+  if (startIndex === -1 || endIndex === -1) return
+  const startColumnPoints: RowColData[] = getColumnPoints(startTable, startIndex)
+  const endColumnPoints: RowColData[] = getColumnPoints(endTable, endIndex)
+  let minDistance = Number.POSITIVE_INFINITY
+  let minI = 0;
+  let minJ = 0;
+  startColumnPoints.forEach((s, i) => {
+    endColumnPoints.forEach((e, j) => {
+      const d: number = distance(s, e)
+      if (d < minDistance) {
+        minDistance = d;
+        minI = i;
+        minJ = j;
+      }
     })
+  })
 
-    const startPoint: RowColData = startColumnPoints[minI]
-    const endPoint: RowColData = endColumnPoints[minJ]
+  const startPoint: RowColData = startColumnPoints[minI]
+  const endPoint: RowColData = endColumnPoints[minJ]
 
-    ctx.beginPath();
-    ctx.moveTo(startPoint.col * Grid.CELL_SIZE, startPoint.row * Grid.CELL_SIZE);
-    startPoint.col += minI === 0 ? -2 : 2
-    endPoint.col += minJ === 0 ? -2 : 2
-    ctx.lineTo(startPoint.col * Grid.CELL_SIZE, startPoint.row * Grid.CELL_SIZE);
-    ctx.lineTo(endPoint.col * Grid.CELL_SIZE, endPoint.row * Grid.CELL_SIZE);
-    endPoint.col += minJ === 0 ? 2 : -2
-    ctx.lineTo(endPoint.col * Grid.CELL_SIZE, endPoint.row * Grid.CELL_SIZE);
-    ctx.strokeStyle = 'red';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  }
+  ctx.beginPath();
+  ctx.moveTo(startPoint.col * Grid.CELL_SIZE, startPoint.row * Grid.CELL_SIZE);
+  startPoint.col += minI === 0 ? -2 : 2
+  endPoint.col += minJ === 0 ? -2 : 2
+  ctx.lineTo(startPoint.col * Grid.CELL_SIZE, startPoint.row * Grid.CELL_SIZE);
+  ctx.lineTo(endPoint.col * Grid.CELL_SIZE, endPoint.row * Grid.CELL_SIZE);
+  endPoint.col += minJ === 0 ? 2 : -2
+  ctx.lineTo(endPoint.col * Grid.CELL_SIZE, endPoint.row * Grid.CELL_SIZE);
+  ctx.strokeStyle = 'red';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
 
-  lines.forEach(line => drawLine(line))
-
+export const drawLines = (
+  ctx: CanvasRenderingContext2D,
+  tables: TableData[],
+  lines: LineData[],
+) => {
+  lines.forEach(line => drawLine(ctx, tables, line))
 }
 
 export const drawTables = (

@@ -98,13 +98,15 @@ export class Grid extends Data<GridData> {
       }
       this.data.hoveredColumnIndex = _hoveredColumnIndex
     }
-    //
-    // Update this.data.selectedTable.rowCol
-    //
-    if (this.isDragging && this.data.selectedTable) {
-      // Handle table move
-      this.data.selectedTable.rowCol.col = this.lastTableRowCol.col + this.mouseCell.col - this.lastMouseCell.col;
-      this.data.selectedTable.rowCol.row = this.lastTableRowCol.row + this.mouseCell.row - this.lastMouseCell.row;
+    {
+      //
+      // Update this.data.selectedTable.rowCol
+      //
+      if (this.isDragging && this.data.selectedTable) {
+        // Handle table move
+        this.data.selectedTable.rowCol.col = this.lastTableRowCol.col + this.mouseCell.col - this.lastMouseCell.col;
+        this.data.selectedTable.rowCol.row = this.lastTableRowCol.row + this.mouseCell.row - this.lastMouseCell.row;
+      }
     }
     return repaint;
   }
