@@ -10,7 +10,6 @@ import {
   drawTables,
 } from '../utils';
 import { Grid, GridData } from '../models/Grid';
-import { RowColData } from '../models/RowCol';
 
 function GridView({
   grid,
@@ -26,7 +25,6 @@ function GridView({
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const bufferRef = useRef<HTMLCanvasElement | null>(null);
-  const mouseCell = useRef<RowColData>(grid.mouseCell)
 
   useEffect(() => {
     bufferRef.current = document.createElement("canvas");
@@ -57,7 +55,7 @@ function GridView({
       gridData.hoveredColumnIndex,
       gridData.selectedColumnIndex,
     );
-    drawMouseCell(bufferCtx, mouseCell.current);
+    drawMouseCell(bufferCtx, grid.mouseCell);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
   }, [
@@ -66,7 +64,7 @@ function GridView({
     gridData.selectedColumnIndex,
     gridData.selectedTable,
     gridData.tables,
-    mouseCell,
+    grid.mouseCell,
   ]);
 
   useEffect(() => {
