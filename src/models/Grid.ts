@@ -1,4 +1,5 @@
 import { Data } from "./Data";
+import { LineData } from "./Line";
 import { RowColData } from "./RowCol";
 import { TableData } from "./Table";
 import { XY } from "./XY";
@@ -7,6 +8,7 @@ export type GridData = {
   selectedTable: TableData | undefined,
   selectedColumnIndex: number,
   tables: TableData[],
+  lines: LineData[],
   hoveredTable: TableData | undefined,
   hoveredColumnIndex: number,
 }

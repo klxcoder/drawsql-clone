@@ -7,6 +7,7 @@ import {
 import styles from './Grid.module.scss';
 import {
   drawDots,
+  drawLines,
   drawMouseCell,
   drawTables,
 } from '../utils';
@@ -54,6 +55,7 @@ function GridView({
     //
     bufferCtx.clearRect(0, 0, buffer.width, buffer.height);
     drawDots(bufferCtx);
+    drawLines(ctx, grid.data.tables, grid.data.lines)
     drawTables(
       bufferCtx,
       grid.data.tables,
@@ -69,6 +71,7 @@ function GridView({
     grid.data.hoveredTable,
     grid.data.selectedTable,
     grid.data.tables,
+    grid.data.lines,
     grid.data.hoveredColumnIndex,
     grid.mouseCell,
     grid.data.selectedColumnIndex,

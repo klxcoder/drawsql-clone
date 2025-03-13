@@ -1,4 +1,5 @@
 import { Grid } from "./models/Grid";
+import { LineData } from "./models/Line";
 import { RowColData } from "./models/RowCol";
 import { TableData } from "./models/Table";
 
@@ -79,6 +80,14 @@ export const drawDots = (ctx: CanvasRenderingContext2D) => {
       ctx.fill();
     }
   }
+}
+
+export const drawLines = (
+  ctx: CanvasRenderingContext2D,
+  tables: TableData[],
+  lines: LineData[],
+) => {
+  console.log({ ctx, tables, lines })
 }
 
 export const drawTables = (
@@ -250,7 +259,7 @@ export const getInitialGrid: () => Grid = () => {
   const grid: Grid = new Grid({
     selectedTable: undefined,
     selectedColumnIndex: -1,
-    "tables": [
+    tables: [
       {
         "name": "student",
         "rowCol": {
@@ -422,6 +431,18 @@ export const getInitialGrid: () => Grid = () => {
           "height": 7
         },
         "color": "#a7468f"
+      }
+    ],
+    lines: [
+      {
+        start: {
+          table: 'student',
+          column: 'person_id',
+        },
+        end: {
+          table: 'x',
+          column: 'x_id',
+        }
       }
     ],
     hoveredTable: undefined,
