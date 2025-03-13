@@ -96,7 +96,7 @@ function GridView({
       };
       animate();
 
-      // setGridData(grid.getData());
+      setGridData(grid.getData());
     }
 
     const onMouseUp = () => {
@@ -107,7 +107,7 @@ function GridView({
         isDirty.current = true;
         draw(); //final draw.
       }
-      // setGridData(grid.getData());
+      setGridData(grid.getData());
     }
 
     canvas.addEventListener('mousemove', onMouseMove);
