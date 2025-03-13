@@ -25,6 +25,8 @@ function GridView({
 
   const bufferRef = useRef<HTMLCanvasElement | null>(null);
 
+  const animationFrameId = useRef<number | null>(null);
+
   useEffect(() => {
     bufferRef.current = document.createElement("canvas");
     bufferRef.current.width = Grid.MAX_COLS * Grid.CELL_SIZE;
@@ -76,16 +78,27 @@ function GridView({
       const y = e.clientY - rect.top;
       grid.mouseMove({ x, y });
       // setGridData(grid.getData());
-      draw();
     };
 
     const onMouseDown = () => {
       grid.mouseDown();
+
+      const animate = () => {
+        draw();
+        animationFrameId.current = requestAnimationFrame(animate);
+      };
+      animate();
+
       // setGridData(grid.getData());
     }
 
     const onMouseUp = () => {
       grid.isDragging = false;
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+        animationFrameId.current = null;
+        draw(); //final draw.
+      }
       // setGridData(grid.getData());
     }
 
