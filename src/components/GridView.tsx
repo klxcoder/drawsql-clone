@@ -13,7 +13,6 @@ import { Grid, GridData } from '../models/Grid';
 
 function GridView({
   grid,
-  gridData,
   setGridData,
 }: {
   grid: Grid,
@@ -49,21 +48,21 @@ function GridView({
     drawDots(bufferCtx);
     drawTables(
       bufferCtx,
-      gridData.tables,
-      gridData.hoveredTable,
-      gridData.selectedTable,
-      gridData.hoveredColumnIndex,
-      gridData.selectedColumnIndex,
+      grid.tables,
+      grid.hoveredTable,
+      grid.selectedTable,
+      grid.hoveredColumnIndex,
+      grid.selectedColumnIndex,
     );
     drawMouseCell(bufferCtx, grid.mouseCell);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
   }, [
-    gridData.hoveredColumnIndex,
-    gridData.hoveredTable,
-    gridData.selectedColumnIndex,
-    gridData.selectedTable,
-    gridData.tables,
+    grid.hoveredColumnIndex,
+    grid.hoveredTable,
+    grid.selectedColumnIndex,
+    grid.selectedTable,
+    grid.tables,
     grid.mouseCell,
   ]);
 
