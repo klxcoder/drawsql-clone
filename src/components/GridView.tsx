@@ -14,11 +14,9 @@ import { Grid, GridData } from '../models/Grid';
 
 function GridView({
   grid,
-  gridData,
   setGridData,
 }: {
   grid: Grid,
-  gridData: GridData,
   setGridData: (gridData: GridData) => void,
 }) {
   console.log('Rendered GridView')
@@ -66,14 +64,7 @@ function GridView({
     drawMouseCell(bufferCtx, grid.mouseCell);
     // Copy the buffer to the main canvas in one step
     ctx.drawImage(buffer, 0, 0);
-  }, [
-    grid.hoveredColumnIndex,
-    grid.hoveredTable,
-    grid.selectedColumnIndex,
-    grid.selectedTable,
-    grid.tables,
-    grid.mouseCell,
-  ]);
+  }, [grid]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -127,7 +118,7 @@ function GridView({
 
   useEffect(() => {
     draw();
-  }, [draw, gridData]);
+  }, [draw]);
 
   return (
     <div className={styles.grid}>
