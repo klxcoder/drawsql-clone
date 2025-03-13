@@ -215,7 +215,9 @@ export const drawTables = (
     ctx.font = "18px 'Lucida Console', monospace";
     drawHoveredColumn();
     drawText();
-    drawDots();
+    if (table.name === selectedTable?.name) {
+      drawDots();
+    }
   }
 
   tables.forEach(table => {

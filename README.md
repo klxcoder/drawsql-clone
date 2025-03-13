@@ -12,7 +12,7 @@
   - Total of row: 4 + 3 * column.length
 
 # Todo later
-  - Can show dots before and after columns
+  - Only show dots for selected column
   - Can connect dots
     + Between 2 columns from 2 tables
     + Between 2 columns from 1 table (self join)
