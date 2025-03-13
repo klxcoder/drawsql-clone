@@ -87,7 +87,15 @@ export const drawLines = (
   tables: TableData[],
   lines: LineData[],
 ) => {
-  console.log({ ctx, tables, lines })
+
+  const drawLine = (
+    line: LineData,
+  ) => {
+    console.log({ ctx, tables, line })
+  }
+
+  lines.forEach(line => drawLine(line))
+
 }
 
 export const drawTables = (
